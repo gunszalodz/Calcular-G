@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herramientas de Cálculo Rápido</title>
+  
+  <!-- Enlace para PWA y Optimización para Safari en iPhone -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Calculadora">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <style>
+    /* VARIABLES CSS - TEMA PREDETERMINADO (Original) */
+    :root {
+      --bg:#0b0e14; --header-bg:#0b0e14; --body-bg:#0b0e14; --text:#e6edf3;
+      --accent:#ff9800; --accent-hover:#e68a00; --on-accent:#000000; --title:#ffffff;
+      --panel:#121721; --panel-border:#1e2638; --icon-bg:#382b14; --muted:#8b949e;
+      --green:#3fb950; --blue:#58a6ff; --field:#06090e; --field-border:#1f293d; --focus:#388bfd;
+      --btn2-bg:#1c212e; --btn2-border:#2d3548; --calc-hover:#161c28; --calc-border:#1d2433;
+      --nav-bg:#06080c; --nav-border:#161b26; --nav-active-bg:#231b0c; --nav-active-border:#3d2d10;
+      --panel-glow:none; --btn-glow:none;
+      --btn-equals-border: none;
+    }
+
+    /* VARIABLES CSS - TEMA ROSA */
+    :root[data-theme="pink"] {
+      --bg:#050407; --header-bg:transparent;
+      --body-bg:linear-gradient(160deg, rgba(255,25,150,.38) 0%, rgba(5,4,7,0) 30%, rgba(5,4,7,0) 68%, rgba(255,25,150,.30) 100%), #050407;
+      --text:#f6e8f1; --accent:#ff2fa3; --accent-hover:#e01f8e; --on-accent:#0a0006; --title:#ffffff;
+      --panel:rgba(12,5,12,.86); --panel-border:#6b1f52; --icon-bg:#3a0f2b; --muted:#e3b6d3;
+      --green:#ff7ac8; --blue:#d2a8ff; --field:#08040a; --field-border:#6b1f52; --focus:#ff2fa3;
+      --btn2-bg:#26101f; --btn2-border:#7a2560; --calc-hover:#2e1025; --calc-border:#5a1a45;
+      --nav-bg:rgba(5,3,6,.92); --nav-border:#4a1538; --nav-active-bg:#34102a; --nav-active-border:#ff2fa3;
+      --panel-glow:0 0 0 1px rgba(255,47,163,.15), 0 0 24px rgba(255,47,163,.14);
+      --btn-glow:0 0 14px rgba(255,47,163,.45);
+      --btn-equals-border: none;
+    }
+
+    /* VARIABLES CSS - TEMA CAFÉ */
+    :root[data-theme="Café"] {
+      --bg:#f2eada;
+      --header-bg:#f2eada;
+      --body-bg:#f2eada;
+      --text:#2c2b28;
+      --accent:#7a5230;
+      --accent-hover:#5e3d21;
+      --on-accent:#ffffff;
+      --title:#2c2b28;
+      --panel:#e8decb;
+      --panel-border:#cbb898;
+      --icon-bg:#dbcaaa;
+      --muted:#2c2b28;
+      --green:#5a3e2b;
+      --blue:#8c5222;
+      --field:#faf6ee;
+      --field-border:#cbb898;
+      --focus:#7a5230;
+      --btn2-bg:#dfd2b9;
+      --btn2-border:#c1ad8b;
+      --calc-hover:#dbcca9;
+      --calc-border:#cbb898;
+      --nav-bg:#e8decb;
+      --nav-border:#cbb898;
+      --nav-active-bg:#dbcaaa;
+      --nav-active-border:#7a5230;
+      --panel-glow:none;
+      --btn-glow:none;
+      --btn-equals-border: 1px solid #5e3d21;
+    }
+
+    .tab-panel { box-shadow: var(--panel-glow); }
+    .btn-clear { box-shadow: var(--btn-glow); }
+
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+    .icon-btn {
+      width: 28px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--btn2-bg);
+      border: 1px solid var(--btn2-border);
+      border-radius: 6px;
+      color: var(--title);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .icon-btn svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 70px;
+      transform: translateX(-50%);
+      background: var(--btn2-bg);
+      border: 1px solid var(--accent);
+      color: var(--title);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      max-width: 90%;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+
+    .toast.show { opacity: 1; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background: var(--body-bg);
+      color: var(--text);
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    main::-webkit-scrollbar,
+    .tab-panel::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    main, .tab-panel, body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    /* Header */
+    header {
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--header-bg);
+      flex-shrink: 0;
+    }
+
+    .app-icon {
+      width: 26px;
+      height: 26px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--on-accent);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--title);
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    main {
+      flex: 1;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .tab-panel {
+      display: none;
+      height: 100%;
+      flex-direction: column;
+      background: var(--panel);
+      border-radius: 12px;
+      border: 1px solid var(--panel-border);
+      padding: 12px;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    .tab-panel.active {
+      display: flex;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--title);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .panel-icon-box {
+      background: var(--icon-bg);
+      color: var(--accent);
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    /* ESTILO TIPO TABLA COMPACTA PARA MÓVIL */
+    .calc-table-layout {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--field-border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--field);
+    }
+
+    .table-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--field-border);
+    }
+    .table-row:last-child {
+      border-bottom: none;
+    }
+
+    .table-cell-label {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .table-cell-label.green { color: var(--green); }
+    .table-cell-label.blue { color: var(--blue); }
+
+    .table-cell-input {
+      width: 130px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .table-cell-input input, .table-cell-input select {
+      width: 100%;
+      padding: 6px 8px;
+      background-color: var(--bg);
+      border: 1px solid var(--field-border);
+      border-radius: 6px;
+      color: var(--title);
+      font-size: 1.25rem;
+      font-weight: bold;
+      text-align: center;
+      outline: none;
+    }
+
+    .table-cell-input input:focus, .table-cell-input select:focus {
+      border-color: var(--focus);
+    }
+
+    /* Botón CE compacto */
+    .btn-ce-box {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -2px;
+    }
+    .btn-ce {
+      background: var(--btn2-bg);
+      border: 1px solid var(--btn2-border);
+      color: var(--accent);
+      padding: 4px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-ce:hover {
+      background: var(--calc-hover);
+    }
+
+    /* Resultado integrado y visible */
+    .result-box-compact {
+      background: var(--bg);
+      border: 1px solid var(--field-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .result-box-compact .text {
+      color: var(--green);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .btn-copy {
+      background: var(--btn2-bg);
+      border: 1px solid var(--btn2-border);
+      color: var(--title);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .log-box-compact {
+      background: var(--bg);
+      border: 1px solid var(--field-border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: var(--green);
+      line-height: 1.3;
+      max-height: 45px;
+      overflow-y: auto;
+    }
+
+    /* --- CALCULADORA ESTÁNDAR --- */
+    .calc-display {
+      background: var(--field);
+      border: 1px solid var(--field-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: right;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 80px;
+    }
+
+    .calc-history {
+      font-size: 0.85rem;
+      color: var(--muted);
+      min-height: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .calc-main-value {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--title);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      flex: 1;
+    }
+
+    .calc-btn {
+      background-color: var(--bg);
+      border: 1px solid var(--calc-border);
+      border-radius: 8px;
+      color: var(--title);
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .calc-btn:hover {
+      background-color: var(--calc-hover);
+    }
+
+    .calc-btn.op {
+      color: var(--accent);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .calc-btn.equals {
+      background-color: var(--accent);
+      color: var(--on-accent);
+      font-size: 1.6rem;
+      border: var(--btn-equals-border);
+    }
+
+    .calc-btn.equals:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Navegación Inferior */
+    nav {
+      background-color: var(--nav-bg);
+      border-top: 1px solid var(--nav-border);
+      display: flex;
+      justify-content: space-around;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      width: 16%;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+      background-color: var(--nav-active-bg);
+      border: 1px solid var(--nav-active-border);
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .panel-icon-box svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #calc-title { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .mode-switch {
+      margin-left: auto;
+      display: flex;
+      gap: 2px;
+      padding: 2px;
+      background: var(--field);
+      border: 1px solid var(--field-border);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .mode-switch button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .mode-switch button.active {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .calc-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sci-grid {
+      display: none;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tab-panel.sci .sci-grid { display: grid; }
+
+    .calc-btn.sci {
+      font-size: 0.85rem;
+      color: var(--blue);
+    }
+
+    .calc-btn.sci.angle { color: var(--accent); }
+    .calc-btn sup { font-size: 0.6em; }
+
+    #tab-standard.sci .calc-display {
+      height: 58px !important;
+      padding: 6px 12px !important;
+      margin-bottom: 4px !important;
+      flex-shrink: 0 !important;
+    }
+
+    #tab-standard.sci .calc-main-value {
+      font-size: 1.5rem;
+      line-height: 1.1 !important;
+    }
+
+    #tab-standard.sci { min-height: 0 !important; }
+
+    #tab-standard.sci .calc-body {
+      flex: 1 !important;
+      min-height: 0;
+    }
+
+    #tab-standard.sci .sci-grid {
+      gap: 4px !important;
+      margin-bottom: 4px !important;
+      flex: 4 1 0 !important;
+      min-height: 0;
+      grid-template-rows: repeat(4, minmax(0, 1fr));
+    }
+
+    #tab-standard.sci .calc-grid {
+      gap: 4px !important;
+      flex: 6.5 1 0 !important;
+      min-height: 0;
+      grid-template-rows: repeat(6, minmax(0, 1fr));
+    }
+
+    #tab-standard.sci .calc-btn {
+      padding: 0 !important;
+      min-height: 0;
+      font-size: 1rem !important;
+    }
+
+    #tab-standard.sci .calc-btn.sci {
+      font-size: 0.75rem !important;
+    }
+
+    @media (max-width: 460px) {
+      .mode-word { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="app-icon">±</div>
+    <h1>Herramientas de Cálculo Rápido</h1>
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()">
+        <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- TAB ESTÁNDAR / CIENTÍFICA -->
+    <div id="tab-standard" class="tab-panel active">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg></div> <span id="calc-title">Calculadora<span class="mode-word" id="calc-mode-word"> Estándar</span></span>
+        <div class="mode-switch" role="group" aria-label="Modo de la calculadora">
+          <button id="mode-std" class="active" onclick="setCalcMode('standard')">Estándar</button>
+          <button id="mode-sci" onclick="setCalcMode('scientific')">Científica</button>
+        </div>
+      </div>
+      <div class="calc-display">
+        <div class="calc-history" id="calc-history"></div>
+        <div class="calc-main-value" id="calc-display">0</div>
+      </div>
+      <div class="calc-body">
+      <div class="sci-grid">
+        <button class="calc-btn sci angle" id="btn-angle" title="Grados / Radianes" onclick="toggleAngle()">DEG</button>
+        <button class="calc-btn sci" title="Pi" onclick="calcConst('pi')">π</button>
+        <button class="calc-btn sci" title="Número e" onclick="calcConst('e')">e</button>
+        <button class="calc-btn sci" title="Abrir paréntesis" onclick="calcParen('(')">(</button>
+        <button class="calc-btn sci" title="Cerrar paréntesis" onclick="calcParen(')')">)</button>
+
+        <button class="calc-btn sci" title="Seno" onclick="calcFunc('sin')">sin</button>
+        <button class="calc-btn sci" title="Coseno" onclick="calcFunc('cos')">cos</button>
+        <button class="calc-btn sci" title="Tangente" onclick="calcFunc('tan')">tan</button>
+        <button class="calc-btn sci" title="Logaritmo natural" onclick="calcFunc('ln')">ln</button>
+        <button class="calc-btn sci" title="Logaritmo en base 10" onclick="calcFunc('log')">log</button>
+
+        <button class="calc-btn sci" title="Arco seno" onclick="calcFunc('asin')"><span>sin<sup>−1</sup></span></button>
+        <button class="calc-btn sci" title="Arco coseno" onclick="calcFunc('acos')"><span>cos<sup>−1</sup></span></button>
+        <button class="calc-btn sci" title="Arco tangente" onclick="calcFunc('atan')"><span>tan<sup>−1</sup></span></button>
+        <button class="calc-btn sci" title="e elevado a x" onclick="calcFunc('exp')"><span>e<sup>x</sup></span></button>
+        <button class="calc-btn sci" title="10 elevado a x" onclick="calcFunc('pow10')"><span>10<sup>x</sup></span></button>
+
+        <button class="calc-btn sci" title="Al cuadrado" onclick="calcFunc('sqr')"><span>x<sup>2</sup></span></button>
+        <button class="calc-btn sci" title="x elevado a y" onclick="calcOp('^')"><span>x<sup>y</sup></span></button>
+        <button class="calc-btn sci" title="Raíz cuadrada" onclick="calcFunc('sqrt')">√x</button>
+        <button class="calc-btn sci" title="Inverso (1/x)" onclick="calcFunc('inv')">1/x</button>
+        <button class="calc-btn sci" title="Factorial" onclick="calcFunc('fact')">n!</button>
+      </div>
+      <div class="calc-grid">
+        <button class="calc-btn op" onclick="calcOp('%')">%</button>
+        <button class="calc-btn op" onclick="calcClearEntry()">CE</button>
+        <button class="calc-btn op" onclick="calcClear()">C</button>
+        <button class="calc-btn op" onclick="calcBackspace()">⌫</button>
+
+        <button class="calc-btn op" onclick="calcOp('/')">÷</button>
+        <button class="calc-btn op" onclick="calcOp('*')">×</button>
+        <button class="calc-btn op" onclick="calcOp('-')">-</button>
+        <button class="calc-btn op" onclick="calcOp('+')">+</button>
+
+        <button class="calc-btn" onclick="calcNum('7')">7</button>
+        <button class="calc-btn" onclick="calcNum('8')">8</button>
+        <button class="calc-btn" onclick="calcNum('9')">9</button>
+        <button class="calc-btn op" onclick="calcToggleSign()">±</button>
+
+        <button class="calc-btn" onclick="calcNum('4')">4</button>
+        <button class="calc-btn" onclick="calcNum('5')">5</button>
+        <button class="calc-btn" onclick="calcNum('6')">6</button>
+        <button class="calc-btn" onclick="calcNum('.')">,</button>
+
+        <button class="calc-btn" onclick="calcNum('1')">1</button>
+        <button class="calc-btn" onclick="calcNum('2')">2</button>
+        <button class="calc-btn" onclick="calcNum('3')">3</button>
+        <button class="calc-btn" onclick="calcNum('.')">.</button>
+
+        <button class="calc-btn" style="grid-column: span 2;" onclick="calcNum('0')">0</button>
+        <button class="calc-btn equals" style="grid-column: span 2;" onclick="calcEquals()">=</button>
+      </div>
+      </div>
+    </div>
+
+    <!-- TAB PORCENTAJE DEL VALOR -->
+    <div id="tab-p1" class="tab-panel">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div> Porcentaje de un Valor
+      </div>
+      
+      <div class="result-box-compact">
+        <div class="text" id="p1-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Porcentaje (%)</div>
+          <div class="table-cell-input" style="position: relative;">
+            <input type="number" id="p1-percent" placeholder="0" oninput="calcP1()" style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--green); font-weight: bold; pointer-events: none;">%</span>
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">Valor Total</div>
+          <div class="table-cell-input">
+            <input type="number" id="p1-value" placeholder="0" oninput="calcP1()">
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP1()">CE</button>
+      </div>
+    </div>
+
+    <!-- TAB QUÉ PORCENTAJE ES -->
+    <div id="tab-p2" class="tab-panel">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div> ¿Qué porcentaje es?
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p2-result-text">Porcentaje = 0%</div>
+        <button class="btn-copy" onclick="copyText('p2-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor Total (100%)</div>
+          <div class="table-cell-input">
+            <input type="number" id="p2-total" placeholder="0" oninput="calcP2()">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">Valor Parcial</div>
+          <div class="table-cell-input">
+            <input type="number" id="p2-part" placeholder="0" oninput="calcP2()">
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP2()">CE</button>
+      </div>
+    </div>
+
+    <!-- TAB AUMENTAR -->
+    <div id="tab-p3" class="tab-panel">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div> Aumentar Porcentaje
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p3-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor Inicial</div>
+          <div class="table-cell-input">
+            <input type="number" id="p3-value" placeholder="0" oninput="calcP3()">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">% a Aumentar</div>
+          <div class="table-cell-input" style="position: relative;">
+            <input type="number" id="p3-percent" placeholder="0" oninput="calcP3()" style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP3()">CE</button>
+      </div>
+    </div>
+
+    <!-- TAB DISMINUIR -->
+    <div id="tab-p4" class="tab-panel">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div> Disminuir Porcentaje
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p4-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor Inicial</div>
+          <div class="table-cell-input">
+            <input type="number" id="p4-value" placeholder="0" oninput="calcP4()">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">% a Descontar</div>
+          <div class="table-cell-input" style="position: relative;">
+            <input type="number" id="p4-percent" placeholder="0" oninput="calcP4()" style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP4()">CE</button>
+      </div>
+    </div>
+
+    <!-- TAB ESCALAS -->
+    <div id="tab-scale" class="tab-panel">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div> Conversión de Escala
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="scale-result-text" style="font-size: 1.05rem;">Escala = 0 cm</div>
+        <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label" style="font-weight: 700; color: var(--title);">Relación de escala</div>
+          <div class="table-cell-input" style="gap: 4px;">
+            <input type="number" id="scale-r1" value="1" oninput="calcScale()">
+            <span style="color: var(--accent); font-weight: bold;">:</span>
+            <input type="number" id="scale-r2" value="2" oninput="calcScale()">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label green">Longitud real</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <input type="number" id="scale-real" placeholder="0" oninput="calcScale('real')">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label" style="font-size: 0.85rem;">Unidad real</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <select id="scale-unit-real" onchange="calcScale()" style="font-size: 0.85rem;">
+              <option value="milímetro">mm</option>
+              <option value="centímetro" selected>cm</option>
+              <option value="metro">m</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">Longitud de escala</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <input type="number" id="scale-plan" placeholder="0" oninput="calcScale('plan')">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label" style="font-size: 0.85rem;">Unidad escala</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <select id="scale-unit-plan" onchange="calcScale()" style="font-size: 0.85rem;">
+              <option value="milímetro">mm</option>
+              <option value="centímetro" selected>cm</option>
+              <option value="metro">m</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -2px;">
+        <div class="log-box-compact" id="scale-log" style="flex: 1; border: none; background: transparent; padding: 0;">
+          • Ingrese los valores.
+        </div>
+        <button class="btn-ce" onclick="clearScale()">CE</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Navegación Inferior -->
+  <nav>
+    <button class="nav-item active" onclick="switchTab('tab-standard', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+      <span>Estándar</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p1', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      <span>% valor</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p2', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+      <span>Qué %</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p3', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span>Aumentar</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p4', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+      <span>Disminuir</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-scale', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+      <span>Escalas</span>
+    </button>
+  </nav>
+
+  <script>
+    function formatEs(num, maxDec = 2) {
+      if (isNaN(num) || num === null) return '0';
+      return num.toLocaleString('es-AR', { maximumFractionDigits: maxDec });
+    }
+
+    function cleanNum(n, digits = 12) {
+      return Number.isFinite(n) ? parseFloat(n.toPrecision(digits)) : n;
+    }
+
+    function roundNum(n, decimals = 8) {
+      return Number.isFinite(n) ? parseFloat(n.toFixed(decimals)) : 0;
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+      if (tabId === 'tab-standard') fitDisplay();
+    }
+
+    /* COPIAR */
+    async function copyToClipboard(text) {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (e) { /* respaldo */ }
+      const previo = document.activeElement;
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-100px;left:0;opacity:0;user-select:text;';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        ta.remove();
+        if (previo && previo.focus) previo.focus();
+        return ok;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    async function copyValue(text) {
+      const ok = await copyToClipboard(text);
+      showToast(ok ? `Copiado: ${text}` : 'No se pudo copiar', 1800);
+    }
+
+    function numberFromResult(txt) {
+      const m = txt.match(/=\s*(-?[\d.,]+(?:e[+-]?\d+)?)/i);
+      return m ? m[1].replace(/\./g, '') : null;
+    }
+
+    function copyText(id) {
+      const txt = document.getElementById(id).innerText;
+      const num = numberFromResult(txt);
+      copyValue(num !== null ? num : txt);
+    }
+
+    /* ESTÁNDAR */
+    let calcVal = '0';
+    let calcOpCurrent = null;
+    let calcPrevVal = null;
+    let calcResetNext = false;
+    let calcReplaceNext = false;
+    let calcStack = [];
+
+    function fitDisplay() {
+      const el = document.getElementById('calc-display');
+      if (!el) return;
+      el.style.fontSize = '';
+      let size = parseFloat(getComputedStyle(el).fontSize);
+      while (el.scrollWidth > el.clientWidth && size > 12) {
+        size -= 1;
+        el.style.fontSize = size + 'px';
+      }
+    }
+
+    function updateCalcDisplay() {
+      document.getElementById('calc-display').innerText = calcVal.replace('.', ',');
+      fitDisplay();
+    }
+
+    function setHistory(text) {
+      const MAX = 36;
+      document.getElementById('calc-history').innerText = text.length > MAX ? '… ' + text.slice(-(MAX - 2)) : text;
+    }
+
+    function opSym(op) {
+      return { '*': '×', '/': '÷' }[op] || op;
+    }
+
+    function calcPrefix() {
+      if (calcStack.length === 0) return '';
+      return calcStack.map(f => (f.prev !== null && f.op ? `${formatEs(f.prev)} ${opSym(f.op)} ` : '') + '(').join(' ') + ' ';
+    }
+
+    function calcNum(n) {
+      let valToInsert = (n === ',' || n === '.') ? '.' : n;
+      if (calcResetNext || calcReplaceNext) {
+        calcVal = valToInsert === '.' ? '0.' : valToInsert;
+        calcResetNext = false;
+        calcReplaceNext = false;
+      } else {
+        if (valToInsert === '.' && calcVal.includes('.')) return;
+        calcVal = calcVal === '0' && valToInsert !== '.' ? valToInsert : calcVal + valToInsert;
+      }
+      updateCalcDisplay();
+    }
+
+    function calcOp(op) {
+      if (calcVal === 'Error') return;
+      if (op === '%') {
+        calcVal = cleanNum(parseFloat(calcVal) / 100).toString();
+        updateCalcDisplay();
+        return;
+      }
+      if (calcPrevVal !== null && !calcResetNext) {
+        calcEval();
+        if (calcVal === 'Error') return;
+      }
+      calcPrevVal = parseFloat(calcVal);
+      calcOpCurrent = op;
+      calcResetNext = true;
+      calcReplaceNext = false;
+      setHistory(`${calcPrefix()}${formatEs(calcPrevVal)} ${opSym(op)}`);
+    }
+
+    function calcEval() {
+      if (calcOpCurrent === null || calcPrevVal === null) return;
+      let curr = parseFloat(calcVal);
+      let res = 0;
+      switch(calcOpCurrent) {
+        case '+': res = calcPrevVal + curr; break;
+        case '-': res = calcPrevVal - curr; break;
+        case '*': res = calcPrevVal * curr; break;
+        case '/': res = curr !== 0 ? calcPrevVal / curr : 'Error'; break;
+        case '^': res = Math.pow(calcPrevVal, curr); break;
+      }
+      if (typeof res === 'number' && !Number.isFinite(res)) res = 'Error';
+      setHistory(`${calcPrefix()}${formatEs(calcPrevVal)} ${opSym(calcOpCurrent)} ${formatEs(curr)} =`);
+      if (typeof res === 'number') {
+        calcVal = (calcOpCurrent === '^' ? snapNum(res) : cleanNum(res)).toString();
+      } else {
+        calcVal = res;
+        calcStack = [];
+      }
+      calcPrevVal = null;
+      calcOpCurrent = null;
+      calcResetNext = true;
+      calcReplaceNext = false;
+      updateCalcDisplay();
+    }
+
+    function calcEquals() {
+      if (calcVal === 'Error') return;
+      while (calcStack.length > 0) {
+        calcCloseParen();
+        if (calcVal === 'Error') return;
+      }
+      calcEval();
+    }
+
+    function calcClear() {
+      calcVal = '0';
+      calcPrevVal = null;
+      calcOpCurrent = null;
+      calcResetNext = false;
+      calcReplaceNext = false;
+      calcStack = [];
+      setHistory('');
+      updateCalcDisplay();
+    }
+
+    function calcClearEntry() {
+      calcVal = '0';
+      calcReplaceNext = false;
+      updateCalcDisplay();
+    }
+
+    function calcBackspace() {
+      if (calcResetNext || calcReplaceNext) return;
+      calcVal = calcVal.length > 1 ? calcVal.slice(0, -1) : '0';
+      if (calcVal === '-' || calcVal === '-0') calcVal = '0';
+      updateCalcDisplay();
+    }
+
+    function calcToggleSign() {
+      if (calcVal !== '0' && calcVal !== 'Error') {
+        calcVal = calcVal.startsWith('-') ? calcVal.slice(1) : '-' + calcVal;
+        updateCalcDisplay();
+      }
+    }
+
+    /* CIENTÍFICA */
+    let calcMode = 'standard';
+    let angleMode = 'deg';
+
+    function snapNum(n) {
+      if (!Number.isFinite(n)) return n;
+      const s = parseFloat(n.toPrecision(15));
+      return Math.abs(n - s) <= 1.5 * Number.EPSILON * Math.abs(n) ? s : n;
+    }
+
+    function factorial(x) {
+      if (!Number.isInteger(x) || x < 0 || x > 170) return NaN;
+      let r = 1;
+      for (let i = 2; i <= x; i++) r *= i;
+      return r;
+    }
+
+    function calcSetError() {
+      calcVal = 'Error';
+      calcPrevVal = null;
+      calcOpCurrent = null;
+      calcStack = [];
+      calcResetNext = true;
+      calcReplaceNext = false;
+      updateCalcDisplay();
+    }
+
+    function calcFunc(name) {
+      if (calcVal === 'Error') return;
+      const x = parseFloat(calcVal);
+      const toRad = v => angleMode === 'deg' ? v * Math.PI / 180 : v;
+      const fromRad = v => angleMode === 'deg' ? v * 180 / Math.PI : v;
+      let r = NaN;
+      switch (name) {
+        case 'sin': r = Math.sin(toRad(x)); break;
+        case 'cos': r = Math.cos(toRad(x)); break;
+        case 'tan': {
+          const a = toRad(x);
+          r = Math.abs(Math.cos(a)) < 1e-12 ? NaN : Math.tan(a);
+          break;
+        }
+        case 'asin': r = Math.abs(x) <= 1 ? fromRad(Math.asin(x)) : NaN; break;
+        case 'acos': r = Math.abs(x) <= 1 ? fromRad(Math.acos(x)) : NaN; break;
+        case 'atan': r = fromRad(Math.atan(x)); break;
+        case 'ln': r = x > 0 ? Math.log(x) : NaN; break;
+        case 'log': r = x > 0 ? Math.log10(x) : NaN; break;
+        case 'exp': r = Math.exp(x); break;
+        case 'pow10': r = Math.pow(10, x); break;
+        case 'sqr': r = x * x; break;
+        case 'sqrt': r = x >= 0 ? Math.sqrt(x) : NaN; break;
+        case 'inv': r = x !== 0 ? 1 / x : NaN; break;
+        case 'fact': r = factorial(x); break;
+      }
+      if (!Number.isFinite(r)) { calcSetError(); return; }
+      if ((name === 'sin' || name === 'cos' || name === 'tan') && Math.abs(r) < 1e-12) r = 0;
+      calcVal = snapNum(r).toString();
+      calcResetNext = false;
+      calcReplaceNext = true;
+      updateCalcDisplay();
+    }
+
+    function calcConst(name) {
+      calcVal = (name === 'pi' ? Math.PI : Math.E).toString();
+      calcResetNext = false;
+      calcReplaceNext = true;
+      updateCalcDisplay();
+    }
+
+    function calcParen(p) {
+      if (p === '(') calcOpenParen(); else calcCloseParen();
+    }
+
+    function calcOpenParen() {
+      if (calcVal === 'Error') return;
+      calcStack.push({ prev: calcPrevVal, op: calcOpCurrent });
+      calcPrevVal = null;
+      calcOpCurrent = null;
+      calcVal = '0';
+      calcResetNext = false;
+      calcReplaceNext = false;
+      setHistory(calcPrefix());
+      updateCalcDisplay();
+    }
+
+    function calcCloseParen() {
+      if (calcVal === 'Error' || calcStack.length === 0) return;
+      if (calcOpCurrent !== null && calcPrevVal !== null) {
+        calcEval();
+        if (calcVal === 'Error') return;
+      }
+      const f = calcStack.pop();
+      calcPrevVal = f.prev;
+      calcOpCurrent = f.op;
+      calcResetNext = false;
+      calcReplaceNext = true;
+      setHistory(calcOpCurrent
+        ? `${calcPrefix()}${formatEs(calcPrevVal)} ${opSym(calcOpCurrent)}`
+        : calcPrefix().trim());
+      updateCalcDisplay();
+    }
+
+    function setAngleMode(mode, save = true) {
+      angleMode = mode === 'rad' ? 'rad' : 'deg';
+      const btn = document.getElementById('btn-angle');
+      if (btn) btn.textContent = angleMode === 'rad' ? 'RAD' : 'DEG';
+      if (save) { try { localStorage.setItem('calc-angle', angleMode); } catch (e) {} }
+    }
+
+    function toggleAngle() {
+      setAngleMode(angleMode === 'deg' ? 'rad' : 'deg');
+    }
+
+    function setCalcMode(mode, save = true) {
+      calcMode = mode === 'scientific' ? 'scientific' : 'standard';
+      const sci = calcMode === 'scientific';
+      document.getElementById('tab-standard').classList.toggle('sci', sci);
+      document.getElementById('mode-std').classList.toggle('active', !sci);
+      document.getElementById('mode-sci').classList.toggle('active', sci);
+      document.getElementById('calc-mode-word').textContent = sci ? ' Científica' : ' Estándar';
+      fitDisplay();
+      if (save) { try { localStorage.setItem('calc-mode', calcMode); } catch (e) {} }
+    }
+
+    try {
+      setCalcMode('standard', false);
+      const savedAngle = localStorage.getItem('calc-angle');
+      if (savedAngle) setAngleMode(savedAngle, false);
+    } catch (e) {}
+
+    window.addEventListener('resize', fitDisplay);
+
+    /* PORCENTAJES */
+    function calcP1() {
+      const p = parseFloat(document.getElementById('p1-percent').value) || 0;
+      const v = parseFloat(document.getElementById('p1-value').value) || 0;
+      const res = (p / 100) * v;
+      document.getElementById('p1-result-text').innerText = `Resultado = ${formatEs(res, 4)}`;
+    }
+    function clearP1() {
+      document.getElementById('p1-percent').value = '';
+      document.getElementById('p1-value').value = '';
+      document.getElementById('p1-result-text').innerText = 'Resultado = 0';
+    }
+
+    function calcP2() {
+      const total = parseFloat(document.getElementById('p2-total').value) || 0;
+      const part = parseFloat(document.getElementById('p2-part').value) || 0;
+      const res = total !== 0 ? (part / total) * 100 : 0;
+      document.getElementById('p2-result-text').innerText = `Porcentaje = ${formatEs(res, 4)}%`;
+    }
+    function clearP2() {
+      document.getElementById('p2-total').value = '';
+      document.getElementById('p2-part').value = '';
+      document.getElementById('p2-result-text').innerText = 'Porcentaje = 0%';
+    }
+
+    function calcP3() {
+      const v = parseFloat(document.getElementById('p3-value').value) || 0;
+      const p = parseFloat(document.getElementById('p3-percent').value) || 0;
+      const res = v * (1 + p / 100);
+      document.getElementById('p3-result-text').innerText = `Resultado = ${formatEs(res, 4)}`;
+    }
+    function clearP3() {
+      document.getElementById('p3-value').value = '';
+      document.getElementById('p3-percent').value = '';
+      document.getElementById('p3-result-text').innerText = 'Resultado = 0';
+    }
+
+    function calcP4() {
+      const v = parseFloat(document.getElementById('p4-value').value) || 0;
+      const p = parseFloat(document.getElementById('p4-percent').value) || 0;
+      const res = v * (1 - p / 100);
+      document.getElementById('p4-result-text').innerText = `Resultado = ${formatEs(res, 4)}`;
+    }
+    function clearP4() {
+      document.getElementById('p4-value').value = '';
+      document.getElementById('p4-percent').value = '';
+      document.getElementById('p4-result-text').innerText = 'Resultado = 0';
+    }
+
+    /* ESCALAS */
+    const UNIT_ABBR = { 'centímetro': 'cm', 'metro': 'm', 'milímetro': 'mm' };
+    const UNIT_TO_M = { 'milímetro': 0.001, 'centímetro': 0.01, 'metro': 1 };
+    let scaleMode = 'real';
+    function planUnitAbbr() {
+      const u = document.getElementById('scale-unit-plan').value;
+      return UNIT_ABBR[u] || u;
+    }
+
+    function calcScale(mode) {
+      if (mode) scaleMode = mode; else mode = scaleMode;
+      const r1 = parseFloat(document.getElementById('scale-r1').value) || 1;
+      const r2 = parseFloat(document.getElementById('scale-r2').value) || 1;
+      const ratio = r2 / r1;
+
+      const realInput = document.getElementById('scale-real');
+      const planInput = document.getElementById('scale-plan');
+      const uReal = document.getElementById('scale-unit-real').value;
+      const uPlan = document.getElementById('scale-unit-plan').value;
+      const fReal = UNIT_TO_M[uReal] || 1;
+      const fPlan = UNIT_TO_M[uPlan] || 1;
+
+      const realValStr = realInput.value.trim();
+      const planValStr = planInput.value.trim();
+
+      if (mode === 'real') {
+        if (realValStr === '') {
+          planInput.value = '';
+          document.getElementById('scale-result-text').innerText = `Escala = 0 ${planUnitAbbr()}`;
+          document.getElementById('scale-log').innerHTML = '• Ingrese los valores.';
+          return;
+        }
+        const realVal = parseFloat(realValStr) || 0;
+        const planVal = (realVal * fReal / ratio) / fPlan;
+        planInput.value = roundNum(planVal);
+        document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${planUnitAbbr()}`;
+        document.getElementById('scale-log').innerHTML = `• Escala ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${uReal}`;
+      } else {
+        if (planValStr === '') {
+          realInput.value = '';
+          document.getElementById('scale-result-text').innerText = `Escala = 0 ${planUnitAbbr()}`;
+          document.getElementById('scale-log').innerHTML = '• Ingrese los valores.';
+          return;
+        }
+        const planVal = parseFloat(planValStr) || 0;
+        const realVal = (planVal * fPlan * ratio) / fReal;
+        realInput.value = roundNum(realVal);
+        document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${planUnitAbbr()}`;
+        document.getElementById('scale-log').innerHTML = `• Escala ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${uReal}`;
+      }
+    }
+
+    function clearScale() {
+      scaleMode = 'real';
+      document.getElementById('scale-real').value = '';
+      document.getElementById('scale-plan').value = '';
+      document.getElementById('scale-result-text').innerText = `Escala = 0 ${planUnitAbbr()}`;
+      document.getElementById('scale-log').innerHTML = '• Ingrese los valores.';
+    }
+
+    /* AVISO */
+    function showToast(msg, ms = 3600) {
+      document.querySelectorAll('.toast').forEach(old => old.remove());
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      requestAnimationFrame(() => t.classList.add('show'));
+      setTimeout(() => t.remove(), ms);
+    }
+
+    /* TEMA */
+    const THEMES = { original: 'Tema original', pink: 'Tema rosa y negro', Café: 'Café' };
+
+    function applyTheme(name) {
+      document.documentElement.setAttribute('data-theme', name || 'original');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'original';
+      let next;
+      if (current === 'original') next = 'pink';
+      else if (current === 'pink') next = 'Café';
+      else next = 'original';
+      
+      applyTheme(next);
+      try { localStorage.setItem('calc-theme', next); } catch (e) {}
+      showToast(THEMES[next]);
+    }
+
+    try { applyTheme(localStorage.getItem('calc-theme')); } catch (e) {}
+  </script>
+</body>
+</html>
