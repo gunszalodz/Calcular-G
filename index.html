@@ -365,7 +365,7 @@
       text-align: right;
       outline: none;
       touch-action: manipulation;
-      direction: rtl;
+      direction: ltr;
     }
 
     .table-cell-input select {
@@ -1732,47 +1732,52 @@
       setActiveInput(document.getElementById('scale-r1'));
     }
 
-    /* CONVERSIÓN DE BASES NUMÉRICAS */
-    function calcBases(changed) {
-      const decIn = document.getElementById('base-dec');
-      const binIn = document.getElementById('base-bin');
-      const octIn = document.getElementById('base-oct');
-      const hexIn = document.getElementById('base-hex');
+    /* CONVERSIÓN DE BASES NUMÉRICAS (con parte fraccionaria) */
+    const BASE_DIGITS = { dec: 10, bin: 2, oct: 8, hex: 16 };
+    const BASE_FRAC_MAX = 10;
 
-      let decimalValue = 0;
-
-      if (changed === 'dec') {
-        let rawVal = decIn.value.replace(',', '.');
-        let parsed = parseFloat(rawVal);
-        if (isNaN(parsed)) {
-          binIn.value = '';
-          octIn.value = '';
-          hexIn.value = '';
-          return;
-        }
-        decimalValue = Math.trunc(parsed);
-        binIn.value = decimalValue.toString(2);
-        octIn.value = decimalValue.toString(8);
-        hexIn.value = decimalValue.toString(16).toUpperCase();
-      } else if (changed === 'bin') {
-        const cleanBin = binIn.value.replace(/[^01]/g, '');
-        decimalValue = parseInt(cleanBin, 2) || 0;
-        decIn.value = cleanBin ? decimalValue : '';
-        octIn.value = cleanBin ? decimalValue.toString(8) : '';
-        hexIn.value = cleanBin ? decimalValue.toString(16).toUpperCase() : '';
-      } else if (changed === 'oct') {
-        const cleanOct = octIn.value.replace(/[^0-7]/g, '');
-        decimalValue = parseInt(cleanOct, 8) || 0;
-        decIn.value = cleanOct ? decimalValue : '';
-        binIn.value = cleanOct ? decimalValue.toString(2) : '';
-        hexIn.value = cleanOct ? decimalValue.toString(16).toUpperCase() : '';
-      } else if (changed === 'hex') {
-        const cleanHex = hexIn.value.replace(/[^0-9a-fA-F]/g, '');
-        decimalValue = parseInt(cleanHex, 16) || 0;
-        decIn.value = cleanHex ? decimalValue : '';
-        binIn.value = cleanHex ? decimalValue.toString(2) : '';
-        octIn.value = cleanHex ? decimalValue.toString(8) : '';
+    function parseBase(str, base) {
+      let t = str.replace(',', '.');
+      const invalid = base === 2 ? /[^01.]/g : base === 8 ? /[^0-7.]/g : base === 10 ? /[^0-9.]/g : /[^0-9a-fA-F.]/g;
+      t = t.replace(invalid, '');
+      if (t === '' || t === '.') return null;
+      const parts = t.split('.');
+      let value = parts[0] ? parseInt(parts[0], base) : 0;
+      if (isNaN(value)) value = 0;
+      const fp = parts[1] || '';
+      for (let i = 0; i < fp.length; i++) {
+        value += parseInt(fp[i], base) / Math.pow(base, i + 1);
       }
+      return value;
+    }
+
+    function numToBase(n, base) {
+      const ip = Math.floor(n);
+      let frac = n - ip;
+      let out = ip.toString(base).toUpperCase();
+      let f = '';
+      while (frac > 1e-12 && f.length < BASE_FRAC_MAX) {
+        frac *= base;
+        const d = Math.floor(frac + 1e-9);
+        f += d.toString(base).toUpperCase();
+        frac -= d;
+      }
+      return f ? out + '.' + f : out;
+    }
+
+    function calcBases(changed) {
+      const inputs = {
+        dec: document.getElementById('base-dec'),
+        bin: document.getElementById('base-bin'),
+        oct: document.getElementById('base-oct'),
+        hex: document.getElementById('base-hex')
+      };
+      const value = parseBase(inputs[changed].value, BASE_DIGITS[changed]);
+      for (const key in inputs) {
+        if (key === changed) continue;
+        inputs[key].value = value === null ? '' : numToBase(value, BASE_DIGITS[key]);
+      }
+      for (const key in inputs) inputs[key].scrollLeft = inputs[key].scrollWidth;
     }
 
     function clearBases() {
