@@ -285,7 +285,7 @@
       border: 1px solid var(--panel-border);
       padding: 8px;
       justify-content: flex-start;
-      gap: 6px;
+      gap: 5px;
     }
 
     .tab-panel.active {
@@ -335,7 +335,7 @@
 
     .table-cell-label {
       flex: 1;
-      padding: 8px 10px;
+      padding: 6px 10px;
       font-size: 0.85rem;
       font-weight: 700;
       color: var(--muted);
@@ -345,24 +345,22 @@
     .table-cell-label.blue { color: var(--blue); }
 
     .table-cell-input {
-      flex: 1;
-      min-width: 0;
-      padding: 5px;
+      width: 200px;
+      padding: 4px 8px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 4px;
     }
 
     .table-cell-input input {
       width: 100%;
       min-width: 0;
-      padding: 6px;
+      padding: 5px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: bold;
       text-align: right;
       outline: none;
@@ -394,25 +392,39 @@
       border-color: var(--focus);
     }
 
-    /* Botones de acción en tabla (Pegar / Copiar sin que se corten) */
-    .table-actions {
+    /* Botones de acción alineados a la derecha debajo de cada fila de bases */
+    .base-row-container {
       display: flex;
-      gap: 3px;
-      padding-right: 6px;
-      flex-shrink: 0;
+      flex-direction: column;
+      border-bottom: 1px solid var(--field-border);
+      background: var(--field);
+    }
+    .base-row-container:last-child {
+      border-bottom: none;
+    }
+
+    .base-row-main {
+      display: flex;
+      align-items: center;
+    }
+
+    .base-row-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      padding: 2px 10px 6px 10px;
     }
 
     .btn-action {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--title);
-      padding: 5px 7px;
-      border-radius: 6px;
+      padding: 3px 8px;
+      border-radius: 5px;
       font-size: 0.72rem;
       font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
-      white-space: nowrap;
     }
     .btn-action:hover {
       background: var(--calc-hover);
@@ -479,7 +491,18 @@
       overflow-y: auto;
     }
 
-    /* TECLADO VIRTUAL AUXILIAR FLEXIBLE Y PERFECTAMENTE ADAPTADO */
+    /* TECLADO VIRTUAL DE BASES (5 FILAS ADAPTADAS) */
+    .virtual-keypad-bases {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      flex: 1;
+      min-height: 0;
+      margin-top: 2px;
+    }
+
+    /* TECLADO VIRTUAL ESTÁNDAR (4 FILAS) */
     .virtual-keypad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -494,13 +517,13 @@
       border: 1px solid var(--calc-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 0;
+      padding: 2px 0;
       touch-action: manipulation;
     }
 
@@ -1024,7 +1047,7 @@
           <div class="table-cell-label" style="color: var(--title);">Escala (ej: 1:2)</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-r1" value="1" onclick="setActiveInput(this)" readonly>
-            <span style="color: var(--accent); font-weight: bold;">:</span>
+            <span style="color: var(--accent); font-weight: bold; padding: 0 4px;">:</span>
             <input type="text" inputmode="none" id="scale-r2" value="2" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
@@ -1032,7 +1055,7 @@
           <div class="table-cell-label green">Longitud real</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-real" placeholder="0" oninput="calcScale('real')" onclick="setActiveInput(this)" readonly>
-            <select id="scale-unit-real" onchange="calcScale('real')">
+            <select id="scale-unit-real" onchange="calcScale('real')" style="margin-left: 4px;">
               <option value="milímetro">mm</option>
               <option value="centímetro" selected>cm</option>
               <option value="metro">m</option>
@@ -1043,7 +1066,7 @@
           <div class="table-cell-label blue">Longitud de escala</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-plan" placeholder="0" oninput="calcScale('plan')" onclick="setActiveInput(this)" readonly>
-            <select id="scale-unit-plan" onchange="calcScale('plan')">
+            <select id="scale-unit-plan" onchange="calcScale('plan')" style="margin-left: 4px;">
               <option value="milímetro">mm</option>
               <option value="centímetro" selected>cm</option>
               <option value="metro">m</option>
@@ -1084,47 +1107,58 @@
 
       <div class="calc-table-layout">
         <!-- Decimal -->
-        <div class="table-row">
-          <div class="table-cell-label green">Decimal (10)</div>
-          <div class="table-cell-input">
-            <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveInput(this)" readonly>
+        <div class="base-row-container">
+          <div class="base-row-main table-row">
+            <div class="table-cell-label green">Decimal (10)</div>
+            <div class="table-cell-input">
+              <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveInput(this)" readonly>
+            </div>
           </div>
-          <div class="table-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-dec', 'dec')">📋</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-dec')">Copiar</button>
+          <div class="base-row-actions">
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-dec', 'dec')">📋 Pegar</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-dec')">📋 Copiar</button>
           </div>
         </div>
+
         <!-- Binario -->
-        <div class="table-row">
-          <div class="table-cell-label blue">Binario (2)</div>
-          <div class="table-cell-input">
-            <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveInput(this)" readonly>
+        <div class="base-row-container">
+          <div class="base-row-main table-row">
+            <div class="table-cell-label blue">Binario (2)</div>
+            <div class="table-cell-input">
+              <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveInput(this)" readonly>
+            </div>
           </div>
-          <div class="table-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-bin', 'bin')">📋</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-bin')">Copiar</button>
+          <div class="base-row-actions">
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-bin', 'bin')">📋 Pegar</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-bin')">📋 Copiar</button>
           </div>
         </div>
+
         <!-- Octal -->
-        <div class="table-row">
-          <div class="table-cell-label" style="color: var(--accent);">Octal (8)</div>
-          <div class="table-cell-input">
-            <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveInput(this)" readonly>
+        <div class="base-row-container">
+          <div class="base-row-main table-row">
+            <div class="table-cell-label" style="color: var(--accent);">Octal (8)</div>
+            <div class="table-cell-input">
+              <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveInput(this)" readonly>
+            </div>
           </div>
-          <div class="table-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-oct', 'oct')">📋</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-oct')">Copiar</button>
+          <div class="base-row-actions">
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-oct', 'oct')">📋 Pegar</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-oct')">📋 Copiar</button>
           </div>
         </div>
+
         <!-- Hexadecimal -->
-        <div class="table-row">
-          <div class="table-cell-label" style="color: var(--title);">Hex (16)</div>
-          <div class="table-cell-input">
-            <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveInput(this)" readonly>
+        <div class="base-row-container">
+          <div class="base-row-main table-row">
+            <div class="table-cell-label" style="color: var(--title);">Hex (16)</div>
+            <div class="table-cell-input">
+              <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveInput(this)" readonly>
+            </div>
           </div>
-          <div class="table-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-hex', 'hex')">📋</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-hex')">Copiar</button>
+          <div class="base-row-actions">
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-hex', 'hex')">📋 Pegar</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-hex')">📋 Copiar</button>
           </div>
         </div>
       </div>
@@ -1133,23 +1167,32 @@
         <button class="btn-ce" onclick="clearBases()">CE</button>
       </div>
 
-      <div class="virtual-keypad">
+      <!-- TECLADO DE BASES (20 botones en 5 filas, incluyendo coma/punto) -->
+      <div class="virtual-keypad-bases">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
+
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('A')">A</button>
+
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey('B')">B</button>
+
         <button class="v-key" onclick="vKey('0')">0</button>
+        <button class="v-key op" onclick="vKey('.')">.</button>
+        <button class="v-key op" onclick="vKey(',')">,</button>
         <button class="v-key op" onclick="vKey('C')">C</button>
+
         <button class="v-key op" onclick="vKey('D')">D</button>
         <button class="v-key op" onclick="vKey('E')">E</button>
+        <button class="v-key op" onclick="vKey('F')">F</button>
+        <button class="v-key op" style="color: var(--green);" onclick="clearBases()">CE</button>
       </div>
     </div>
   </main>
@@ -1683,10 +1726,12 @@
       let decimalValue = 0;
 
       if (changed === 'dec') {
-        decimalValue = parseInt(decIn.value, 10) || 0;
-        binIn.value = decimalValue ? decimalValue.toString(2) : '';
-        octIn.value = decimalValue ? decimalValue.toString(8) : '';
-        hexIn.value = decimalValue ? decimalValue.toString(16).toUpperCase() : '';
+        let cleanDec = decIn.value.replace(/[^0-9.,]/g, '').replace(',', '.');
+        decimalValue = parseFloat(cleanDec) || 0;
+        let intVal = Math.trunc(decimalValue);
+        binIn.value = intVal ? intVal.toString(2) : '';
+        octIn.value = intVal ? intVal.toString(8) : '';
+        hexIn.value = intVal ? intVal.toString(16).toUpperCase() : '';
       } else if (changed === 'bin') {
         const cleanBin = binIn.value.replace(/[^01]/g, '');
         decimalValue = parseInt(cleanBin, 2) || 0;
