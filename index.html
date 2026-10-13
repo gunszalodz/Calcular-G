@@ -336,15 +336,17 @@
     .table-cell-label {
       flex: 1;
       padding: 8px 10px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--muted);
+      line-height: 1.1;
     }
     .table-cell-label.green { color: var(--green); }
     .table-cell-label.blue { color: var(--blue); }
 
     .table-cell-input {
-      width: 230px;
+      flex: 1;
+      min-width: 0;
       padding: 5px;
       display: flex;
       align-items: center;
@@ -353,19 +355,19 @@
     }
 
     .table-cell-input input {
-      flex: 1;
+      width: 100%;
       min-width: 0;
       padding: 6px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: bold;
       text-align: right;
       outline: none;
       touch-action: manipulation;
-      direction: rtl; /* Hace que los números largos muestren siempre el inicio/fin correctamente */
+      direction: rtl;
     }
 
     .table-cell-input select {
@@ -392,10 +394,10 @@
       border-color: var(--focus);
     }
 
-    /* Botones de acción en tabla (Copiar / Pegar) */
+    /* Botones de acción en tabla (Pegar / Copiar sin que se corten) */
     .table-actions {
       display: flex;
-      gap: 4px;
+      gap: 3px;
       padding-right: 6px;
       flex-shrink: 0;
     }
@@ -404,12 +406,13 @@
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--title);
-      padding: 4px 8px;
+      padding: 5px 7px;
       border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
+      white-space: nowrap;
     }
     .btn-action:hover {
       background: var(--calc-hover);
@@ -476,14 +479,14 @@
       overflow-y: auto;
     }
 
-    /* TECLADO VIRTUAL AUXILIAR OPTIMIZADO Y MÁS COMPACTO */
+    /* TECLADO VIRTUAL AUXILIAR FLEXIBLE Y PERFECTAMENTE ADAPTADO */
     .virtual-keypad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
+      gap: 5px;
       flex: 1;
+      min-height: 0;
       margin-top: 2px;
-      max-height: 195px; /* Altura controlada para dar mayor protagonismo visual a los campos */
     }
 
     .v-key {
@@ -491,7 +494,7 @@
       border: 1px solid var(--calc-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -1087,8 +1090,8 @@
             <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveInput(this)" readonly>
           </div>
           <div class="table-actions">
-            <button class="btn-action" onclick="pasteToInput('base-dec', 'dec')">📋</button>
-            <button class="btn-action" onclick="copyInputValue('base-dec')">Copiar</button>
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-dec', 'dec')">📋</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-dec')">Copiar</button>
           </div>
         </div>
         <!-- Binario -->
@@ -1098,8 +1101,8 @@
             <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveInput(this)" readonly>
           </div>
           <div class="table-actions">
-            <button class="btn-action" onclick="pasteToInput('base-bin', 'bin')">📋</button>
-            <button class="btn-action" onclick="copyInputValue('base-bin')">Copiar</button>
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-bin', 'bin')">📋</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-bin')">Copiar</button>
           </div>
         </div>
         <!-- Octal -->
@@ -1109,8 +1112,8 @@
             <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveInput(this)" readonly>
           </div>
           <div class="table-actions">
-            <button class="btn-action" onclick="pasteToInput('base-oct', 'oct')">📋</button>
-            <button class="btn-action" onclick="copyInputValue('base-oct')">Copiar</button>
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-oct', 'oct')">📋</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-oct')">Copiar</button>
           </div>
         </div>
         <!-- Hexadecimal -->
@@ -1120,8 +1123,8 @@
             <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveInput(this)" readonly>
           </div>
           <div class="table-actions">
-            <button class="btn-action" onclick="pasteToInput('base-hex', 'hex')">📋</button>
-            <button class="btn-action" onclick="copyInputValue('base-hex')">Copiar</button>
+            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-hex', 'hex')">📋</button>
+            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-hex')">Copiar</button>
           </div>
         </div>
       </div>
