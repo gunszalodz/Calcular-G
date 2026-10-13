@@ -135,7 +135,7 @@
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       user-select: none;
-      touch-action: manipulation; /* Evita zoom por doble toque */
+      touch-action: manipulation;
     }
 
     body {
@@ -260,8 +260,8 @@
 
     .table-cell-label {
       flex: 1;
-      padding: 8px 10px;
-      font-size: 0.9rem;
+      padding: 10px 12px;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--muted);
     }
@@ -270,7 +270,7 @@
 
     .table-cell-input {
       width: 190px;
-      padding: 5px;
+      padding: 6px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -280,12 +280,12 @@
     .table-cell-input input {
       flex: 1;
       min-width: 0;
-      padding: 6px 6px;
+      padding: 8px 6px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: bold;
       text-align: center;
       outline: none;
@@ -295,12 +295,12 @@
     .table-cell-input select {
       width: 62px;
       flex-shrink: 0;
-      padding: 6px 2px;
+      padding: 8px 2px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: bold;
       text-align: center;
       outline: none;
@@ -325,7 +325,7 @@
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--accent);
-      padding: 4px 14px;
+      padding: 5px 14px;
       border-radius: 6px;
       font-size: 0.85rem;
       font-weight: 700;
@@ -341,7 +341,7 @@
       background: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -349,14 +349,14 @@
     .result-box-compact .text {
       color: var(--green);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
     }
 
     .btn-copy {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--title);
-      padding: 5px 12px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-size: 0.8rem;
       font-weight: 600;
@@ -377,11 +377,11 @@
       overflow-y: auto;
     }
 
-    /* TECLADO VIRTUAL INTEGRADO */
+    /* TECLADO VIRTUAL AUXILIAR OPTIMIZADO (Más compacto y con el 0 normalizado) */
     .virtual-keypad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      gap: 5px;
       flex: 1;
       margin-top: 4px;
     }
@@ -391,13 +391,13 @@
       border: 1px solid var(--calc-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.45rem;
-      font-weight: 800;
+      font-size: 1.2rem;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 0;
+      padding: 6px 0;
       touch-action: manipulation;
     }
 
