@@ -283,9 +283,9 @@
       background: var(--panel);
       border-radius: 12px;
       border: 1px solid var(--panel-border);
-      padding: 8px;
+      padding: 10px;
       justify-content: flex-start;
-      gap: 5px;
+      gap: 8px;
     }
 
     .tab-panel.active {
@@ -293,7 +293,7 @@
     }
 
     .panel-title {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--title);
       display: flex;
@@ -305,16 +305,16 @@
     .panel-icon-box {
       background: var(--icon-bg);
       color: var(--accent);
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
 
-    /* ESTILO TIPO TABLA COMPACTA */
+    /* ESTILO TIPO TABLA MÁS CÓMODO Y VISIBLE */
     .calc-table-layout {
       display: flex;
       flex-direction: column;
@@ -335,18 +335,18 @@
 
     .table-cell-label {
       flex: 1;
-      padding: 6px 10px;
-      font-size: 0.85rem;
+      padding: 8px 12px;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--muted);
-      line-height: 1.1;
+      line-height: 1.2;
     }
     .table-cell-label.green { color: var(--green); }
     .table-cell-label.blue { color: var(--blue); }
 
     .table-cell-input {
-      width: 200px;
-      padding: 4px 8px;
+      width: 210px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -355,12 +355,12 @@
     .table-cell-input input {
       width: 100%;
       min-width: 0;
-      padding: 5px;
+      padding: 8px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: bold;
       text-align: right;
       outline: none;
@@ -369,14 +369,14 @@
     }
 
     .table-cell-input select {
-      width: 62px;
+      width: 68px;
       flex-shrink: 0;
-      padding: 6px 2px;
+      padding: 8px 4px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       font-weight: bold;
       text-align: center;
       outline: none;
@@ -412,16 +412,16 @@
       display: flex;
       justify-content: flex-end;
       gap: 6px;
-      padding: 2px 10px 6px 10px;
+      padding: 2px 12px 6px 12px;
     }
 
     .btn-action {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--title);
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 5px;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
@@ -439,9 +439,9 @@
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--accent);
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       touch-action: manipulation;
@@ -455,7 +455,7 @@
       background: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -463,16 +463,16 @@
     .result-box-compact .text {
       color: var(--green);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
     .btn-copy {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--title);
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
@@ -482,31 +482,21 @@
       background: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      padding: 6px 10px;
+      padding: 8px 12px;
       font-family: monospace;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: var(--green);
       line-height: 1.2;
-      max-height: 34px;
+      max-height: 38px;
       overflow-y: auto;
     }
 
-    /* TECLADO VIRTUAL DE BASES (5 FILAS ADAPTADAS) */
-    .virtual-keypad-bases {
+    /* TECLADO COMPACTO UNIFICADO (5 FILAS ESTÉTICAS EN TODAS LAS FUNCIONES) */
+    .virtual-keypad-compact {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(5, minmax(0, 1fr));
       gap: 4px;
-      flex: 1;
-      min-height: 0;
-      margin-top: 2px;
-    }
-
-    /* TECLADO VIRTUAL ESTÁNDAR (4 FILAS) */
-    .virtual-keypad {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
       flex: 1;
       min-height: 0;
       margin-top: 2px;
@@ -517,7 +507,7 @@
       border: 1px solid var(--calc-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -855,8 +845,8 @@
         <div class="table-row">
           <div class="table-cell-label green">Porcentaje (%)</div>
           <div class="table-cell-input" style="position: relative;">
-            <input type="text" inputmode="none" id="p1-percent" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly style="padding-right: 25px;">
-            <span style="position: absolute; right: 14px; color: var(--green); font-weight: bold; pointer-events: none;">%</span>
+            <input type="text" inputmode="none" id="p1-percent" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
+            <span style="position: absolute; right: 16px; color: var(--green); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
         <div class="table-row">
@@ -871,20 +861,29 @@
         <button class="btn-ce" onclick="clearP1()">CE</button>
       </div>
 
-      <div class="virtual-keypad">
+      <!-- TECLADO COMPACTO 5 FILAS -->
+      <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
+
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
+
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
+
+        <button class="v-key" onclick="vKey('0')">0</button>
+        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP1()">CE</button>
+        
+        <!-- Relleno inferior equilibrado -->
+        <button class="v-key op" style="grid-column: span 4; visibility: hidden; padding:0; height:0; border:none; margin:0;" disabled></button>
       </div>
     </div>
 
@@ -918,20 +917,28 @@
         <button class="btn-ce" onclick="clearP2()">CE</button>
       </div>
 
-      <div class="virtual-keypad">
+      <!-- TECLADO COMPACTO 5 FILAS -->
+      <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
+
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
+
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
+
+        <button class="v-key" onclick="vKey('0')">0</button>
+        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP2()">CE</button>
+        
+        <button class="v-key op" style="grid-column: span 4; visibility: hidden; padding:0; height:0; border:none; margin:0;" disabled></button>
       </div>
     </div>
 
@@ -956,8 +963,8 @@
         <div class="table-row">
           <div class="table-cell-label blue">% a Aumentar</div>
           <div class="table-cell-input" style="position: relative;">
-            <input type="text" inputmode="none" id="p3-percent" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly style="padding-right: 25px;">
-            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
+            <input type="text" inputmode="none" id="p3-percent" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
+            <span style="position: absolute; right: 16px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
@@ -966,20 +973,28 @@
         <button class="btn-ce" onclick="clearP3()">CE</button>
       </div>
 
-      <div class="virtual-keypad">
+      <!-- TECLADO COMPACTO 5 FILAS -->
+      <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
+
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
+
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
+
+        <button class="v-key" onclick="vKey('0')">0</button>
+        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP3()">CE</button>
+        
+        <button class="v-key op" style="grid-column: span 4; visibility: hidden; padding:0; height:0; border:none; margin:0;" disabled></button>
       </div>
     </div>
 
@@ -1004,8 +1019,8 @@
         <div class="table-row">
           <div class="table-cell-label blue">% a Descontar</div>
           <div class="table-cell-input" style="position: relative;">
-            <input type="text" inputmode="none" id="p4-percent" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly style="padding-right: 25px;">
-            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
+            <input type="text" inputmode="none" id="p4-percent" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
+            <span style="position: absolute; right: 16px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
@@ -1014,20 +1029,28 @@
         <button class="btn-ce" onclick="clearP4()">CE</button>
       </div>
 
-      <div class="virtual-keypad">
+      <!-- TECLADO COMPACTO 5 FILAS -->
+      <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
+
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
+
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
+
+        <button class="v-key" onclick="vKey('0')">0</button>
+        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP4()">CE</button>
+        
+        <button class="v-key op" style="grid-column: span 4; visibility: hidden; padding:0; height:0; border:none; margin:0;" disabled></button>
       </div>
     </div>
 
@@ -1082,24 +1105,32 @@
         <button class="btn-ce" onclick="clearScale()">CE</button>
       </div>
 
-      <div class="virtual-keypad">
+      <!-- TECLADO COMPACTO 5 FILAS -->
+      <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
+
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
+
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
+
+        <button class="v-key" onclick="vKey('0')">0</button>
+        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearScale()">CE</button>
+        
+        <button class="v-key op" style="grid-column: span 4; visibility: hidden; padding:0; height:0; border:none; margin:0;" disabled></button>
       </div>
     </div>
 
-    <!-- TAB: CONVERSIÓN DE BASES NUMÉRICAS OPTIMIZADA -->
+    <!-- TAB: CONVERSIÓN DE BASES NUMÉRICAS -->
     <div id="tab-bases" class="tab-panel">
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div> Sistemas Numéricos
@@ -1167,8 +1198,8 @@
         <button class="btn-ce" onclick="clearBases()">CE</button>
       </div>
 
-      <!-- TECLADO DE BASES (20 botones en 5 filas, incluyendo coma/punto) -->
-      <div class="virtual-keypad-bases">
+      <!-- TECLADO DE BASES (5 FILAS) -->
+      <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
@@ -1726,12 +1757,18 @@
       let decimalValue = 0;
 
       if (changed === 'dec') {
-        let cleanDec = decIn.value.replace(/[^0-9.,]/g, '').replace(',', '.');
-        decimalValue = parseFloat(cleanDec) || 0;
-        let intVal = Math.trunc(decimalValue);
-        binIn.value = intVal ? intVal.toString(2) : '';
-        octIn.value = intVal ? intVal.toString(8) : '';
-        hexIn.value = intVal ? intVal.toString(16).toUpperCase() : '';
+        let rawVal = decIn.value.replace(',', '.');
+        let parsed = parseFloat(rawVal);
+        if (isNaN(parsed)) {
+          binIn.value = '';
+          octIn.value = '';
+          hexIn.value = '';
+          return;
+        }
+        decimalValue = Math.trunc(parsed);
+        binIn.value = decimalValue.toString(2);
+        octIn.value = decimalValue.toString(8);
+        hexIn.value = decimalValue.toString(16).toUpperCase();
       } else if (changed === 'bin') {
         const cleanBin = binIn.value.replace(/[^01]/g, '');
         decimalValue = parseInt(cleanBin, 2) || 0;
