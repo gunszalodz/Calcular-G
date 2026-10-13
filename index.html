@@ -215,8 +215,9 @@
       background: var(--panel);
       border-radius: 12px;
       border: 1px solid var(--panel-border);
-      padding: 14px;
-      justify-content: space-between;
+      padding: 12px;
+      justify-content: flex-start;
+      gap: 10px;
     }
 
     .tab-panel.active {
@@ -224,9 +225,8 @@
     }
 
     .panel-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 12px;
       color: var(--title);
       display: flex;
       align-items: center;
@@ -237,161 +237,128 @@
     .panel-icon-box {
       background: var(--icon-bg);
       color: var(--accent);
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
-    .form-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 10px;
-      align-items: flex-end;
-    }
-
-    .input-group {
+    /* ESTILO TIPO TABLA COMPACTA PARA MÓVIL */
+    .calc-table-layout {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      flex: 1;
-    }
-
-    .input-group label {
-      font-size: 1.05rem;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .input-group.label-green label {
-      color: var(--green);
-    }
-
-    .input-group.label-blue label {
-      color: var(--blue);
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-
-    .input-wrapper.percent-symbol::after {
-      content: "%";
-      position: absolute;
-      right: 14px;
-      color: var(--green);
-      font-size: 1.2rem;
-      font-weight: bold;
-      pointer-events: none;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 8px 12px;
-      background-color: var(--field);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      color: var(--green);
-      font-size: 1.25rem;
+      overflow: hidden;
+      background: var(--field);
+    }
+
+    .table-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--field-border);
+    }
+    .table-row:last-child {
+      border-bottom: none;
+    }
+
+    .table-cell-label {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .table-cell-label.green { color: var(--green); }
+    .table-cell-label.blue { color: var(--blue); }
+
+    .table-cell-input {
+      width: 120px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .table-cell-input input, .table-cell-input select {
+      width: 100%;
+      padding: 6px 8px;
+      background-color: var(--bg);
+      border: 1px solid var(--field-border);
+      border-radius: 6px;
+      color: var(--title);
+      font-size: 1.1rem;
       font-weight: bold;
-      outline: none;
       text-align: center;
+      outline: none;
     }
 
-    .input-wrapper.percent-symbol input {
-      padding-right: 32px;
-    }
-
-    input:focus, select:focus {
+    .table-cell-input input:focus, .table-cell-input select:focus {
       border-color: var(--focus);
     }
 
-    select {
-      color: var(--title);
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .colon-separator {
-      color: var(--accent);
-      font-size: 1.5rem;
-      font-weight: bold;
-      padding-bottom: 2px;
-    }
-
-    .action-btn-container {
+    /* Botón CE compacto */
+    .btn-ce-box {
       display: flex;
-      justify-content: center;
-      margin: 8px 0;
+      justify-content: flex-end;
+      margin-top: -2px;
     }
-
-    .btn-clear {
-      background: var(--accent);
-      border: none;
-      color: var(--on-accent);
-      padding: 10px 28px;
-      border-radius: 12px;
-      font-size: 1rem;
+    .btn-ce {
+      background: var(--btn2-bg);
+      border: 1px solid var(--btn2-border);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-ce:hover {
+      background: var(--calc-hover);
     }
 
-    .btn-clear:hover {
-      background: var(--accent-hover);
-    }
-
-    .result-banner {
-      background: var(--field);
+    /* Resultado integrado y visible arriba/abajo de la tabla */
+    .result-box-compact {
+      background: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
     }
-
-    .result-banner .text {
+    .result-box-compact .text {
       color: var(--green);
       font-weight: 700;
-      font-size: 1.35rem;
+      font-size: 1.2rem;
     }
 
     .btn-copy {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--title);
-      padding: 6px 14px;
+      padding: 5px 10px;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
     }
 
-    .log-box {
-      background: var(--field);
+    .log-box-compact {
+      background: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      padding: 8px 12px;
-      height: 52px;
-      min-height: 52px;
-      max-height: 52px;
-      overflow-y: auto;
+      padding: 8px 10px;
       font-family: monospace;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--green);
-      line-height: 1.35;
-      display: flex;
-      align-items: center;
+      line-height: 1.3;
+      max-height: 45px;
+      overflow-y: auto;
     }
 
     /* --- CALCULADORA ESTÁNDAR --- */
@@ -510,8 +477,8 @@
     }
 
     .panel-icon-box svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2;
@@ -712,24 +679,29 @@
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div> Porcentaje de un Valor
       </div>
-      <div class="form-row">
-        <div class="input-group label-green">
-          <label>Porcentaje (%)</label>
-          <div class="input-wrapper percent-symbol">
+      
+      <div class="result-box-compact">
+        <div class="text" id="p1-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Porcentaje (%)</div>
+          <div class="table-cell-input">
             <input type="number" id="p1-percent" placeholder="0" oninput="calcP1()">
           </div>
         </div>
-        <div class="input-group label-blue">
-          <label>Valor Total</label>
-          <input type="number" id="p1-value" placeholder="0" oninput="calcP1()">
+        <div class="table-row">
+          <div class="table-cell-label blue">Valor Total</div>
+          <div class="table-cell-input">
+            <input type="number" id="p1-value" placeholder="0" oninput="calcP1()">
+          </div>
         </div>
       </div>
-      <div class="action-btn-container">
-        <button class="btn-clear" onclick="clearP1()">Limpiar campos</button>
-      </div>
-      <div class="result-banner">
-        <div class="text" id="p1-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP1()">CE Limpiar</button>
       </div>
     </div>
 
@@ -738,22 +710,29 @@
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div> ¿Qué porcentaje es?
       </div>
-      <div class="form-row">
-        <div class="input-group label-green">
-          <label>Valor Total (100%)</label>
-          <input type="number" id="p2-total" placeholder="0" oninput="calcP2()">
-        </div>
-        <div class="input-group label-blue">
-          <label>Valor Parcial</label>
-          <input type="number" id="p2-part" placeholder="0" oninput="calcP2()">
-        </div>
-      </div>
-      <div class="action-btn-container">
-        <button class="btn-clear" onclick="clearP2()">Limpiar campos</button>
-      </div>
-      <div class="result-banner">
+
+      <div class="result-box-compact">
         <div class="text" id="p2-result-text">Porcentaje = 0%</div>
         <button class="btn-copy" onclick="copyText('p2-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor Total (100%)</div>
+          <div class="table-cell-input">
+            <input type="number" id="p2-total" placeholder="0" oninput="calcP2()">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">Valor Parcial</div>
+          <div class="table-cell-input">
+            <input type="number" id="p2-part" placeholder="0" oninput="calcP2()">
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP2()">CE Limpiar</button>
       </div>
     </div>
 
@@ -762,24 +741,29 @@
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div> Aumentar Porcentaje
       </div>
-      <div class="form-row">
-        <div class="input-group label-green">
-          <label>Valor Inicial</label>
-          <input type="number" id="p3-value" placeholder="0" oninput="calcP3()">
+
+      <div class="result-box-compact">
+        <div class="text" id="p3-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor Inicial</div>
+          <div class="table-cell-input">
+            <input type="number" id="p3-value" placeholder="0" oninput="calcP3()">
+          </div>
         </div>
-        <div class="input-group label-blue">
-          <label>% a Aumentar</label>
-          <div class="input-wrapper percent-symbol">
+        <div class="table-row">
+          <div class="table-cell-label blue">% a Aumentar</div>
+          <div class="table-cell-input">
             <input type="number" id="p3-percent" placeholder="0" oninput="calcP3()">
           </div>
         </div>
       </div>
-      <div class="action-btn-container">
-        <button class="btn-clear" onclick="clearP3()">Limpiar campos</button>
-      </div>
-      <div class="result-banner">
-        <div class="text" id="p3-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP3()">CE Limpiar</button>
       </div>
     </div>
 
@@ -788,24 +772,29 @@
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div> Disminuir Porcentaje
       </div>
-      <div class="form-row">
-        <div class="input-group label-green">
-          <label>Valor Inicial</label>
-          <input type="number" id="p4-value" placeholder="0" oninput="calcP4()">
+
+      <div class="result-box-compact">
+        <div class="text" id="p4-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor Inicial</div>
+          <div class="table-cell-input">
+            <input type="number" id="p4-value" placeholder="0" oninput="calcP4()">
+          </div>
         </div>
-        <div class="input-group label-blue">
-          <label>% a Descontar</label>
-          <div class="input-wrapper percent-symbol">
+        <div class="table-row">
+          <div class="table-cell-label blue">% a Descontar</div>
+          <div class="table-cell-input">
             <input type="number" id="p4-percent" placeholder="0" oninput="calcP4()">
           </div>
         </div>
       </div>
-      <div class="action-btn-container">
-        <button class="btn-clear" onclick="clearP4()">Limpiar campos</button>
-      </div>
-      <div class="result-banner">
-        <div class="text" id="p4-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP4()">CE Limpiar</button>
       </div>
     </div>
 
@@ -815,56 +804,59 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div> Conversión de Escala
       </div>
 
-      <div style="margin-bottom: 12px;">
-        <label style="font-size: 1.05rem; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px;">Relación de escala</label>
-        <div class="form-row" style="align-items: center; margin-bottom: 0;">
-          <input type="number" id="scale-r1" value="1" style="width: 100%;" oninput="calcScale()">
-          <span class="colon-separator">:</span>
-          <input type="number" id="scale-r2" value="2" style="width: 100%;" oninput="calcScale()">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="input-group label-green">
-          <label>Longitud real</label>
-          <input type="number" id="scale-real" placeholder="0" oninput="calcScale('real')">
-        </div>
-        <div class="input-group">
-          <label>Unidad</label>
-          <select id="scale-unit-real" onchange="calcScale()">
-            <option value="milímetro">milímetro</option>
-            <option value="centímetro" selected>centímetro</option>
-            <option value="metro">metro</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="input-group label-blue">
-          <label>Longitud de escala</label>
-          <input type="number" id="scale-plan" placeholder="0" oninput="calcScale('plan')">
-        </div>
-        <div class="input-group">
-          <label>Unidad</label>
-          <select id="scale-unit-plan" onchange="calcScale()">
-            <option value="milímetro">milímetro</option>
-            <option value="centímetro" selected>centímetro</option>
-            <option value="metro">metro</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="action-btn-container">
-        <button class="btn-clear" onclick="clearScale()">Limpiar campos</button>
-      </div>
-
-      <div class="result-banner">
-        <div class="text" id="scale-result-text">Escala = 0 cm</div>
+      <div class="result-box-compact">
+        <div class="text" id="scale-result-text" style="font-size: 1.05rem;">Escala = 0 cm</div>
         <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
       </div>
 
-      <div class="log-box" id="scale-log">
-        • Ingrese los valores para realizar el cálculo.
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label" style="font-weight: 700; color: var(--title);">Relación de escala</div>
+          <div class="table-cell-input" style="gap: 4px;">
+            <input type="number" id="scale-r1" value="1" oninput="calcScale()">
+            <span style="color: var(--accent); font-weight: bold;">:</span>
+            <input type="number" id="scale-r2" value="2" oninput="calcScale()">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label green">Longitud real</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <input type="number" id="scale-real" placeholder="0" oninput="calcScale('real')">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label" style="font-size: 0.85rem;">Unidad real</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <select id="scale-unit-real" onchange="calcScale()" style="font-size: 0.85rem;">
+              <option value="milímetro">mm</option>
+              <option value="centímetro" selected>cm</option>
+              <option value="metro">m</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">Longitud de escala</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <input type="number" id="scale-plan" placeholder="0" oninput="calcScale('plan')">
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label" style="font-size: 0.85rem;">Unidad escala</div>
+          <div class="table-cell-input" style="width: 140px;">
+            <select id="scale-unit-plan" onchange="calcScale()" style="font-size: 0.85rem;">
+              <option value="milímetro">mm</option>
+              <option value="centímetro" selected>cm</option>
+              <option value="metro">m</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -2px;">
+        <div class="log-box-compact" id="scale-log" style="flex: 1; border: none; background: transparent; padding: 0;">
+          • Ingrese los valores.
+        </div>
+        <button class="btn-ce" onclick="clearScale()">CE Limpiar</button>
       </div>
     </div>
   </main>
@@ -958,19 +950,6 @@
       const txt = document.getElementById(id).innerText;
       const num = numberFromResult(txt);
       copyValue(num !== null ? num : txt);
-    }
-
-    function copyActiveResult() {
-      const panel = document.querySelector('.tab-panel.active');
-      if (!panel) return;
-      if (panel.id === 'tab-standard') {
-        const v = document.getElementById('calc-display').innerText.replace(/,$/, '');
-        if (v === 'Error') showToast('No hay un resultado para copiar', 1800);
-        else copyValue(v);
-      } else {
-        const t = panel.querySelector('.result-banner .text');
-        if (t) copyText(t.id);
-      }
     }
 
     /* ESTÁNDAR */
@@ -1237,52 +1216,7 @@
       if (savedAngle) setAngleMode(savedAngle, false);
     } catch (e) {}
 
-    window.addEventListener('keydown', (e) => {
-      if (!(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey || String(e.key).toLowerCase() !== 'c') return;
-      const el = document.activeElement;
-      if (el && ['INPUT', 'TEXTAREA'].includes(el.tagName) && el.selectionStart !== el.selectionEnd) return;
-      if (String(window.getSelection ? window.getSelection() : '').length > 0) return;
-      e.preventDefault();
-      copyActiveResult();
-    });
-
     window.addEventListener('resize', fitDisplay);
-
-    /* TECLADO FÍSICO */
-    window.addEventListener('keydown', (e) => {
-      const standardTab = document.getElementById('tab-standard');
-      if (!standardTab || !standardTab.classList.contains('active')) return;
-      if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-      const key = e.key;
-      const sci = standardTab.classList.contains('sci');
-
-      if (key >= '0' && key <= '9') {
-        calcNum(key);
-      } else if (key === '.' || key === ',') {
-        calcNum('.');
-      } else if (key === '+' || key === '-' || key === '*' || key === '/') {
-        e.preventDefault();
-        calcOp(key);
-      } else if (key === '%') {
-        calcOp('%');
-      } else if (sci && (key === '(' || key === ')')) {
-        calcParen(key);
-      } else if (sci && key === '^') {
-        e.preventDefault();
-        calcOp('^');
-      } else if (sci && key === '!') {
-        calcFunc('fact');
-      } else if (key === 'Enter' || key === '=') {
-        e.preventDefault();
-        calcEquals();
-      } else if (key === 'Backspace') {
-        calcBackspace();
-      } else if (key === 'Escape' || key.toLowerCase() === 'c') {
-        calcClear();
-      }
-    });
 
     /* PORCENTAJES */
     function calcP1() {
@@ -1362,26 +1296,26 @@
         if (realValStr === '') {
           planInput.value = '';
           document.getElementById('scale-result-text').innerText = `Escala = 0 ${planUnitAbbr()}`;
-          document.getElementById('scale-log').innerHTML = '• Ingrese los valores para realizar el cálculo.';
+          document.getElementById('scale-log').innerHTML = '• Ingrese los valores.';
           return;
         }
         const realVal = parseFloat(realValStr) || 0;
         const planVal = (realVal * fReal / ratio) / fPlan;
         planInput.value = roundNum(planVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${planUnitAbbr()}`;
-        document.getElementById('scale-log').innerHTML = `• Relación de escala ${r1}:${r2} | Longitud real: ${formatEs(realVal, 4)} ${uReal} | Longitud de escala: ${formatEs(planVal, 4)} ${uPlan}`;
+        document.getElementById('scale-log').innerHTML = `• Escala ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${uReal}`;
       } else {
         if (planValStr === '') {
           realInput.value = '';
           document.getElementById('scale-result-text').innerText = `Escala = 0 ${planUnitAbbr()}`;
-          document.getElementById('scale-log').innerHTML = '• Ingrese los valores para realizar el cálculo.';
+          document.getElementById('scale-log').innerHTML = '• Ingrese los valores.';
           return;
         }
         const planVal = parseFloat(planValStr) || 0;
         const realVal = (planVal * fPlan * ratio) / fReal;
         realInput.value = roundNum(realVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${planUnitAbbr()}`;
-        document.getElementById('scale-log').innerHTML = `• Relación de escala ${r1}:${r2} | Longitud real: ${formatEs(realVal, 4)} ${uReal} | Longitud de escala: ${formatEs(planVal, 4)} ${uPlan}`;
+        document.getElementById('scale-log').innerHTML = `• Escala ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${uReal}`;
       }
     }
 
@@ -1390,7 +1324,7 @@
       document.getElementById('scale-real').value = '';
       document.getElementById('scale-plan').value = '';
       document.getElementById('scale-result-text').innerText = `Escala = 0 ${planUnitAbbr()}`;
-      document.getElementById('scale-log').innerHTML = '• Ingrese los valores para realizar el cálculo.';
+      document.getElementById('scale-log').innerHTML = '• Ingrese los valores.';
     }
 
     /* AVISO */
