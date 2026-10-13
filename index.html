@@ -268,7 +268,7 @@
     .table-cell-label {
       flex: 1;
       padding: 8px 10px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--muted);
     }
@@ -276,7 +276,7 @@
     .table-cell-label.blue { color: var(--blue); }
 
     .table-cell-input {
-      width: 120px;
+      width: 130px;
       padding: 6px;
       display: flex;
       align-items: center;
@@ -291,7 +291,7 @@
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: bold;
       text-align: center;
       outline: none;
@@ -311,9 +311,9 @@
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
       color: var(--accent);
-      padding: 4px 12px;
+      padding: 4px 14px;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
     }
@@ -321,7 +321,7 @@
       background: var(--calc-hover);
     }
 
-    /* Resultado integrado y visible arriba/abajo de la tabla */
+    /* Resultado integrado y visible */
     .result-box-compact {
       background: var(--bg);
       border: 1px solid var(--field-border);
@@ -486,7 +486,6 @@
       stroke-linejoin: round;
     }
 
-    /* Selector Estándar / Científica */
     #calc-title { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .mode-switch {
@@ -516,7 +515,6 @@
       color: var(--on-accent);
     }
 
-    /* Teclas científicas base */
     .calc-body {
       flex: 1;
       display: flex;
@@ -540,7 +538,6 @@
     .calc-btn.sci.angle { color: var(--accent); }
     .calc-btn sup { font-size: 0.6em; }
 
-    /* MODO CIENTÍFICO AJUSTADO PARA MÓVILES */
     #tab-standard.sci .calc-display {
       height: 58px !important;
       padding: 6px 12px !important;
@@ -688,8 +685,9 @@
       <div class="calc-table-layout">
         <div class="table-row">
           <div class="table-cell-label green">Porcentaje (%)</div>
-          <div class="table-cell-input">
-            <input type="number" id="p1-percent" placeholder="0" oninput="calcP1()">
+          <div class="table-cell-input" style="position: relative;">
+            <input type="number" id="p1-percent" placeholder="0" oninput="calcP1()" style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--green); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
         <div class="table-row">
@@ -701,7 +699,7 @@
       </div>
 
       <div class="btn-ce-box">
-        <button class="btn-ce" onclick="clearP1()">CE Limpiar</button>
+        <button class="btn-ce" onclick="clearP1()">CE</button>
       </div>
     </div>
 
@@ -732,7 +730,7 @@
       </div>
 
       <div class="btn-ce-box">
-        <button class="btn-ce" onclick="clearP2()">CE Limpiar</button>
+        <button class="btn-ce" onclick="clearP2()">CE</button>
       </div>
     </div>
 
@@ -756,14 +754,15 @@
         </div>
         <div class="table-row">
           <div class="table-cell-label blue">% a Aumentar</div>
-          <div class="table-cell-input">
-            <input type="number" id="p3-percent" placeholder="0" oninput="calcP3()">
+          <div class="table-cell-input" style="position: relative;">
+            <input type="number" id="p3-percent" placeholder="0" oninput="calcP3()" style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
 
       <div class="btn-ce-box">
-        <button class="btn-ce" onclick="clearP3()">CE Limpiar</button>
+        <button class="btn-ce" onclick="clearP3()">CE</button>
       </div>
     </div>
 
@@ -787,14 +786,15 @@
         </div>
         <div class="table-row">
           <div class="table-cell-label blue">% a Descontar</div>
-          <div class="table-cell-input">
-            <input type="number" id="p4-percent" placeholder="0" oninput="calcP4()">
+          <div class="table-cell-input" style="position: relative;">
+            <input type="number" id="p4-percent" placeholder="0" oninput="calcP4()" style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
 
       <div class="btn-ce-box">
-        <button class="btn-ce" onclick="clearP4()">CE Limpiar</button>
+        <button class="btn-ce" onclick="clearP4()">CE</button>
       </div>
     </div>
 
@@ -856,7 +856,7 @@
         <div class="log-box-compact" id="scale-log" style="flex: 1; border: none; background: transparent; padding: 0;">
           • Ingrese los valores.
         </div>
-        <button class="btn-ce" onclick="clearScale()">CE Limpiar</button>
+        <button class="btn-ce" onclick="clearScale()">CE</button>
       </div>
     </div>
   </main>
