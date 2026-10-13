@@ -193,33 +193,36 @@
       text-overflow: ellipsis;
     }
 
-    /* Navegación Superior con desplazamiento horizontal fluido */
+    /* Navegación Superior con texto debajo del ícono */
     nav {
       background-color: var(--nav-bg);
       border-bottom: 1px solid var(--nav-border);
       display: flex;
       justify-content: flex-start;
-      padding: 6px 10px;
+      padding: 4px 8px;
       flex-shrink: 0;
-      gap: 6px;
+      gap: 4px;
       overflow-x: auto;
     }
 
     .nav-item {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 2px;
       background: none;
       border: 1px solid transparent;
       color: var(--muted);
-      font-size: 0.78rem;
+      font-size: 0.7rem;
       font-weight: 700;
       cursor: pointer;
-      padding: 6px 10px;
+      padding: 5px 8px;
       border-radius: 6px;
       white-space: nowrap;
       touch-action: manipulation;
       flex-shrink: 0;
+      min-width: 72px;
     }
 
     .nav-item.active {
@@ -229,8 +232,8 @@
     }
 
     .nav-icon {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2.2;
@@ -654,7 +657,7 @@
     </div>
   </header>
 
-  <!-- Navegación Superior con Textos Visibles -->
+  <!-- Navegación Superior con el texto debajo del ícono -->
   <nav>
     <button class="nav-item active" onclick="switchTab('tab-standard', this)">
       <svg class="nav-icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
@@ -662,19 +665,19 @@
     </button>
     <button class="nav-item" onclick="switchTab('tab-p1', this)">
       <svg class="nav-icon" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
-      <span>% de un valor</span>
+      <span>% valor</span>
     </button>
     <button class="nav-item" onclick="switchTab('tab-p2', this)">
       <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-      <span>Qué % es</span>
+      <span>Qué %</span>
     </button>
     <button class="nav-item" onclick="switchTab('tab-p3', this)">
       <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-      <span>Aumentar %</span>
+      <span>Aumentar</span>
     </button>
     <button class="nav-item" onclick="switchTab('tab-p4', this)">
       <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
-      <span>Disminuir %</span>
+      <span>Disminuir</span>
     </button>
     <button class="nav-item" onclick="switchTab('tab-scale', this)">
       <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
