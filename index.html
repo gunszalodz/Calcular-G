@@ -292,8 +292,9 @@
       display: flex;
     }
 
+    /* Títulos agrandados según referencia de diseño */
     .panel-title {
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--title);
       display: flex;
@@ -305,13 +306,13 @@
     .panel-icon-box {
       background: var(--icon-bg);
       color: var(--accent);
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
 
     /* ESTILO TIPO TABLA */
@@ -335,8 +336,8 @@
 
     .table-cell-label {
       flex: 1;
-      padding: 12px 12px;
-      font-size: 1.05rem;
+      padding: 10px 12px;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--muted);
       line-height: 1.2;
@@ -346,7 +347,7 @@
 
     .table-cell-input {
       width: 220px;
-      padding: 6px 10px;
+      padding: 5px 10px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -355,12 +356,12 @@
     .table-cell-input input {
       width: 100%;
       min-width: 0;
-      padding: 11px 8px;
+      padding: 10px 8px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: bold;
       text-align: right;
       outline: none;
@@ -371,7 +372,7 @@
     .table-cell-input select {
       width: 78px;
       flex-shrink: 0;
-      padding: 11px 4px;
+      padding: 10px 4px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
@@ -433,7 +434,7 @@
       background: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 8px;
-      padding: 16px 14px;
+      padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -441,7 +442,7 @@
     .result-box-compact .text {
       color: var(--green);
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .btn-copy {
@@ -464,32 +465,30 @@
       font-family: monospace;
       font-size: 0.8rem;
       color: var(--green);
-      line-height: 1.2;
-      max-height: 38px;
-      overflow-y: auto;
+      line-height: 1.3;
     }
 
-    /* TECLADO VIRTUAL COMPACTO (Con 0 y CE expandidos a 2 columnas cada uno) */
+    /* TECLADO VIRTUAL COMPACTO - Altura ligeramente reducida y más abajo para el pulgar */
     .virtual-keypad-compact {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 50px;
-      gap: 6px;
+      grid-auto-rows: 44px;
+      gap: 5px;
       margin-top: auto;
     }
 
     .v-key {
       background-color: var(--bg);
       border: 1px solid var(--calc-border);
-      border-radius: 8px;
+      border-radius: 7px;
       color: var(--title);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2px 0;
+      padding: 0;
       touch-action: manipulation;
       transition: opacity 0.15s, background 0.15s;
     }
@@ -508,7 +507,7 @@
       font-weight: 800;
     }
 
-    /* Teclado específico para bases para mantener su diseño sin cambios */
+    /* Teclado específico para bases */
     .virtual-keypad-bases {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -526,11 +525,11 @@
       border-radius: 8px;
       padding: 10px 14px;
       text-align: right;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      height: 75px;
+      height: 85px; /* Pantalla estirada según referencia */
     }
 
     .calc-history {
@@ -542,7 +541,7 @@
     }
 
     .calc-main-value {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       font-weight: 700;
       color: var(--title);
       overflow: hidden;
@@ -553,16 +552,17 @@
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      grid-auto-rows: minmax(42px, 1fr);
+      gap: 5px;
       flex: 1;
     }
 
     .calc-btn {
       background-color: var(--bg);
       border: 1px solid var(--calc-border);
-      border-radius: 8px;
+      border-radius: 7px;
       color: var(--title);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -578,17 +578,17 @@
 
     .calc-btn.op {
       color: var(--accent);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
     }
 
     .calc-btn.equals {
       background-color: var(--accent);
       color: var(--on-accent);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       border: var(--btn-equals-border);
-      border-radius: 8px;
+      border-radius: 7px;
     }
 
     .calc-btn.equals:hover {
@@ -596,8 +596,8 @@
     }
 
     .panel-icon-box svg {
-      width: 14px;
-      height: 14px;
+      width: 15px;
+      height: 15px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2;
@@ -644,14 +644,14 @@
     .sci-grid {
       display: none;
       grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
-      margin-bottom: 6px;
+      gap: 4px;
+      margin-bottom: 5px;
     }
 
     .tab-panel.sci .sci-grid { display: grid; }
 
     .calc-btn.sci {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--blue);
     }
 
@@ -695,11 +695,11 @@
     #tab-standard.sci .calc-btn {
       padding: 0 !important;
       min-height: 0;
-      font-size: 0.95rem !important;
+      font-size: 0.9rem !important;
     }
 
     #tab-standard.sci .calc-btn.sci {
-      font-size: 0.7rem !important;
+      font-size: 0.65rem !important;
     }
 
     @media (max-width: 420px) {
@@ -835,11 +835,6 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div> Porcentaje de un Valor
       </div>
       
-      <div class="result-box-compact">
-        <div class="text" id="p1-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
-      </div>
-
       <div class="calc-table-layout">
         <div class="table-row">
           <div class="table-cell-label green">Porcentaje (%)</div>
@@ -856,7 +851,11 @@
         </div>
       </div>
 
-      <!-- Teclado compacto con 0 y CE de doble ancho -->
+      <div class="result-box-compact">
+        <div class="text" id="p1-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
+      </div>
+
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -884,11 +883,6 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div> ¿Qué porcentaje es?
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p2-result-text">Porcentaje = 0%</div>
-        <button class="btn-copy" onclick="copyText('p2-result-text')">Copiar</button>
-      </div>
-
       <div class="calc-table-layout">
         <div class="table-row">
           <div class="table-cell-label green">Valor Total (100%)</div>
@@ -902,6 +896,11 @@
             <input type="text" inputmode="none" id="p2-part" placeholder="0" oninput="calcP2()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p2-result-text">Porcentaje = 0%</div>
+        <button class="btn-copy" onclick="copyText('p2-result-text')">Copiar</button>
       </div>
 
       <div class="virtual-keypad-compact">
@@ -931,11 +930,6 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div> Aumentar Porcentaje
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p3-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
-      </div>
-
       <div class="calc-table-layout">
         <div class="table-row">
           <div class="table-cell-label green">Valor Inicial</div>
@@ -950,6 +944,11 @@
             <span style="position: absolute; right: 16px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p3-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
       </div>
 
       <div class="virtual-keypad-compact">
@@ -979,11 +978,6 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div> Disminuir Porcentaje
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p4-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
-      </div>
-
       <div class="calc-table-layout">
         <div class="table-row">
           <div class="table-cell-label green">Valor Inicial</div>
@@ -998,6 +992,11 @@
             <span style="position: absolute; right: 16px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p4-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
       </div>
 
       <div class="virtual-keypad-compact">
@@ -1027,9 +1026,9 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div> Conversión de Escala
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="scale-result-text">Escala = 0 cm</div>
-        <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
+      <!-- Texto "Ingrese valores" movido arriba -->
+      <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0;">
+        • Ingrese valores.
       </div>
 
       <div class="calc-table-layout">
@@ -1065,8 +1064,10 @@
         </div>
       </div>
 
-      <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0;">
-        • Ingrese valores.
+      <!-- Resultado movido abajo -->
+      <div class="result-box-compact">
+        <div class="text" id="scale-result-text">Escala = 0 cm</div>
+        <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
       </div>
 
       <div class="virtual-keypad-compact">
@@ -1182,15 +1183,10 @@
       </div>
     </div>
 
-    <!-- TAB: CONVERSOR DE DATOS / ALMACENAMIENTO (Incluye Petabyte - PB) -->
+    <!-- TAB: CONVERSOR DE DATOS / ALMACENAMIENTO -->
     <div id="tab-data" class="tab-panel">
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div> Conversor de Datos
-      </div>
-
-      <div class="result-box-compact">
-        <div class="text" id="data-result-text">Resultado = 0 Bytes</div>
-        <button class="btn-copy" onclick="copyText('data-result-text')">Copiar</button>
       </div>
 
       <div class="calc-table-layout">
@@ -1224,6 +1220,11 @@
             </select>
           </div>
         </div>
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="data-result-text">Resultado = 0 Bytes</div>
+        <button class="btn-copy" onclick="copyText('data-result-text')">Copiar</button>
       </div>
 
       <div class="virtual-keypad-compact">
@@ -1785,7 +1786,7 @@
         const planVal = planMeters / fPlan;
         planInput.value = roundNum(planVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}`;
+        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala: ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       } else {
         if (planValStr === '') {
           realInput.value = '';
@@ -1799,7 +1800,7 @@
         const realVal = realMeters / fReal;
         realInput.value = roundNum(realVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}`;
+        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala: ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       }
     }
 
@@ -1811,7 +1812,7 @@
       setActiveInput(document.getElementById('scale-r1'));
     }
 
-    /* CONVERSIÓN DE BASES NUMÉRICAS (con parte fraccionaria) */
+    /* CONVERSIÓN DE BASES NUMÉRICAS */
     const BASE_DIGITS = { dec: 10, bin: 2, oct: 8, hex: 16 };
     const BASE_FRAC_MAX = 10;
 
