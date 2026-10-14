@@ -515,10 +515,16 @@
       justify-content: center;
       padding: 2px 0;
       touch-action: manipulation;
+      transition: opacity 0.15s, background 0.15s;
     }
 
-    .v-key:active {
+    .v-key:active:not(:disabled) {
       background-color: var(--calc-hover);
+    }
+
+    .v-key:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
     }
 
     .v-key.op {
@@ -589,11 +595,14 @@
       font-weight: 800;
     }
 
+    /* Botón igual sutil y elegante */
     .calc-btn.equals {
       background-color: var(--accent);
       color: var(--on-accent);
-      font-size: 1.5rem;
+      font-size: 1.35rem;
+      font-weight: 800;
       border: var(--btn-equals-border);
+      border-radius: 8px;
     }
 
     .calc-btn.equals:hover {
@@ -861,7 +870,7 @@
         <button class="btn-ce" onclick="clearP1()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS -->
+      <!-- TECLADO COMPACTO 5 FILAS (0 UNIFICADO) -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -878,8 +887,7 @@
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
 
-        <button class="v-key" onclick="vKey('0')">0</button>
-        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
         <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP1()">CE</button>
       </div>
     </div>
@@ -914,7 +922,6 @@
         <button class="btn-ce" onclick="clearP2()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -931,8 +938,7 @@
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
 
-        <button class="v-key" onclick="vKey('0')">0</button>
-        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
         <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP2()">CE</button>
       </div>
     </div>
@@ -968,7 +974,6 @@
         <button class="btn-ce" onclick="clearP3()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -985,8 +990,7 @@
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
 
-        <button class="v-key" onclick="vKey('0')">0</button>
-        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
         <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP3()">CE</button>
       </div>
     </div>
@@ -1022,7 +1026,6 @@
         <button class="btn-ce" onclick="clearP4()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -1039,8 +1042,7 @@
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
 
-        <button class="v-key" onclick="vKey('0')">0</button>
-        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
         <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP4()">CE</button>
       </div>
     </div>
@@ -1096,7 +1098,7 @@
         <button class="btn-ce" onclick="clearScale()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS -->
+      <!-- TECLADO COMPACTO 5 FILAS (0 UNIFICADO) -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -1113,13 +1115,12 @@
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
 
-        <button class="v-key" onclick="vKey('0')">0</button>
-        <button class="v-key" onclick="vKey('00')">00</button>
+        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
         <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearScale()">CE</button>
       </div>
     </div>
 
-    <!-- TAB: CONVERSIÓN DE BASES NUMÉRICAS -->
+    <!-- TAB: CONVERSIÓN DE BASES NUMÉRICAS CON BLOQUEO DINÁMICO DE TECLAS -->
     <div id="tab-bases" class="tab-panel">
       <div class="panel-title">
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div> Sistemas Numéricos
@@ -1131,7 +1132,7 @@
           <div class="base-row-main table-row">
             <div class="table-cell-label green">Decimal (10)</div>
             <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveInput(this)" readonly>
+              <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveBaseInput('base-dec', 'dec')" readonly>
             </div>
           </div>
           <div class="base-row-actions">
@@ -1145,7 +1146,7 @@
           <div class="base-row-main table-row">
             <div class="table-cell-label blue">Binario (2)</div>
             <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveInput(this)" readonly>
+              <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveBaseInput('base-bin', 'bin')" readonly>
             </div>
           </div>
           <div class="base-row-actions">
@@ -1159,7 +1160,7 @@
           <div class="base-row-main table-row">
             <div class="table-cell-label" style="color: var(--accent);">Octal (8)</div>
             <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveInput(this)" readonly>
+              <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveBaseInput('base-oct', 'oct')" readonly>
             </div>
           </div>
           <div class="base-row-actions">
@@ -1173,7 +1174,7 @@
           <div class="base-row-main table-row">
             <div class="table-cell-label" style="color: var(--title);">Hex (16)</div>
             <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveInput(this)" readonly>
+              <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveBaseInput('base-hex', 'hex')" readonly>
             </div>
           </div>
           <div class="base-row-actions">
@@ -1183,32 +1184,32 @@
         </div>
       </div>
 
-      <!-- TECLADO DE BASES (5 FILAS) -->
-      <div class="virtual-keypad-compact">
-        <button class="v-key" onclick="vKey('7')">7</button>
-        <button class="v-key" onclick="vKey('8')">8</button>
-        <button class="v-key" onclick="vKey('9')">9</button>
-        <button class="v-key op" onclick="vKey('back')">⌫</button>
+      <!-- TECLADO DE BASES CON ATRIBUTOS DE DATOS PARA FILTRADO DINÁMICO -->
+      <div class="virtual-keypad-compact" id="bases-keypad">
+        <button class="v-key" data-val="7" onclick="vKey('7')">7</button>
+        <button class="v-key" data-val="8" onclick="vKey('8')">8</button>
+        <button class="v-key" data-val="9" onclick="vKey('9')">9</button>
+        <button class="v-key op" data-val="back" onclick="vKey('back')">⌫</button>
 
-        <button class="v-key" onclick="vKey('4')">4</button>
-        <button class="v-key" onclick="vKey('5')">5</button>
-        <button class="v-key" onclick="vKey('6')">6</button>
-        <button class="v-key op" onclick="vKey('A')">A</button>
+        <button class="v-key" data-val="4" onclick="vKey('4')">4</button>
+        <button class="v-key" data-val="5" onclick="vKey('5')">5</button>
+        <button class="v-key" data-val="6" onclick="vKey('6')">6</button>
+        <button class="v-key op" data-val="A" onclick="vKey('A')">A</button>
 
-        <button class="v-key" onclick="vKey('1')">1</button>
-        <button class="v-key" onclick="vKey('2')">2</button>
-        <button class="v-key" onclick="vKey('3')">3</button>
-        <button class="v-key op" onclick="vKey('B')">B</button>
+        <button class="v-key" data-val="1" onclick="vKey('1')">1</button>
+        <button class="v-key" data-val="2" onclick="vKey('2')">2</button>
+        <button class="v-key" data-val="3" onclick="vKey('3')">3</button>
+        <button class="v-key op" data-val="B" onclick="vKey('B')">B</button>
 
-        <button class="v-key" onclick="vKey('0')">0</button>
-        <button class="v-key op" onclick="vKey('.')">.</button>
-        <button class="v-key op" onclick="vKey(',')">,</button>
-        <button class="v-key op" onclick="vKey('C')">C</button>
+        <button class="v-key" data-val="0" onclick="vKey('0')">0</button>
+        <button class="v-key op" data-val="." onclick="vKey('.')">.</button>
+        <button class="v-key op" data-val="," onclick="vKey(',')">,</button>
+        <button class="v-key op" data-val="C" onclick="vKey('C')">C</button>
 
-        <button class="v-key op" onclick="vKey('D')">D</button>
-        <button class="v-key op" onclick="vKey('E')">E</button>
-        <button class="v-key op" onclick="vKey('F')">F</button>
-        <button class="v-key op" style="color: var(--green);" onclick="clearBases()">CE</button>
+        <button class="v-key op" data-val="D" onclick="vKey('D')">D</button>
+        <button class="v-key op" data-val="E" onclick="vKey('E')">E</button>
+        <button class="v-key op" data-val="F" onclick="vKey('F')">F</button>
+        <button class="v-key op" data-val="ce" style="color: var(--green);" onclick="clearBases()">CE</button>
       </div>
     </div>
   </main>
@@ -1220,11 +1221,43 @@
     });
 
     let activeInput = null;
+    let currentBaseType = 'dec'; // dec, bin, oct, hex
 
     function setActiveInput(input) {
       document.querySelectorAll('.tab-panel.active input').forEach(el => el.classList.remove('active-input'));
       activeInput = input;
       if (activeInput) activeInput.classList.add('active-input');
+    }
+
+    function setActiveBaseInput(inputId, type) {
+      currentBaseType = type;
+      const input = document.getElementById(inputId);
+      setActiveInput(input);
+      updateBasesKeypadState();
+    }
+
+    function updateBasesKeypadState() {
+      const keypad = document.getElementById('bases-keypad');
+      if (!keypad) return;
+      const buttons = keypad.querySelectorAll('button');
+
+      buttons.forEach(btn => {
+        const val = btn.getAttribute('data-val');
+        if (!val || val === 'back' || val === 'ce') return;
+
+        let allowed = true;
+        if (currentBaseType === 'bin') {
+          allowed = ['0', '1', '.', ','].includes(val);
+        } else if (currentBaseType === 'oct') {
+          allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '.', ','].includes(val);
+        } else if (currentBaseType === 'dec') {
+          allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ','].includes(val);
+        } else if (currentBaseType === 'hex') {
+          allowed = true; // Todo permitido en hexadecimal
+        }
+
+        btn.disabled = !allowed;
+      });
     }
 
     function parseNum(valStr) {
@@ -1279,6 +1312,8 @@
       btn.classList.add('active');
       if (tabId === 'tab-standard') {
         fitDisplay();
+      } else if (tabId === 'tab-bases') {
+        setActiveBaseInput('base-dec', 'dec');
       } else {
         const firstInput = target.querySelector('input');
         if (firstInput) setActiveInput(firstInput);
@@ -1330,7 +1365,8 @@
           const text = await navigator.clipboard.readText();
           if (text) {
             const input = document.getElementById(inputId);
-            setActiveInput(input);
+            if (inputId.startsWith('base-')) setActiveBaseInput(inputId, type);
+            else setActiveInput(input);
             input.value = text.trim();
             input.dispatchEvent(new Event('input'));
             showToast('Pegado con éxito', 1500);
@@ -1785,7 +1821,7 @@
       document.getElementById('base-bin').value = '';
       document.getElementById('base-oct').value = '';
       document.getElementById('base-hex').value = '';
-      setActiveInput(document.getElementById('base-dec'));
+      setActiveBaseInput('base-dec', 'dec');
     }
 
     /* AVISO */
