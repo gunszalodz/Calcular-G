@@ -292,7 +292,6 @@
       display: flex;
     }
 
-    /* Títulos agrandados según referencia de diseño */
     .panel-title {
       font-size: 1.15rem;
       font-weight: 700;
@@ -468,7 +467,7 @@
       line-height: 1.3;
     }
 
-    /* TECLADO VIRTUAL COMPACTO - Altura ligeramente reducida y más abajo para el pulgar */
+    /* TECLADO VIRTUAL COMPACTO */
     .virtual-keypad-compact {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -529,7 +528,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      height: 85px; /* Pantalla estirada según referencia */
+      height: 85px;
     }
 
     .calc-history {
@@ -1026,8 +1025,8 @@
         <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div> Conversión de Escala
       </div>
 
-      <!-- Texto "Ingrese valores" movido arriba -->
-      <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0;">
+      <!-- Texto superior con min-height fijo para evitar saltos de diseño -->
+      <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0; min-height: 2.6rem; display: flex; flex-direction: column; justify-content: center;">
         • Ingrese valores.
       </div>
 
@@ -1064,7 +1063,6 @@
         </div>
       </div>
 
-      <!-- Resultado movido abajo -->
       <div class="result-box-compact">
         <div class="text" id="scale-result-text">Escala = 0 cm</div>
         <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
