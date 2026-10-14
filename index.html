@@ -345,7 +345,7 @@
     .table-cell-label.blue { color: var(--blue); }
 
     .table-cell-input {
-      width: 210px;
+      width: 220px;
       padding: 6px 10px;
       display: flex;
       align-items: center;
@@ -369,14 +369,14 @@
     }
 
     .table-cell-input select {
-      width: 68px;
+      width: 78px;
       flex-shrink: 0;
       padding: 11px 4px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
       border-radius: 6px;
       color: var(--title);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: bold;
       text-align: center;
       outline: none;
@@ -764,6 +764,10 @@
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         <span>Bases (Bin/Hex)</span>
       </button>
+      <button class="nav-item" onclick="switchTab('tab-data', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <span>Datos</span>
+      </button>
     </nav>
   </div>
 
@@ -870,7 +874,6 @@
         <button class="btn-ce" onclick="clearP1()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS (0 UNIFICADO) -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -1098,7 +1101,6 @@
         <button class="btn-ce" onclick="clearScale()">CE</button>
       </div>
 
-      <!-- TECLADO COMPACTO 5 FILAS (0 UNIFICADO) -->
       <div class="virtual-keypad-compact">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
@@ -1184,7 +1186,10 @@
         </div>
       </div>
 
-      <!-- TECLADO DE BASES CON ATRIBUTOS DE DATOS PARA FILTRADO DINÁMICO -->
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearBases()">CE</button>
+      </div>
+
       <div class="virtual-keypad-compact" id="bases-keypad">
         <button class="v-key" data-val="7" onclick="vKey('7')">7</button>
         <button class="v-key" data-val="8" onclick="vKey('8')">8</button>
@@ -1212,6 +1217,73 @@
         <button class="v-key op" data-val="ce" style="color: var(--green);" onclick="clearBases()">CE</button>
       </div>
     </div>
+
+    <!-- TAB: CONVERSOR DE DATOS / ALMACENAMIENTO -->
+    <div id="tab-data" class="tab-panel">
+      <div class="panel-title">
+        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div> Conversor de Datos
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="data-result-text">Resultado = 0 Bytes</div>
+        <button class="btn-copy" onclick="copyText('data-result-text')">Copiar</button>
+      </div>
+
+      <div class="calc-table-layout">
+        <div class="table-row">
+          <div class="table-cell-label green">Valor de Origen</div>
+          <div class="table-cell-input">
+            <input type="text" inputmode="none" id="data-val-1" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-1', 'src')" readonly>
+            <select id="data-unit-1" onchange="calcData()" style="margin-left: 4px;">
+              <option value="bit">bit</option>
+              <option value="byte" selected>Byte</option>
+              <option value="KB">KB</option>
+              <option value="MB">MB</option>
+              <option value="GB">GB</option>
+              <option value="TB">TB</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell-label blue">Valor de Destino</div>
+          <div class="table-cell-input">
+            <input type="text" inputmode="none" id="data-val-2" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-2', 'dst')" readonly>
+            <select id="data-unit-2" onchange="calcData()" style="margin-left: 4px;">
+              <option value="bit">bit</option>
+              <option value="byte">Byte</option>
+              <option value="KB" selected>KB</option>
+              <option value="MB">MB</option>
+              <option value="GB">GB</option>
+              <option value="TB">TB</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearData()">CE</button>
+      </div>
+
+      <div class="virtual-keypad-compact">
+        <button class="v-key" onclick="vKey('7')">7</button>
+        <button class="v-key" onclick="vKey('8')">8</button>
+        <button class="v-key" onclick="vKey('9')">9</button>
+        <button class="v-key op" onclick="vKey('back')">⌫</button>
+
+        <button class="v-key" onclick="vKey('4')">4</button>
+        <button class="v-key" onclick="vKey('5')">5</button>
+        <button class="v-key" onclick="vKey('6')">6</button>
+        <button class="v-key op" onclick="vKey('.')">.</button>
+
+        <button class="v-key" onclick="vKey('1')">1</button>
+        <button class="v-key" onclick="vKey('2')">2</button>
+        <button class="v-key" onclick="vKey('3')">3</button>
+        <button class="v-key op" onclick="vKey(',')">,</button>
+
+        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
+        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearData()">CE</button>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -1222,6 +1294,7 @@
 
     let activeInput = null;
     let currentBaseType = 'dec'; // dec, bin, oct, hex
+    let activeDataField = 'src'; // src o dst
 
     function setActiveInput(input) {
       document.querySelectorAll('.tab-panel.active input').forEach(el => el.classList.remove('active-input'));
@@ -1234,6 +1307,12 @@
       const input = document.getElementById(inputId);
       setActiveInput(input);
       updateBasesKeypadState();
+    }
+
+    function setActiveDataInput(inputId, field) {
+      activeDataField = field;
+      const input = document.getElementById(inputId);
+      setActiveInput(input);
     }
 
     function updateBasesKeypadState() {
@@ -1253,7 +1332,7 @@
         } else if (currentBaseType === 'dec') {
           allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ','].includes(val);
         } else if (currentBaseType === 'hex') {
-          allowed = true; // Todo permitido en hexadecimal
+          allowed = true;
         }
 
         btn.disabled = !allowed;
@@ -1291,7 +1370,7 @@
       activeInput.dispatchEvent(new Event('input'));
     }
 
-    function formatEs(num, maxDec = 2) {
+    function formatEs(num, maxDec = 4) {
       if (isNaN(num) || num === null) return '0';
       return num.toLocaleString('es-AR', { maximumFractionDigits: maxDec });
     }
@@ -1314,6 +1393,8 @@
         fitDisplay();
       } else if (tabId === 'tab-bases') {
         setActiveBaseInput('base-dec', 'dec');
+      } else if (tabId === 'tab-data') {
+        setActiveDataInput('data-val-1', 'src');
       } else {
         const firstInput = target.querySelector('input');
         if (firstInput) setActiveInput(firstInput);
@@ -1822,6 +1903,44 @@
       document.getElementById('base-oct').value = '';
       document.getElementById('base-hex').value = '';
       setActiveBaseInput('base-dec', 'dec');
+    }
+
+    /* CONVERSOR DE DATOS / ALMACENAMIENTO */
+    const DATA_MULTIPLIERS = {
+      'bit': 0.125,
+      'byte': 1,
+      'KB': 1024,
+      'MB': 1024 * 1024,
+      'GB': 1024 * 1024 * 1024,
+      'TB': 1024 * 1024 * 1024 * 1024
+    };
+
+    function calcData() {
+      const val1Input = document.getElementById('data-val-1');
+      const val2Input = document.getElementById('data-val-2');
+      const unit1 = document.getElementById('data-unit-1').value;
+      const unit2 = document.getElementById('data-unit-2').value;
+
+      if (activeDataField === 'src') {
+        const raw = parseNum(val1Input.value);
+        const bytes = raw * DATA_MULTIPLIERS[unit1];
+        const converted = bytes / DATA_MULTIPLIERS[unit2];
+        val2Input.value = val1Input.value === '' ? '' : roundNum(converted, 6);
+        document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(converted, 4)} ${unit2}`;
+      } else {
+        const raw = parseNum(val2Input.value);
+        const bytes = raw * DATA_MULTIPLIERS[unit2];
+        const converted = bytes / DATA_MULTIPLIERS[unit1];
+        val1Input.value = val2Input.value === '' ? '' : roundNum(converted, 6);
+        document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(raw, 4)} ${unit2}`;
+      }
+    }
+
+    function clearData() {
+      document.getElementById('data-val-1').value = '';
+      document.getElementById('data-val-2').value = '';
+      document.getElementById('data-result-text').innerText = 'Resultado = 0 Bytes';
+      setActiveDataInput('data-val-1', 'src');
     }
 
     /* AVISO */
