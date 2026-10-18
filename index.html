@@ -16,47 +16,77 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== TEMA ORIGINAL ===== */
+    /* ===== TEMA ORIGINAL (neón cian / rosa sobre carcasa oscura) ===== */
     :root {
       --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
       --font-num: "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
 
-      --bg: #0b0e14; --header-bg: #0b0e14; --body-bg: #0b0e14; --text: #e6edf3;
-      --accent: #ff9800; --accent-hover: #e68a00; --accent-edge: #8f5400; --on-accent: #000000;
-      --title: #ffffff;
-      --green: #3fb950; --blue: #58a6ff; --panel: #121721; --panel-border: #1e2638; --muted: #8b949e;
-      --field: #06090e; --field-border: #1f293d; --focus: #388bfd;
-      --btn2-bg: #1c212e; --btn2-border: #2d3548; --calc-hover: #1f2735; --calc-border: #1d2433;
-      --nav-bg: #06080c; --nav-border: #161b26;
-      --key-bg: #171d29; --key-alt: #111620; --key-edge: #04060a; --key-hi: rgba(255,255,255,.07);
-      --lcd-bg: #120d06; --lcd-fg: #ffab1a; --lcd-dim: #8c6420; --inset: rgba(0,0,0,.55);
+      --bg: #07050d; --header-bg: transparent;
+      --body-bg: radial-gradient(120% 55% at 50% 0%, rgba(41,211,255,.20) 0%, transparent 65%), radial-gradient(110% 50% at 50% 100%, rgba(190,60,255,.22) 0%, transparent 65%), #0c0914;
+      --text: #eee6ff;
+      --accent: #3ddcff; --accent-hover: #86eaff; --accent-edge: #0a6f8a; --on-accent: #021016;
+      --title: #f6f0ff;
+      --title-glow: 0 0 8px rgba(41,211,255,.65);
+      --green: #6dffb0; --blue: #7cd4ff;
+      --panel: linear-gradient(180deg, #211b33 0%, #151120 100%);
+      --panel-border: #29d3ff; --panel-inner: #0d0a16;
+      --glow-c: rgba(41,211,255,.55); --glow-soft: rgba(41,211,255,.18);
+      --muted: #c9c2e6;
+      --field: #100c1b; --field-border: #4a4678; --focus: #3ddcff;
+      --btn2-bg: linear-gradient(180deg, #34324f 0%, #23213a 100%); --btn2-border: #5a5590;
+      --calc-hover: linear-gradient(180deg, #47446b 0%, #2f2c4b 100%); --calc-border: #4a4678;
+      --nav-bg: #0c0914; --nav-border: #2c2750;
+      --key-bg: linear-gradient(180deg, #3a3855 0%, #25233a 100%);
+      --key-alt: linear-gradient(180deg, #2f2d49 0%, #1d1b30 100%);
+      --key-edge: #05030a; --key-hi: rgba(255,255,255,.14);
+      --key-fg: #ff7ad9; --key-glow: 0 0 6px rgba(255,90,210,.55);
+      --op-glow: 0 0 6px rgba(61,220,255,.55);
+      --lcd-bg: #05030a; --lcd-fg: #ff4f93; --lcd-dim: #d27aa0; --lcd-glow: 0 0 8px rgba(255,79,147,.6);
+      --lcd-edge: #4a4678; --inset: rgba(0,0,0,.7);
     }
 
-    /* ===== TEMA ROSA ===== */
+    /* ===== TEMA ROSA (neón magenta) ===== */
     :root[data-theme="pink"] {
-      --bg: #050407; --header-bg: transparent;
-      --body-bg: linear-gradient(160deg, rgba(255,25,150,.38) 0%, rgba(5,4,7,0) 30%, rgba(5,4,7,0) 68%, rgba(255,25,150,.30) 100%), #050407;
-      --text: #f6e8f1; --accent: #ff2fa3; --accent-hover: #e01f8e; --accent-edge: #8f1058; --on-accent: #0a0006;
-      --title: #ffffff;
-      --green: #ff7ac8; --blue: #d2a8ff; --panel: rgba(12,5,12,.86); --panel-border: #6b1f52; --muted: #e3b6d3;
-      --field: #08040a; --field-border: #6b1f52; --focus: #ff2fa3;
-      --btn2-bg: #26101f; --btn2-border: #7a2560; --calc-hover: #3a1530; --calc-border: #5a1a45;
-      --nav-bg: rgba(5,3,6,.92); --nav-border: #4a1538;
-      --key-bg: #25101e; --key-alt: #1a0b15; --key-edge: #07020a; --key-hi: rgba(255,140,210,.12);
-      --lcd-bg: #12050d; --lcd-fg: #ff7ac8; --lcd-dim: #9a4d7e; --inset: rgba(0,0,0,.6);
+      --bg: #08030a; --header-bg: transparent;
+      --body-bg: radial-gradient(120% 55% at 50% 0%, rgba(255,63,176,.28) 0%, transparent 65%), radial-gradient(110% 50% at 50% 100%, rgba(255,63,176,.22) 0%, transparent 65%), #0a0409;
+      --text: #ffe9f6;
+      --accent: #ff5fc8; --accent-hover: #ff8fda; --accent-edge: #8f1058; --on-accent: #1a0010;
+      --title: #fff2fa;
+      --title-glow: 0 0 8px rgba(255,63,176,.7);
+      --green: #8dffd0; --blue: #cdb0ff;
+      --panel: linear-gradient(180deg, #2a1325 0%, #170a15 100%);
+      --panel-border: #ff3fb0; --panel-inner: #0e050c;
+      --glow-c: rgba(255,63,176,.55); --glow-soft: rgba(255,63,176,.20);
+      --muted: #f0c4de;
+      --field: #12060f; --field-border: #7a2560; --focus: #ff5fc8;
+      --btn2-bg: linear-gradient(180deg, #4a2040 0%, #2e132a 100%); --btn2-border: #9a3a7c;
+      --calc-hover: linear-gradient(180deg, #5f2a52 0%, #3a1934 100%); --calc-border: #7a2560;
+      --nav-bg: #0a0409; --nav-border: #4a1538;
+      --key-bg: linear-gradient(180deg, #43203b 0%, #2a1227 100%);
+      --key-alt: linear-gradient(180deg, #371a31 0%, #230f20 100%);
+      --key-edge: #05020a; --key-hi: rgba(255,170,225,.16);
+      --key-fg: #ffc2ec; --key-glow: 0 0 6px rgba(255,95,200,.55);
+      --op-glow: 0 0 6px rgba(255,95,200,.6);
+      --lcd-bg: #0a0309; --lcd-fg: #ff9ee0; --lcd-dim: #d58bbd; --lcd-glow: 0 0 8px rgba(255,120,210,.6);
+      --lcd-edge: #7a2560; --inset: rgba(0,0,0,.7);
     }
 
-    /* ===== TEMA CAFÉ ===== */
+    /* ===== TEMA CAFÉ (claro, sin brillo) ===== */
     :root[data-theme="Café"] {
-      --bg: #f2eada; --header-bg: #f2eada; --body-bg: #f2eada; --text: #2c2b28;
+      --bg: #fbf5e8; --header-bg: transparent; --body-bg: #f2eada; --text: #2c2b28;
       --accent: #7a5230; --accent-hover: #5e3d21; --accent-edge: #3f2812; --on-accent: #ffffff;
-      --title: #2c2b28;
-      --green: #4f6a2a; --blue: #9a4a1c; --panel: #e8decb; --panel-border: #cbb898; --muted: #2c2b28;
-      --field: #faf6ee; --field-border: #cbb898; --focus: #7a5230;
-      --btn2-bg: #dfd2b9; --btn2-border: #c1ad8b; --calc-hover: #e9dfc8; --calc-border: #cbb898;
-      --nav-bg: #e8decb; --nav-border: #cbb898;
+      --title: #2b1a0a; --title-glow: none;
+      --green: #3f5a1f; --blue: #8a3f12;
+      --panel: #e8decb; --panel-border: #7a5230; --panel-inner: #f4ecd9;
+      --glow-c: rgba(0,0,0,0); --glow-soft: rgba(0,0,0,0);
+      --muted: #2c2b28;
+      --field: #faf6ee; --field-border: #b49c74; --focus: #7a5230;
+      --btn2-bg: #dfd2b9; --btn2-border: #a88f67; --calc-hover: #e9dfc8; --calc-border: #b49c74;
+      --nav-bg: #e8decb; --nav-border: #b49c74;
       --key-bg: #f7f0e0; --key-alt: #efe5cf; --key-edge: #a88f67; --key-hi: rgba(255,255,255,.85);
-      --lcd-bg: #c9cea8; --lcd-fg: #2a321c; --lcd-dim: #67704a; --inset: rgba(60,50,20,.35);
+      --key-fg: #2b1a0a; --key-glow: none; --op-glow: none;
+      --lcd-bg: #c9cea8; --lcd-fg: #1f2714; --lcd-dim: #3f482b; --lcd-glow: none;
+      --lcd-edge: #7a5230; --inset: rgba(60,50,20,.35);
     }
 
     * {
@@ -103,6 +133,7 @@
       font-weight: 700;
       letter-spacing: .02em;
       color: var(--title);
+      text-shadow: var(--title-glow);
       min-width: 0;
       white-space: nowrap;
       overflow: hidden;
@@ -119,9 +150,9 @@
       justify-content: center;
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
-      border-radius: 3px;
-      box-shadow: 0 1px 0 var(--key-edge);
-      color: var(--title);
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
+      color: var(--accent);
       font-size: 1rem;
       line-height: 1;
       cursor: pointer;
@@ -139,18 +170,19 @@
       stroke-linejoin: round;
     }
 
-    .icon-btn:active { transform: translateY(1px); box-shadow: none; }
+    .icon-btn:active { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--key-hi); }
 
     .toast {
       position: fixed;
       left: 50%;
       bottom: 20px;
       transform: translateX(-50%);
-      background: var(--btn2-bg);
+      background: var(--panel-inner);
       border: 1px solid var(--accent);
+      box-shadow: 0 0 10px var(--glow-c);
       color: var(--title);
       padding: 9px 14px;
-      border-radius: 4px;
+      border-radius: 10px;
       font-size: 0.85rem;
       font-weight: 600;
       max-width: 90%;
@@ -163,7 +195,7 @@
 
     .toast.show { opacity: 1; }
 
-    /* ===== Navegación ===== */
+    /* ===== Navegación (fila de teclas de función) ===== */
     .nav-container {
       position: relative;
       flex-shrink: 0;
@@ -185,8 +217,8 @@
     nav {
       display: flex;
       justify-content: flex-start;
-      padding: 0 6px;
-      gap: 2px;
+      padding: 6px 6px 7px;
+      gap: 6px;
       overflow-x: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--accent) transparent;
@@ -201,15 +233,16 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
+      background: var(--key-bg);
+      border: 1px solid var(--key-edge);
+      border-radius: 10px;
+      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
       color: var(--muted);
       font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: .01em;
       cursor: pointer;
-      padding: 8px 12px 7px;
+      padding: 7px 12px 6px;
       min-width: 72px;
       white-space: nowrap;
       touch-action: manipulation;
@@ -230,24 +263,32 @@
     .nav-item.active {
       color: var(--accent);
       font-weight: 700;
-      border-bottom-color: var(--accent);
+      border-color: var(--accent);
+      text-shadow: var(--op-glow);
+      box-shadow: inset 0 1px 0 var(--key-hi), 0 0 8px var(--glow-c);
     }
 
     main {
       flex: 1;
-      padding: 8px 12px;
+      padding: 10px 15px 12px;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
 
+    /* Carcasa con borde brillante */
     .tab-panel {
       display: none;
       height: 100%;
       flex-direction: column;
       background: var(--panel);
-      border-radius: 6px;
+      border-radius: 20px;
       border: 1px solid var(--panel-border);
+      box-shadow:
+        0 0 0 2px var(--panel-border),
+        0 0 12px 3px var(--glow-c),
+        inset 0 0 0 3px var(--panel-inner),
+        inset 0 0 16px var(--glow-soft);
       padding: 10px;
       justify-content: flex-start;
       gap: 8px;
@@ -270,7 +311,7 @@
       display: flex;
       flex-direction: column;
       border: 1px solid var(--field-border);
-      border-radius: 4px;
+      border-radius: 10px;
       overflow: hidden;
       background: var(--field);
     }
@@ -310,8 +351,8 @@
       padding: 10px 8px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
-      border-radius: 3px;
-      box-shadow: inset 0 1px 3px var(--inset);
+      border-radius: 8px;
+      box-shadow: inset 0 2px 4px var(--inset);
       color: var(--title);
       font-family: var(--font-num);
       font-size: 1.25rem;
@@ -328,7 +369,7 @@
       padding: 10px 4px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
-      border-radius: 3px;
+      border-radius: 8px;
       color: var(--title);
       font-family: var(--font-num);
       font-size: 0.8rem;
@@ -340,7 +381,7 @@
 
     .table-cell-input input.active-input {
       border-color: var(--accent);
-      box-shadow: inset 0 1px 3px var(--inset), 0 0 0 1px var(--accent);
+      box-shadow: inset 0 2px 4px var(--inset), 0 0 0 1px var(--accent), 0 0 8px var(--glow-c);
     }
 
     .table-cell-input input:focus, .table-cell-input select:focus {
@@ -367,9 +408,9 @@
     .btn-action, .btn-copy {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
-      box-shadow: 0 1px 0 var(--key-edge);
+      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
       color: var(--title);
-      border-radius: 3px;
+      border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
@@ -378,7 +419,7 @@
     .btn-action { padding: 4px 10px; font-size: 0.75rem; }
     .btn-copy { padding: 6px 12px; font-size: 0.82rem; }
 
-    .btn-action:active, .btn-copy:active { transform: translateY(1px); box-shadow: none; }
+    .btn-action:active, .btn-copy:active { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--key-hi); }
 
     @media (hover: hover) {
       .btn-action:hover, .btn-copy:hover { background: var(--calc-hover); }
@@ -387,9 +428,9 @@
     /* ===== Pantalla de resultado (LCD) ===== */
     .result-box-compact {
       background: var(--lcd-bg);
-      border: 1px solid var(--field-border);
-      border-radius: 3px;
-      box-shadow: inset 0 2px 5px var(--inset);
+      border: 1px solid var(--lcd-edge);
+      border-radius: 10px;
+      box-shadow: inset 0 2px 8px var(--inset), inset 0 0 14px var(--glow-soft);
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
@@ -398,6 +439,7 @@
     }
     .result-box-compact .text {
       color: var(--lcd-fg);
+      text-shadow: var(--lcd-glow);
       font-family: var(--font-num);
       font-weight: 700;
       font-size: 1.15rem;
@@ -406,7 +448,7 @@
     .log-box-compact {
       background: var(--bg);
       border: 1px solid var(--field-border);
-      border-radius: 3px;
+      border-radius: 8px;
       padding: 8px 12px;
       font-family: var(--font-num);
       font-size: 0.78rem;
@@ -417,11 +459,12 @@
 
     /* ===== Teclas ===== */
     .v-key, .calc-btn {
-      background-color: var(--key-bg);
+      background: var(--key-bg);
       border: 1px solid var(--key-edge);
-      border-radius: 4px;
+      border-radius: 9px;
       box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
-      color: var(--title);
+      color: var(--key-fg);
+      text-shadow: var(--key-glow);
       font-family: var(--font-num);
       font-size: 1.25rem;
       font-weight: 700;
@@ -443,12 +486,12 @@
     }
 
     @media (hover: hover) {
-      .v-key:hover:not(:disabled), .calc-btn:hover { background-color: var(--calc-hover); }
+      .v-key:hover:not(:disabled), .calc-btn:hover { background: var(--calc-hover); }
     }
 
-    .v-key:disabled { opacity: 0.28; cursor: not-allowed; }
+    .v-key:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 800; }
+    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 800; text-shadow: var(--op-glow); }
 
     .virtual-keypad-compact {
       display: grid;
@@ -473,9 +516,9 @@
     /* ===== Calculadora estándar / científica ===== */
     .calc-display {
       background: var(--lcd-bg);
-      border: 1px solid var(--field-border);
-      border-radius: 3px;
-      box-shadow: inset 0 2px 5px var(--inset);
+      border: 1px solid var(--lcd-edge);
+      border-radius: 10px;
+      box-shadow: inset 0 2px 8px var(--inset), inset 0 0 14px var(--glow-soft);
       padding: 10px 14px;
       text-align: right;
       margin-bottom: 6px;
@@ -500,6 +543,7 @@
       font-size: 2.3rem;
       font-weight: 700;
       color: var(--lcd-fg);
+      text-shadow: var(--lcd-glow);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -514,20 +558,21 @@
     }
 
     .calc-btn.equals {
-      background-color: var(--accent);
+      background: var(--accent);
       color: var(--on-accent);
+      text-shadow: none;
       font-weight: 800;
       border-color: var(--accent-edge);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 0 var(--accent-edge);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 0 var(--accent-edge), 0 0 10px var(--glow-c);
     }
 
     .calc-btn.equals:active {
       transform: translateY(2px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 0 var(--accent-edge);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 0 0 var(--accent-edge);
     }
 
     @media (hover: hover) {
-      .calc-btn.equals:hover { background-color: var(--accent-hover); }
+      .calc-btn.equals:hover { background: var(--accent-hover); }
     }
 
     #calc-title { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -539,7 +584,7 @@
       padding: 2px;
       background: var(--field);
       border: 1px solid var(--field-border);
-      border-radius: 4px;
+      border-radius: 9px;
       flex-shrink: 0;
     }
 
@@ -550,7 +595,7 @@
       font-size: 0.76rem;
       font-weight: 700;
       padding: 4px 8px;
-      border-radius: 3px;
+      border-radius: 7px;
       cursor: pointer;
       touch-action: manipulation;
     }
@@ -558,7 +603,7 @@
     .mode-switch button.active {
       background: var(--accent);
       color: var(--on-accent);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .calc-body { flex: 1; display: flex; flex-direction: column; }
@@ -573,12 +618,13 @@
     .tab-panel.sci .sci-grid { display: grid; }
 
     .calc-btn.sci {
-      background-color: var(--key-alt);
+      background: var(--key-alt);
       font-size: 0.75rem;
       color: var(--text);
+      text-shadow: none;
     }
 
-    .calc-btn.sci.angle { color: var(--accent); font-weight: 800; }
+    .calc-btn.sci.angle { color: var(--accent); font-weight: 800; text-shadow: var(--op-glow); }
     .calc-btn sup { font-size: 0.6em; }
 
     #tab-standard.sci .calc-display {
@@ -616,6 +662,7 @@
       padding: 0 !important;
       min-height: 0;
       font-size: 0.9rem !important;
+      border-radius: 7px;
     }
 
     #tab-standard.sci .calc-btn.sci { font-size: 0.65rem !important; }
