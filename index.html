@@ -4,138 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Herramientas de Cálculo Rápido</title>
-  
+
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Calculadora">
   <link rel="apple-touch-icon" href="icon.png">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    /* VARIABLES CSS - TEMA PREDETERMINADO (Original) */
+    /* ===== TEMA ORIGINAL ===== */
     :root {
-      --bg:#0b0e14; --header-bg:#0b0e14; --body-bg:#0b0e14; --text:#e6edf3;
-      --accent:#ff9800; --accent-hover:#e68a00; --on-accent:#000000; --title:#ffffff;
-      --panel:#121721; --panel-border:#1e2638; --icon-bg:#382b14; --muted:#8b949e;
-      --green:#3fb950; --blue:#58a6ff; --field:#06090e; --field-border:#1f293d; --focus:#388bfd;
-      --btn2-bg:#1c212e; --btn2-border:#2d3548; --calc-hover:#161c28; --calc-border:#1d2433;
-      --nav-bg:#06080c; --nav-border:#161b26; --nav-active-bg:#231b0c; --nav-active-border:#3d2d10;
-      --panel-glow:none; --btn-glow:none;
-      --btn-equals-border: none;
+      --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      --font-num: "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+
+      --bg: #0b0e14; --header-bg: #0b0e14; --body-bg: #0b0e14; --text: #e6edf3;
+      --accent: #ff9800; --accent-hover: #e68a00; --accent-edge: #8f5400; --on-accent: #000000;
+      --title: #ffffff;
+      --panel: #121721; --panel-border: #1e2638; --muted: #8b949e;
+      --field: #06090e; --field-border: #1f293d; --focus: #388bfd;
+      --btn2-bg: #1c212e; --btn2-border: #2d3548; --calc-hover: #1f2735; --calc-border: #1d2433;
+      --nav-bg: #06080c; --nav-border: #161b26;
+      --key-bg: #171d29; --key-alt: #111620; --key-edge: #04060a; --key-hi: rgba(255,255,255,.07);
+      --lcd-bg: #120d06; --lcd-fg: #ffab1a; --lcd-dim: #8c6420; --inset: rgba(0,0,0,.55);
     }
 
-    /* VARIABLES CSS - TEMA ROSA */
+    /* ===== TEMA ROSA ===== */
     :root[data-theme="pink"] {
-      --bg:#050407; --header-bg:transparent;
-      --body-bg:linear-gradient(160deg, rgba(255,25,150,.38) 0%, rgba(5,4,7,0) 30%, rgba(5,4,7,0) 68%, rgba(255,25,150,.30) 100%), #050407;
-      --text:#f6e8f1; --accent:#ff2fa3; --accent-hover:#e01f8e; --on-accent:#0a0006; --title:#ffffff;
-      --panel:rgba(12,5,12,.86); --panel-border:#6b1f52; --icon-bg:#3a0f2b; --muted:#e3b6d3;
-      --green:#ff7ac8; --blue:#d2a8ff; --field:#08040a; --field-border:#6b1f52; --focus:#ff2fa3;
-      --btn2-bg:#26101f; --btn2-border:#7a2560; --calc-hover:#2e1025; --calc-border:#5a1a45;
-      --nav-bg:rgba(5,3,6,.92); --nav-border:#4a1538; --nav-active-bg:#34102a; --nav-active-border:#ff2fa3;
-      --panel-glow:0 0 0 1px rgba(255,47,163,.15), 0 0 24px rgba(255,47,163,.14);
-      --btn-glow:0 0 14px rgba(255,47,163,.45);
-      --btn-equals-border: none;
+      --bg: #050407; --header-bg: transparent;
+      --body-bg: linear-gradient(160deg, rgba(255,25,150,.38) 0%, rgba(5,4,7,0) 30%, rgba(5,4,7,0) 68%, rgba(255,25,150,.30) 100%), #050407;
+      --text: #f6e8f1; --accent: #ff2fa3; --accent-hover: #e01f8e; --accent-edge: #8f1058; --on-accent: #0a0006;
+      --title: #ffffff;
+      --panel: rgba(12,5,12,.86); --panel-border: #6b1f52; --muted: #e3b6d3;
+      --field: #08040a; --field-border: #6b1f52; --focus: #ff2fa3;
+      --btn2-bg: #26101f; --btn2-border: #7a2560; --calc-hover: #3a1530; --calc-border: #5a1a45;
+      --nav-bg: rgba(5,3,6,.92); --nav-border: #4a1538;
+      --key-bg: #25101e; --key-alt: #1a0b15; --key-edge: #07020a; --key-hi: rgba(255,140,210,.12);
+      --lcd-bg: #12050d; --lcd-fg: #ff7ac8; --lcd-dim: #9a4d7e; --inset: rgba(0,0,0,.6);
     }
 
-    /* VARIABLES CSS - TEMA CAFÉ */
+    /* ===== TEMA CAFÉ ===== */
     :root[data-theme="Café"] {
-      --bg:#f2eada;
-      --header-bg:#f2eada;
-      --body-bg:#f2eada;
-      --text:#2c2b28;
-      --accent:#7a5230;
-      --accent-hover:#5e3d21;
-      --on-accent:#ffffff;
-      --title:#2c2b28;
-      --panel:#e8decb;
-      --panel-border:#cbb898;
-      --icon-bg:#dbcaaa;
-      --muted:#2c2b28;
-      --green:#5a3e2b;
-      --blue:#8c5222;
-      --field:#faf6ee;
-      --field-border:#cbb898;
-      --focus:#7a5230;
-      --btn2-bg:#dfd2b9;
-      --btn2-border:#c1ad8b;
-      --calc-hover:#dbcca9;
-      --calc-border:#cbb898;
-      --nav-bg:#e8decb;
-      --nav-border:#cbb898;
-      --nav-active-bg:#dbcaaa;
-      --nav-active-border:#7a5230;
-      --panel-glow:none;
-      --btn-glow:none;
-      --btn-equals-border: 1px solid #5e3d21;
+      --bg: #f2eada; --header-bg: #f2eada; --body-bg: #f2eada; --text: #2c2b28;
+      --accent: #7a5230; --accent-hover: #5e3d21; --accent-edge: #3f2812; --on-accent: #ffffff;
+      --title: #2c2b28;
+      --panel: #e8decb; --panel-border: #cbb898; --muted: #2c2b28;
+      --field: #faf6ee; --field-border: #cbb898; --focus: #7a5230;
+      --btn2-bg: #dfd2b9; --btn2-border: #c1ad8b; --calc-hover: #e9dfc8; --calc-border: #cbb898;
+      --nav-bg: #e8decb; --nav-border: #cbb898;
+      --key-bg: #f7f0e0; --key-alt: #efe5cf; --key-edge: #a88f67; --key-hi: rgba(255,255,255,.85);
+      --lcd-bg: #c9cea8; --lcd-fg: #2a321c; --lcd-dim: #67704a; --inset: rgba(60,50,20,.35);
     }
-
-    .tab-panel { box-shadow: var(--panel-glow); }
-    .btn-clear { box-shadow: var(--btn-glow); }
-
-    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-
-    .icon-btn {
-      width: 28px;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--btn2-bg);
-      border: 1px solid var(--btn2-border);
-      border-radius: 6px;
-      color: var(--title);
-      cursor: pointer;
-      padding: 0;
-      transition: background 0.15s, color 0.15s;
-      touch-action: manipulation;
-    }
-
-    .icon-btn svg {
-      width: 15px;
-      height: 15px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .icon-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--on-accent);
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
-      background: var(--btn2-bg);
-      border: 1px solid var(--accent);
-      color: var(--title);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      max-width: 90%;
-      text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-      z-index: 10;
-    }
-
-    .toast.show { opacity: 1; }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: var(--font-ui);
       user-select: none;
       touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -150,16 +81,14 @@
 
     main::-webkit-scrollbar,
     .tab-panel::-webkit-scrollbar,
-    body::-webkit-scrollbar {
-      display: none;
-    }
+    body::-webkit-scrollbar { display: none; }
 
     main, .tab-panel, body {
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
 
-    /* Header */
+    /* ===== Encabezado ===== */
     header {
       padding: 8px 14px;
       display: flex;
@@ -169,23 +98,10 @@
       flex-shrink: 0;
     }
 
-    .app-icon {
-      width: 26px;
-      height: 26px;
-      background: var(--accent);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: var(--on-accent);
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
     header h1 {
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 600;
+      letter-spacing: .02em;
       color: var(--title);
       min-width: 0;
       white-space: nowrap;
@@ -193,7 +109,51 @@
       text-overflow: ellipsis;
     }
 
-    /* Contenedor de Navegación */
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+    .icon-btn {
+      width: 28px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--btn2-bg);
+      border: 1px solid var(--btn2-border);
+      border-radius: 3px;
+      box-shadow: 0 1px 0 var(--key-edge);
+      color: var(--title);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      touch-action: manipulation;
+    }
+
+    .icon-btn:active { transform: translateY(1px); box-shadow: none; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: var(--btn2-bg);
+      border: 1px solid var(--accent);
+      color: var(--title);
+      padding: 9px 14px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      max-width: 90%;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+
+    .toast.show { opacity: 1; }
+
+    /* ===== Navegación ===== */
     .nav-container {
       position: relative;
       flex-shrink: 0;
@@ -207,7 +167,7 @@
       top: 0;
       right: 0;
       bottom: 0;
-      width: 24px;
+      width: 16px;
       background: linear-gradient(to right, transparent, var(--nav-bg));
       pointer-events: none;
     }
@@ -215,57 +175,35 @@
     nav {
       display: flex;
       justify-content: flex-start;
-      padding: 6px 8px;
-      gap: 6px;
+      padding: 0 6px;
+      gap: 2px;
       overflow-x: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--accent) transparent;
     }
 
-    nav::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    nav::-webkit-scrollbar-thumb {
-      background-color: var(--accent);
-      border-radius: 4px;
-    }
+    nav::-webkit-scrollbar { height: 3px; }
+    nav::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 2px; }
 
     .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
       background: none;
-      border: 1px solid transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
       color: var(--muted);
-      font-size: 0.73rem;
-      font-weight: 700;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: .01em;
       cursor: pointer;
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 11px 12px 9px;
       white-space: nowrap;
       touch-action: manipulation;
       flex-shrink: 0;
-      min-width: 72px;
     }
 
     .nav-item.active {
       color: var(--accent);
-      background-color: var(--nav-active-bg);
-      border-color: var(--nav-active-border);
-    }
-
-    .nav-icon {
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
+      font-weight: 600;
+      border-bottom-color: var(--accent);
     }
 
     main {
@@ -281,20 +219,18 @@
       height: 100%;
       flex-direction: column;
       background: var(--panel);
-      border-radius: 12px;
+      border-radius: 6px;
       border: 1px solid var(--panel-border);
       padding: 10px;
       justify-content: flex-start;
       gap: 8px;
     }
 
-    .tab-panel.active {
-      display: flex;
-    }
+    .tab-panel.active { display: flex; }
 
     .panel-title {
-      font-size: 1.15rem;
-      font-weight: 700;
+      font-size: 1.05rem;
+      font-weight: 600;
       color: var(--title);
       display: flex;
       align-items: center;
@@ -302,24 +238,12 @@
       flex-shrink: 0;
     }
 
-    .panel-icon-box {
-      background: var(--icon-bg);
-      color: var(--accent);
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-    }
-
-    /* ESTILO TIPO TABLA */
+    /* ===== Tabla de campos ===== */
     .calc-table-layout {
       display: flex;
       flex-direction: column;
       border: 1px solid var(--field-border);
-      border-radius: 8px;
+      border-radius: 4px;
       overflow: hidden;
       background: var(--field);
     }
@@ -329,20 +253,16 @@
       align-items: center;
       border-bottom: 1px solid var(--field-border);
     }
-    .table-row:last-child {
-      border-bottom: none;
-    }
+    .table-row:last-child { border-bottom: none; }
 
     .table-cell-label {
       flex: 1;
       padding: 10px 12px;
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 0.95rem;
+      font-weight: 500;
       color: var(--muted);
       line-height: 1.2;
     }
-    .table-cell-label.green { color: var(--green); }
-    .table-cell-label.blue { color: var(--blue); }
 
     .table-cell-input {
       width: 220px;
@@ -358,10 +278,12 @@
       padding: 10px 8px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
-      border-radius: 6px;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 3px var(--inset);
       color: var(--title);
-      font-size: 1.3rem;
-      font-weight: bold;
+      font-family: var(--font-num);
+      font-size: 1.25rem;
+      font-weight: 500;
       text-align: right;
       outline: none;
       touch-action: manipulation;
@@ -374,10 +296,11 @@
       padding: 10px 4px;
       background-color: var(--bg);
       border: 1px solid var(--field-border);
-      border-radius: 6px;
+      border-radius: 3px;
       color: var(--title);
-      font-size: 0.85rem;
-      font-weight: bold;
+      font-family: var(--font-num);
+      font-size: 0.8rem;
+      font-weight: 500;
       text-align: center;
       outline: none;
       touch-action: manipulation;
@@ -385,7 +308,7 @@
 
     .table-cell-input input.active-input {
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent);
+      box-shadow: inset 0 1px 3px var(--inset), 0 0 0 1px var(--accent);
     }
 
     .table-cell-input input:focus, .table-cell-input select:focus {
@@ -398,14 +321,9 @@
       border-bottom: 1px solid var(--field-border);
       background: var(--field);
     }
-    .base-row-container:last-child {
-      border-bottom: none;
-    }
+    .base-row-container:last-child { border-bottom: none; }
 
-    .base-row-main {
-      display: flex;
-      align-items: center;
-    }
+    .base-row-main { display: flex; align-items: center; }
 
     .base-row-actions {
       display: flex;
@@ -414,60 +332,88 @@
       padding: 2px 12px 6px 12px;
     }
 
-    .btn-action {
+    .btn-action, .btn-copy {
       background: var(--btn2-bg);
       border: 1px solid var(--btn2-border);
+      box-shadow: 0 1px 0 var(--key-edge);
       color: var(--title);
-      padding: 4px 10px;
-      border-radius: 5px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      border-radius: 3px;
+      font-weight: 500;
       cursor: pointer;
       touch-action: manipulation;
     }
-    .btn-action:hover {
-      background: var(--calc-hover);
+
+    .btn-action { padding: 4px 10px; font-size: 0.75rem; }
+    .btn-copy { padding: 6px 12px; font-size: 0.82rem; }
+
+    .btn-action:active, .btn-copy:active { transform: translateY(1px); box-shadow: none; }
+
+    @media (hover: hover) {
+      .btn-action:hover, .btn-copy:hover { background: var(--calc-hover); }
     }
 
+    /* ===== Pantalla de resultado (LCD) ===== */
     .result-box-compact {
-      background: var(--bg);
+      background: var(--lcd-bg);
       border: 1px solid var(--field-border);
-      border-radius: 8px;
+      border-radius: 3px;
+      box-shadow: inset 0 2px 5px var(--inset);
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
     .result-box-compact .text {
-      color: var(--green);
-      font-weight: 700;
-      font-size: 1.3rem;
-    }
-
-    .btn-copy {
-      background: var(--btn2-bg);
-      border: 1px solid var(--btn2-border);
-      color: var(--title);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      touch-action: manipulation;
+      color: var(--lcd-fg);
+      font-family: var(--font-num);
+      font-weight: 500;
+      font-size: 1.15rem;
     }
 
     .log-box-compact {
       background: var(--bg);
       border: 1px solid var(--field-border);
-      border-radius: 8px;
+      border-radius: 3px;
       padding: 8px 12px;
-      font-family: monospace;
-      font-size: 0.8rem;
-      color: var(--green);
-      line-height: 1.3;
+      font-family: var(--font-num);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.35;
     }
 
-    /* TECLADO VIRTUAL COMPACTO */
+    /* ===== Teclas ===== */
+    .v-key, .calc-btn {
+      background-color: var(--key-bg);
+      border: 1px solid var(--key-edge);
+      border-radius: 4px;
+      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
+      color: var(--title);
+      font-family: var(--font-num);
+      font-size: 1.25rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      touch-action: manipulation;
+      transition: transform .05s;
+    }
+
+    .v-key:active:not(:disabled), .calc-btn:active {
+      transform: translateY(2px);
+      box-shadow: inset 0 1px 0 var(--key-hi), 0 0 0 var(--key-edge);
+    }
+
+    @media (hover: hover) {
+      .v-key:hover:not(:disabled), .calc-btn:hover { background-color: var(--calc-hover); }
+    }
+
+    .v-key:disabled { opacity: 0.28; cursor: not-allowed; }
+
+    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 600; }
+
     .virtual-keypad-compact {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -476,41 +422,8 @@
       margin-top: auto;
     }
 
-    .virtual-keypad-compact .v-key {
-      font-size: 1.35rem;
-    }
+    .virtual-keypad-compact .v-key { font-size: 1.3rem; }
 
-    .v-key {
-      background-color: var(--bg);
-      border: 1px solid var(--calc-border);
-      border-radius: 7px;
-      color: var(--title);
-      font-size: 1.25rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      touch-action: manipulation;
-      transition: opacity 0.15s, background 0.15s;
-    }
-
-    .v-key:active:not(:disabled) {
-      background-color: var(--calc-hover);
-    }
-
-    .v-key:disabled {
-      opacity: 0.25;
-      cursor: not-allowed;
-    }
-
-    .v-key.op {
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    /* Teclado específico para bases */
     .virtual-keypad-bases {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -521,11 +434,12 @@
       margin-top: 2px;
     }
 
-    /* --- CALCULADORA ESTÁNDAR --- */
+    /* ===== Calculadora estándar / científica ===== */
     .calc-display {
-      background: var(--field);
+      background: var(--lcd-bg);
       border: 1px solid var(--field-border);
-      border-radius: 8px;
+      border-radius: 3px;
+      box-shadow: inset 0 2px 5px var(--inset);
       padding: 10px 14px;
       text-align: right;
       margin-bottom: 6px;
@@ -536,17 +450,19 @@
     }
 
     .calc-history {
-      font-size: 0.85rem;
-      color: var(--muted);
+      font-family: var(--font-num);
+      font-size: 0.8rem;
+      color: var(--lcd-dim);
       min-height: 18px;
       white-space: nowrap;
       overflow: hidden;
     }
 
     .calc-main-value {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: var(--title);
+      font-family: var(--font-num);
+      font-size: 2.3rem;
+      font-weight: 500;
+      color: var(--lcd-fg);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -560,52 +476,21 @@
       flex: 1;
     }
 
-    .calc-btn {
-      background-color: var(--bg);
-      border: 1px solid var(--calc-border);
-      border-radius: 7px;
-      color: var(--title);
-      font-size: 1.25rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s;
-      touch-action: manipulation;
-    }
-
-    .calc-btn:hover {
-      background-color: var(--calc-hover);
-    }
-
-    .calc-btn.op {
-      color: var(--accent);
-      font-size: 1.25rem;
-      font-weight: 800;
-    }
-
     .calc-btn.equals {
       background-color: var(--accent);
       color: var(--on-accent);
-      font-size: 1.25rem;
-      font-weight: 800;
-      border: var(--btn-equals-border);
-      border-radius: 7px;
+      font-weight: 600;
+      border-color: var(--accent-edge);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 0 var(--accent-edge);
     }
 
-    .calc-btn.equals:hover {
-      background-color: var(--accent-hover);
+    .calc-btn.equals:active {
+      transform: translateY(2px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 0 var(--accent-edge);
     }
 
-    .panel-icon-box svg {
-      width: 15px;
-      height: 15px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    @media (hover: hover) {
+      .calc-btn.equals:hover { background-color: var(--accent-hover); }
     }
 
     #calc-title { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -617,7 +502,7 @@
       padding: 2px;
       background: var(--field);
       border: 1px solid var(--field-border);
-      border-radius: 8px;
+      border-radius: 4px;
       flex-shrink: 0;
     }
 
@@ -625,10 +510,10 @@
       background: none;
       border: none;
       color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.76rem;
+      font-weight: 500;
       padding: 4px 8px;
-      border-radius: 6px;
+      border-radius: 3px;
       cursor: pointer;
       touch-action: manipulation;
     }
@@ -636,13 +521,10 @@
     .mode-switch button.active {
       background: var(--accent);
       color: var(--on-accent);
+      font-weight: 600;
     }
 
-    .calc-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+    .calc-body { flex: 1; display: flex; flex-direction: column; }
 
     .sci-grid {
       display: none;
@@ -654,11 +536,12 @@
     .tab-panel.sci .sci-grid { display: grid; }
 
     .calc-btn.sci {
+      background-color: var(--key-alt);
       font-size: 0.75rem;
-      color: var(--blue);
+      color: var(--text);
     }
 
-    .calc-btn.sci.angle { color: var(--accent); }
+    .calc-btn.sci.angle { color: var(--accent); font-weight: 600; }
     .calc-btn sup { font-size: 0.6em; }
 
     #tab-standard.sci .calc-display {
@@ -675,10 +558,7 @@
 
     #tab-standard.sci { min-height: 0 !important; }
 
-    #tab-standard.sci .calc-body {
-      flex: 1 !important;
-      min-height: 0;
-    }
+    #tab-standard.sci .calc-body { flex: 1 !important; min-height: 0; }
 
     #tab-standard.sci .sci-grid {
       gap: 3px !important;
@@ -701,9 +581,7 @@
       font-size: 0.9rem !important;
     }
 
-    #tab-standard.sci .calc-btn.sci {
-      font-size: 0.65rem !important;
-    }
+    #tab-standard.sci .calc-btn.sci { font-size: 0.65rem !important; }
 
     @media (max-width: 420px) {
       .mode-word { display: none; }
@@ -713,50 +591,23 @@
 <body>
 
   <header>
-    <div class="app-icon">±</div>
     <h1>Herramientas de Cálculo Rápido</h1>
     <div class="header-actions">
-      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()">
-        <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-      </button>
+      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()">◐</button>
     </div>
   </header>
 
   <!-- Navegación Superior -->
   <div class="nav-container">
     <nav>
-      <button class="nav-item active" onclick="switchTab('tab-standard', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
-        <span>Estándar</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p1', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
-        <span>% valor</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p2', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-        <span>Qué %</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p3', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-        <span>Aumentar</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p4', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
-        <span>Disminuir</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-scale', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
-        <span>Escalas</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-bases', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span>Bases (Bin/Hex)</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-data', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        <span>Datos</span>
-      </button>
+      <button class="nav-item active" onclick="switchTab('tab-standard', this)">Estándar</button>
+      <button class="nav-item" onclick="switchTab('tab-p1', this)">% valor</button>
+      <button class="nav-item" onclick="switchTab('tab-p2', this)">Qué %</button>
+      <button class="nav-item" onclick="switchTab('tab-p3', this)">Aumentar</button>
+      <button class="nav-item" onclick="switchTab('tab-p4', this)">Disminuir</button>
+      <button class="nav-item" onclick="switchTab('tab-scale', this)">Escalas</button>
+      <button class="nav-item" onclick="switchTab('tab-bases', this)">Bases (Bin/Hex)</button>
+      <button class="nav-item" onclick="switchTab('tab-data', this)">Datos</button>
     </nav>
   </div>
 
@@ -764,7 +615,7 @@
     <!-- TAB ESTÁNDAR / CIENTÍFICA -->
     <div id="tab-standard" class="tab-panel active">
       <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg></div> <span id="calc-title">Calculadora<span class="mode-word" id="calc-mode-word"> Estándar</span></span>
+        <span id="calc-title">Calculadora<span class="mode-word" id="calc-mode-word"> Estándar</span></span>
         <div class="mode-switch" role="group" aria-label="Modo de la calculadora">
           <button id="mode-std" class="active" onclick="setCalcMode('standard')">Estándar</button>
           <button id="mode-sci" onclick="setCalcMode('scientific')">Científica</button>
@@ -834,20 +685,18 @@
 
     <!-- TAB PORCENTAJE DEL VALOR -->
     <div id="tab-p1" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div> Porcentaje de un Valor
-      </div>
-      
+      <div class="panel-title">Porcentaje de un Valor</div>
+
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label green">Porcentaje (%)</div>
+          <div class="table-cell-label">Porcentaje (%)</div>
           <div class="table-cell-input" style="position: relative;">
             <input type="text" inputmode="none" id="p1-percent" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--green); font-weight: bold; pointer-events: none;">%</span>
+            <span style="position: absolute; right: 16px; color: var(--muted); font-family: var(--font-num); pointer-events: none;">%</span>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label blue">Valor Total</div>
+          <div class="table-cell-label">Valor Total</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p1-value" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly>
           </div>
@@ -876,25 +725,23 @@
         <button class="v-key op" onclick="vKey(',')">,</button>
 
         <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP1()">CE</button>
+        <button class="v-key op" style="grid-column: span 2;" onclick="clearP1()">CE</button>
       </div>
     </div>
 
     <!-- TAB QUÉ PORCENTAJE ES -->
     <div id="tab-p2" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div> ¿Qué porcentaje es?
-      </div>
+      <div class="panel-title">¿Qué porcentaje es?</div>
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label green">Valor Total (100%)</div>
+          <div class="table-cell-label">Valor Total (100%)</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p2-total" placeholder="0" oninput="calcP2()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label blue">Valor Parcial</div>
+          <div class="table-cell-label">Valor Parcial</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p2-part" placeholder="0" oninput="calcP2()" onclick="setActiveInput(this)" readonly>
           </div>
@@ -923,28 +770,26 @@
         <button class="v-key op" onclick="vKey(',')">,</button>
 
         <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP2()">CE</button>
+        <button class="v-key op" style="grid-column: span 2;" onclick="clearP2()">CE</button>
       </div>
     </div>
 
     <!-- TAB AUMENTAR -->
     <div id="tab-p3" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div> Aumentar Porcentaje
-      </div>
+      <div class="panel-title">Aumentar Porcentaje</div>
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label green">Valor Inicial</div>
+          <div class="table-cell-label">Valor Inicial</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p3-value" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label blue">% a Aumentar</div>
+          <div class="table-cell-label">% a Aumentar</div>
           <div class="table-cell-input" style="position: relative;">
             <input type="text" inputmode="none" id="p3-percent" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
+            <span style="position: absolute; right: 16px; color: var(--muted); font-family: var(--font-num); pointer-events: none;">%</span>
           </div>
         </div>
       </div>
@@ -971,28 +816,26 @@
         <button class="v-key op" onclick="vKey(',')">,</button>
 
         <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP3()">CE</button>
+        <button class="v-key op" style="grid-column: span 2;" onclick="clearP3()">CE</button>
       </div>
     </div>
 
     <!-- TAB DISMINUIR -->
     <div id="tab-p4" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div> Disminuir Porcentaje
-      </div>
+      <div class="panel-title">Disminuir Porcentaje</div>
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label green">Valor Inicial</div>
+          <div class="table-cell-label">Valor Inicial</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p4-value" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label blue">% a Descontar</div>
+          <div class="table-cell-label">% a Descontar</div>
           <div class="table-cell-input" style="position: relative;">
             <input type="text" inputmode="none" id="p4-percent" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
+            <span style="position: absolute; right: 16px; color: var(--muted); font-family: var(--font-num); pointer-events: none;">%</span>
           </div>
         </div>
       </div>
@@ -1019,15 +862,13 @@
         <button class="v-key op" onclick="vKey(',')">,</button>
 
         <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearP4()">CE</button>
+        <button class="v-key op" style="grid-column: span 2;" onclick="clearP4()">CE</button>
       </div>
     </div>
 
     <!-- TAB ESCALAS -->
     <div id="tab-scale" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></div> Conversión de Escala
-      </div>
+      <div class="panel-title">Conversión de Escala</div>
 
       <!-- Texto superior con min-height fijo para evitar saltos de diseño -->
       <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0; min-height: 2.6rem; display: flex; flex-direction: column; justify-content: center;">
@@ -1036,15 +877,15 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label" style="color: var(--title);">Escala (ej: 1:2)</div>
+          <div class="table-cell-label">Escala (ej: 1:2)</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-r1" value="1" onclick="setActiveInput(this)" readonly>
-            <span style="color: var(--accent); font-weight: bold; padding: 0 4px;">:</span>
+            <span style="color: var(--accent); font-weight: 600; padding: 0 4px;">:</span>
             <input type="text" inputmode="none" id="scale-r2" value="2" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label green">Longitud real</div>
+          <div class="table-cell-label">Longitud real</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-real" placeholder="0" oninput="calcScale('real')" onclick="setActiveInput(this)" readonly>
             <select id="scale-unit-real" onchange="calcScale('real')" style="margin-left: 4px;">
@@ -1055,7 +896,7 @@
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label blue">Longitud de escala</div>
+          <div class="table-cell-label">Longitud de escala</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-plan" placeholder="0" oninput="calcScale('plan')" onclick="setActiveInput(this)" readonly>
             <select id="scale-unit-plan" onchange="calcScale('plan')" style="margin-left: 4px;">
@@ -1089,21 +930,19 @@
         <button class="v-key op" onclick="vKey(',')">,</button>
 
         <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearScale()">CE</button>
+        <button class="v-key op" style="grid-column: span 2;" onclick="clearScale()">CE</button>
       </div>
     </div>
 
-    <!-- TAB: CONVERSIÓN DE BASES NUMÉRICAS -->
+    <!-- TAB CONVERSIÓN DE BASES NUMÉRICAS -->
     <div id="tab-bases" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div> Sistemas Numéricos
-      </div>
+      <div class="panel-title">Sistemas Numéricos</div>
 
       <div class="calc-table-layout">
         <!-- Decimal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label green">Decimal (10)</div>
+            <div class="table-cell-label">Decimal (10)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveBaseInput('base-dec', 'dec')" readonly>
             </div>
@@ -1117,7 +956,7 @@
         <!-- Binario -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label blue">Binario (2)</div>
+            <div class="table-cell-label">Binario (2)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveBaseInput('base-bin', 'bin')" readonly>
             </div>
@@ -1131,7 +970,7 @@
         <!-- Octal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label" style="color: var(--accent);">Octal (8)</div>
+            <div class="table-cell-label">Octal (8)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveBaseInput('base-oct', 'oct')" readonly>
             </div>
@@ -1145,7 +984,7 @@
         <!-- Hexadecimal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label" style="color: var(--title);">Hex (16)</div>
+            <div class="table-cell-label">Hex (16)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveBaseInput('base-hex', 'hex')" readonly>
             </div>
@@ -1181,19 +1020,17 @@
         <button class="v-key op" data-val="D" onclick="vKey('D')">D</button>
         <button class="v-key op" data-val="E" onclick="vKey('E')">E</button>
         <button class="v-key op" data-val="F" onclick="vKey('F')">F</button>
-        <button class="v-key op" data-val="ce" style="color: var(--green);" onclick="clearBases()">CE</button>
+        <button class="v-key op" data-val="ce" onclick="clearBases()">CE</button>
       </div>
     </div>
 
-    <!-- TAB: CONVERSOR DE DATOS / ALMACENAMIENTO -->
+    <!-- TAB CONVERSOR DE DATOS / ALMACENAMIENTO -->
     <div id="tab-data" class="tab-panel">
-      <div class="panel-title">
-        <div class="panel-icon-box"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div> Conversor de Datos
-      </div>
+      <div class="panel-title">Conversor de Datos</div>
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label green">Valor de Origen</div>
+          <div class="table-cell-label">Valor de Origen</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="data-val-1" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-1', 'src')" readonly>
             <select id="data-unit-1" onchange="calcData()" style="margin-left: 4px;">
@@ -1208,7 +1045,7 @@
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label blue">Valor de Destino</div>
+          <div class="table-cell-label">Valor de Destino</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="data-val-2" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-2', 'dst')" readonly>
             <select id="data-unit-2" onchange="calcData()" style="margin-left: 4px;">
@@ -1246,13 +1083,13 @@
         <button class="v-key op" onclick="vKey(',')">,</button>
 
         <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2; color: var(--green);" onclick="clearData()">CE</button>
+        <button class="v-key op" style="grid-column: span 2;" onclick="clearData()">CE</button>
       </div>
     </div>
   </main>
 
   <script>
-    /* Bloquear gestos de zoom de iOS Safari */
+    // Bloquear gestos de zoom de iOS Safari
     document.addEventListener('gesturestart', function (e) {
       e.preventDefault();
     });
@@ -1366,7 +1203,7 @@
       }
     }
 
-    /* COPIAR Y PEGAR */
+    // COPIAR Y PEGAR
     async function copyToClipboard(text) {
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1434,7 +1271,7 @@
       copyValue(num !== null ? num : txt);
     }
 
-    /* ESTÁNDAR */
+    // ESTÁNDAR
     let calcVal = '0';
     let calcOpCurrent = null;
     let calcPrevVal = null;
@@ -1569,7 +1406,7 @@
       }
     }
 
-    /* CIENTÍFICA */
+    // CIENTÍFICA
     let calcMode = 'standard';
     let angleMode = 'deg';
 
@@ -1701,7 +1538,7 @@
 
     window.addEventListener('resize', fitDisplay);
 
-    /* PORCENTAJES */
+    // PORCENTAJES
     function calcP1() {
       const p = parseNum(document.getElementById('p1-percent').value);
       const v = parseNum(document.getElementById('p1-value').value);
@@ -1754,7 +1591,7 @@
       setActiveInput(document.getElementById('p4-value'));
     }
 
-    /* ESCALAS */
+    // ESCALAS
     const UNIT_ABBR = { 'milímetro': 'mm', 'centímetro': 'cm', 'metro': 'm' };
     const UNIT_TO_M = { 'milímetro': 0.001, 'centímetro': 0.01, 'metro': 1 };
     let scaleMode = 'real';
@@ -1788,7 +1625,7 @@
         const planVal = planMeters / fPlan;
         planInput.value = roundNum(planVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala: ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       } else {
         if (planValStr === '') {
           realInput.value = '';
@@ -1802,7 +1639,7 @@
         const realVal = realMeters / fReal;
         realInput.value = roundNum(realVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala: ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       }
     }
 
@@ -1814,7 +1651,7 @@
       setActiveInput(document.getElementById('scale-r1'));
     }
 
-    /* CONVERSIÓN DE BASES NUMÉRICAS */
+    // CONVERSIÓN DE BASES NUMÉRICAS
     const BASE_DIGITS = { dec: 10, bin: 2, oct: 8, hex: 16 };
     const BASE_FRAC_MAX = 10;
 
@@ -1870,7 +1707,7 @@
       setActiveBaseInput('base-dec', 'dec');
     }
 
-    /* CONVERSOR DE DATOS / ALMACENAMIENTO */
+    // CONVERSOR DE DATOS / ALMACENAMIENTO
     const DATA_MULTIPLIERS = {
       'bit': 0.125,
       'byte': 1,
@@ -1909,7 +1746,7 @@
       setActiveDataInput('data-val-1', 'src');
     }
 
-    /* AVISO */
+    // AVISO
     function showToast(msg, ms = 3600) {
       document.querySelectorAll('.toast').forEach(old => old.remove());
       const t = document.createElement('div');
@@ -1920,8 +1757,8 @@
       setTimeout(() => t.remove(), ms);
     }
 
-    /* TEMA */
-    const THEMES = { original: 'Tema original', pink: 'Tema rosa y negro', Café: 'Café' };
+    // TEMA
+    const THEMES = { original: 'Tema original', pink: 'Tema rosa y negro', 'Café': 'Café' };
 
     function applyTheme(name) {
       document.documentElement.setAttribute('data-theme', name || 'original');
@@ -1933,7 +1770,7 @@
       if (current === 'original') next = 'pink';
       else if (current === 'pink') next = 'Café';
       else next = 'original';
-      
+
       applyTheme(next);
       try { localStorage.setItem('calc-theme', next); } catch (e) {}
       showToast(THEMES[next]);
