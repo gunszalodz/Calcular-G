@@ -13,7 +13,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ===== TEMA ORIGINAL ===== */
@@ -24,7 +24,7 @@
       --bg: #0b0e14; --header-bg: #0b0e14; --body-bg: #0b0e14; --text: #e6edf3;
       --accent: #ff9800; --accent-hover: #e68a00; --accent-edge: #8f5400; --on-accent: #000000;
       --title: #ffffff;
-      --panel: #121721; --panel-border: #1e2638; --muted: #8b949e;
+      --green: #3fb950; --blue: #58a6ff; --panel: #121721; --panel-border: #1e2638; --muted: #8b949e;
       --field: #06090e; --field-border: #1f293d; --focus: #388bfd;
       --btn2-bg: #1c212e; --btn2-border: #2d3548; --calc-hover: #1f2735; --calc-border: #1d2433;
       --nav-bg: #06080c; --nav-border: #161b26;
@@ -38,7 +38,7 @@
       --body-bg: linear-gradient(160deg, rgba(255,25,150,.38) 0%, rgba(5,4,7,0) 30%, rgba(5,4,7,0) 68%, rgba(255,25,150,.30) 100%), #050407;
       --text: #f6e8f1; --accent: #ff2fa3; --accent-hover: #e01f8e; --accent-edge: #8f1058; --on-accent: #0a0006;
       --title: #ffffff;
-      --panel: rgba(12,5,12,.86); --panel-border: #6b1f52; --muted: #e3b6d3;
+      --green: #ff7ac8; --blue: #d2a8ff; --panel: rgba(12,5,12,.86); --panel-border: #6b1f52; --muted: #e3b6d3;
       --field: #08040a; --field-border: #6b1f52; --focus: #ff2fa3;
       --btn2-bg: #26101f; --btn2-border: #7a2560; --calc-hover: #3a1530; --calc-border: #5a1a45;
       --nav-bg: rgba(5,3,6,.92); --nav-border: #4a1538;
@@ -51,7 +51,7 @@
       --bg: #f2eada; --header-bg: #f2eada; --body-bg: #f2eada; --text: #2c2b28;
       --accent: #7a5230; --accent-hover: #5e3d21; --accent-edge: #3f2812; --on-accent: #ffffff;
       --title: #2c2b28;
-      --panel: #e8decb; --panel-border: #cbb898; --muted: #2c2b28;
+      --green: #4f6a2a; --blue: #9a4a1c; --panel: #e8decb; --panel-border: #cbb898; --muted: #2c2b28;
       --field: #faf6ee; --field-border: #cbb898; --focus: #7a5230;
       --btn2-bg: #dfd2b9; --btn2-border: #c1ad8b; --calc-hover: #e9dfc8; --calc-border: #cbb898;
       --nav-bg: #e8decb; --nav-border: #cbb898;
@@ -100,7 +100,7 @@
 
     header h1 {
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: .02em;
       color: var(--title);
       min-width: 0;
@@ -142,7 +142,7 @@
       padding: 9px 14px;
       border-radius: 4px;
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
       max-width: 90%;
       text-align: center;
       opacity: 0;
@@ -191,7 +191,7 @@
       border-bottom: 2px solid transparent;
       color: var(--muted);
       font-size: 0.8rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: .01em;
       cursor: pointer;
       padding: 11px 12px 9px;
@@ -202,7 +202,7 @@
 
     .nav-item.active {
       color: var(--accent);
-      font-weight: 600;
+      font-weight: 700;
       border-bottom-color: var(--accent);
     }
 
@@ -230,7 +230,7 @@
 
     .panel-title {
       font-size: 1.05rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--title);
       display: flex;
       align-items: center;
@@ -259,10 +259,15 @@
       flex: 1;
       padding: 10px 12px;
       font-size: 0.95rem;
-      font-weight: 500;
+      font-weight: 700;
       color: var(--muted);
       line-height: 1.2;
     }
+
+    .table-cell-label.green { color: var(--green); }
+    .table-cell-label.blue { color: var(--blue); }
+    .table-cell-label.accent { color: var(--accent); }
+    .table-cell-label.strong { color: var(--title); }
 
     .table-cell-input {
       width: 220px;
@@ -283,7 +288,7 @@
       color: var(--title);
       font-family: var(--font-num);
       font-size: 1.25rem;
-      font-weight: 500;
+      font-weight: 700;
       text-align: right;
       outline: none;
       touch-action: manipulation;
@@ -300,7 +305,7 @@
       color: var(--title);
       font-family: var(--font-num);
       font-size: 0.8rem;
-      font-weight: 500;
+      font-weight: 700;
       text-align: center;
       outline: none;
       touch-action: manipulation;
@@ -338,7 +343,7 @@
       box-shadow: 0 1px 0 var(--key-edge);
       color: var(--title);
       border-radius: 3px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
     }
@@ -367,7 +372,7 @@
     .result-box-compact .text {
       color: var(--lcd-fg);
       font-family: var(--font-num);
-      font-weight: 500;
+      font-weight: 700;
       font-size: 1.15rem;
     }
 
@@ -380,6 +385,7 @@
       font-size: 0.78rem;
       color: var(--muted);
       line-height: 1.35;
+      font-weight: 500;
     }
 
     /* ===== Teclas ===== */
@@ -391,7 +397,7 @@
       color: var(--title);
       font-family: var(--font-num);
       font-size: 1.25rem;
-      font-weight: 500;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -412,7 +418,7 @@
 
     .v-key:disabled { opacity: 0.28; cursor: not-allowed; }
 
-    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 600; }
+    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 800; }
 
     .virtual-keypad-compact {
       display: grid;
@@ -453,6 +459,7 @@
       font-family: var(--font-num);
       font-size: 0.8rem;
       color: var(--lcd-dim);
+      font-weight: 500;
       min-height: 18px;
       white-space: nowrap;
       overflow: hidden;
@@ -461,7 +468,7 @@
     .calc-main-value {
       font-family: var(--font-num);
       font-size: 2.3rem;
-      font-weight: 500;
+      font-weight: 700;
       color: var(--lcd-fg);
       overflow: hidden;
       text-overflow: ellipsis;
@@ -479,7 +486,7 @@
     .calc-btn.equals {
       background-color: var(--accent);
       color: var(--on-accent);
-      font-weight: 600;
+      font-weight: 800;
       border-color: var(--accent-edge);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 0 var(--accent-edge);
     }
@@ -511,7 +518,7 @@
       border: none;
       color: var(--muted);
       font-size: 0.76rem;
-      font-weight: 500;
+      font-weight: 700;
       padding: 4px 8px;
       border-radius: 3px;
       cursor: pointer;
@@ -541,7 +548,7 @@
       color: var(--text);
     }
 
-    .calc-btn.sci.angle { color: var(--accent); font-weight: 600; }
+    .calc-btn.sci.angle { color: var(--accent); font-weight: 800; }
     .calc-btn sup { font-size: 0.6em; }
 
     #tab-standard.sci .calc-display {
@@ -689,14 +696,14 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label">Porcentaje (%)</div>
+          <div class="table-cell-label green">Porcentaje (%)</div>
           <div class="table-cell-input" style="position: relative;">
             <input type="text" inputmode="none" id="p1-percent" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--muted); font-family: var(--font-num); pointer-events: none;">%</span>
+            <span style="position: absolute; right: 16px; color: var(--green); font-family: var(--font-num); font-weight: 700; pointer-events: none;">%</span>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">Valor Total</div>
+          <div class="table-cell-label blue">Valor Total</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p1-value" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly>
           </div>
@@ -735,13 +742,13 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label">Valor Total (100%)</div>
+          <div class="table-cell-label green">Valor Total (100%)</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p2-total" placeholder="0" oninput="calcP2()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">Valor Parcial</div>
+          <div class="table-cell-label blue">Valor Parcial</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p2-part" placeholder="0" oninput="calcP2()" onclick="setActiveInput(this)" readonly>
           </div>
@@ -780,16 +787,16 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label">Valor Inicial</div>
+          <div class="table-cell-label green">Valor Inicial</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p3-value" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">% a Aumentar</div>
+          <div class="table-cell-label blue">% a Aumentar</div>
           <div class="table-cell-input" style="position: relative;">
             <input type="text" inputmode="none" id="p3-percent" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--muted); font-family: var(--font-num); pointer-events: none;">%</span>
+            <span style="position: absolute; right: 16px; color: var(--blue); font-family: var(--font-num); font-weight: 700; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
@@ -826,16 +833,16 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label">Valor Inicial</div>
+          <div class="table-cell-label green">Valor Inicial</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="p4-value" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">% a Descontar</div>
+          <div class="table-cell-label blue">% a Descontar</div>
           <div class="table-cell-input" style="position: relative;">
             <input type="text" inputmode="none" id="p4-percent" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--muted); font-family: var(--font-num); pointer-events: none;">%</span>
+            <span style="position: absolute; right: 16px; color: var(--blue); font-family: var(--font-num); font-weight: 700; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
@@ -877,15 +884,15 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label">Escala (ej: 1:2)</div>
+          <div class="table-cell-label strong">Escala (ej: 1:2)</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-r1" value="1" onclick="setActiveInput(this)" readonly>
-            <span style="color: var(--accent); font-weight: 600; padding: 0 4px;">:</span>
+            <span style="color: var(--accent); font-weight: 800; padding: 0 4px;">:</span>
             <input type="text" inputmode="none" id="scale-r2" value="2" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">Longitud real</div>
+          <div class="table-cell-label green">Longitud real</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-real" placeholder="0" oninput="calcScale('real')" onclick="setActiveInput(this)" readonly>
             <select id="scale-unit-real" onchange="calcScale('real')" style="margin-left: 4px;">
@@ -896,7 +903,7 @@
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">Longitud de escala</div>
+          <div class="table-cell-label blue">Longitud de escala</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-plan" placeholder="0" oninput="calcScale('plan')" onclick="setActiveInput(this)" readonly>
             <select id="scale-unit-plan" onchange="calcScale('plan')" style="margin-left: 4px;">
@@ -942,7 +949,7 @@
         <!-- Decimal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label">Decimal (10)</div>
+            <div class="table-cell-label green">Decimal (10)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveBaseInput('base-dec', 'dec')" readonly>
             </div>
@@ -956,7 +963,7 @@
         <!-- Binario -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label">Binario (2)</div>
+            <div class="table-cell-label blue">Binario (2)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveBaseInput('base-bin', 'bin')" readonly>
             </div>
@@ -970,7 +977,7 @@
         <!-- Octal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label">Octal (8)</div>
+            <div class="table-cell-label accent">Octal (8)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveBaseInput('base-oct', 'oct')" readonly>
             </div>
@@ -984,7 +991,7 @@
         <!-- Hexadecimal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
-            <div class="table-cell-label">Hex (16)</div>
+            <div class="table-cell-label strong">Hex (16)</div>
             <div class="table-cell-input">
               <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveBaseInput('base-hex', 'hex')" readonly>
             </div>
@@ -1030,7 +1037,7 @@
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label">Valor de Origen</div>
+          <div class="table-cell-label green">Valor de Origen</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="data-val-1" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-1', 'src')" readonly>
             <select id="data-unit-1" onchange="calcData()" style="margin-left: 4px;">
@@ -1045,7 +1052,7 @@
           </div>
         </div>
         <div class="table-row">
-          <div class="table-cell-label">Valor de Destino</div>
+          <div class="table-cell-label blue">Valor de Destino</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="data-val-2" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-2', 'dst')" readonly>
             <select id="data-unit-2" onchange="calcData()" style="margin-left: 4px;">
