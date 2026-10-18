@@ -129,6 +129,16 @@
       touch-action: manipulation;
     }
 
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .icon-btn:active { transform: translateY(1px); box-shadow: none; }
 
     .toast {
@@ -186,17 +196,34 @@
     nav::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 2px; }
 
     .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: .01em;
       cursor: pointer;
-      padding: 11px 12px 9px;
+      padding: 8px 12px 7px;
+      min-width: 72px;
       white-space: nowrap;
       touch-action: manipulation;
+      flex-shrink: 0;
+    }
+
+    .nav-icon {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       flex-shrink: 0;
     }
 
@@ -407,6 +434,9 @@
       transition: transform .05s;
     }
 
+    .v-key, .calc-btn { -webkit-text-stroke: 0.5px currentColor; }
+    .calc-btn.sci { -webkit-text-stroke: 0.3px currentColor; }
+
     .v-key:active:not(:disabled), .calc-btn:active {
       transform: translateY(2px);
       box-shadow: inset 0 1px 0 var(--key-hi), 0 0 0 var(--key-edge);
@@ -600,21 +630,45 @@
   <header>
     <h1>Herramientas de Cálculo Rápido</h1>
     <div class="header-actions">
-      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()">◐</button>
+      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()"><svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></button>
     </div>
   </header>
 
   <!-- Navegación Superior -->
   <div class="nav-container">
     <nav>
-      <button class="nav-item active" onclick="switchTab('tab-standard', this)">Estándar</button>
-      <button class="nav-item" onclick="switchTab('tab-p1', this)">% valor</button>
-      <button class="nav-item" onclick="switchTab('tab-p2', this)">Qué %</button>
-      <button class="nav-item" onclick="switchTab('tab-p3', this)">Aumentar</button>
-      <button class="nav-item" onclick="switchTab('tab-p4', this)">Disminuir</button>
-      <button class="nav-item" onclick="switchTab('tab-scale', this)">Escalas</button>
-      <button class="nav-item" onclick="switchTab('tab-bases', this)">Bases (Bin/Hex)</button>
-      <button class="nav-item" onclick="switchTab('tab-data', this)">Datos</button>
+      <button class="nav-item active" onclick="switchTab('tab-standard', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+        <span>Estándar</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-p1', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+        <span>% valor</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-p2', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+        <span>Qué %</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-p3', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        <span>Aumentar</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-p4', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+        <span>Disminuir</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-scale', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+        <span>Escalas</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-bases', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span>Bases (Bin/Hex)</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-data', this)">
+        <svg class="nav-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <span>Datos</span>
+      </button>
     </nav>
   </div>
 
