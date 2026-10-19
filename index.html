@@ -118,7 +118,6 @@
       scrollbar-width: none;
     }
 
-    /* ===== Encabezado ===== */
     header {
       padding: 8px 14px;
       display: flex;
@@ -195,7 +194,6 @@
 
     .toast.show { opacity: 1; }
 
-    /* ===== Navegación (fila de teclas de función) ===== */
     .nav-container {
       position: relative;
       flex-shrink: 0;
@@ -276,7 +274,6 @@
       overflow-y: auto;
     }
 
-    /* Carcasa con borde brillante */
     .tab-panel {
       display: none;
       height: 100%;
@@ -306,7 +303,6 @@
       flex-shrink: 0;
     }
 
-    /* ===== Tabla de campos ===== */
     .calc-table-layout {
       display: flex;
       flex-direction: column;
@@ -425,7 +421,6 @@
       .btn-action:hover, .btn-copy:hover { background: var(--calc-hover); }
     }
 
-    /* ===== Pantalla de resultado (LCD) ===== */
     .result-box-compact {
       background: var(--lcd-bg);
       border: 1px solid var(--lcd-edge);
@@ -457,7 +452,6 @@
       font-weight: 500;
     }
 
-    /* ===== Teclas ===== */
     .v-key, .calc-btn {
       background: var(--key-bg);
       border: 1px solid var(--key-edge);
@@ -513,7 +507,6 @@
       margin-top: 2px;
     }
 
-    /* ===== Calculadora estándar / científica ===== */
     .calc-display {
       background: var(--lcd-bg);
       border: 1px solid var(--lcd-edge);
@@ -738,8 +731,8 @@
         <button class="calc-btn sci angle" id="btn-angle" title="Grados / Radianes" onclick="toggleAngle()">DEG</button>
         <button class="calc-btn sci" title="Pi" onclick="calcConst('pi')">π</button>
         <button class="calc-btn sci" title="Número e" onclick="calcConst('e')">e</button>
-        <button class="calc-btn sci" title="Abrir paréntesis" onclick="calcParen('(')">(</button>
-        <button class="calc-btn sci" title="Cerrar paréntesis" onclick="calcParen(')')">)</button>
+        <button class="calc-btn sci" title="Valor absoluto" onclick="calcFunc('abs')">|x|</button>
+        <button class="calc-btn sci" title="Al cubo" onclick="calcFunc('cube')"><span>x<sup>3</sup></span></button>
 
         <button class="calc-btn sci" title="Seno" onclick="calcFunc('sin')">sin</button>
         <button class="calc-btn sci" title="Coseno" onclick="calcFunc('cos')">cos</button>
@@ -760,33 +753,41 @@
         <button class="calc-btn sci" title="Factorial" onclick="calcFunc('fact')">n!</button>
       </div>
       <div class="calc-grid">
+        <!-- Fila 1 -->
         <button class="calc-btn op" onclick="calcOp('%')">%</button>
         <button class="calc-btn op" onclick="calcClearEntry()">CE</button>
         <button class="calc-btn op" onclick="calcClear()">C</button>
         <button class="calc-btn op" onclick="calcBackspace()">⌫</button>
 
+        <!-- Fila 2 -->
+        <button class="calc-btn op" onclick="calcToggleSign()">±</button>
+        <button class="calc-btn sci" title="Abrir paréntesis" onclick="calcParen('(')">(</button>
+        <button class="calc-btn sci" title="Cerrar paréntesis" onclick="calcParen(')')">)</button>
         <button class="calc-btn op" onclick="calcOp('/')">÷</button>
-        <button class="calc-btn op" onclick="calcOp('*')">×</button>
-        <button class="calc-btn op" onclick="calcOp('-')">-</button>
-        <button class="calc-btn op" onclick="calcOp('+')">+</button>
 
+        <!-- Fila 3 -->
         <button class="calc-btn" onclick="calcNum('7')">7</button>
         <button class="calc-btn" onclick="calcNum('8')">8</button>
         <button class="calc-btn" onclick="calcNum('9')">9</button>
-        <button class="calc-btn op" onclick="calcToggleSign()">±</button>
+        <button class="calc-btn op" onclick="calcOp('*')">×</button>
 
+        <!-- Fila 4 -->
         <button class="calc-btn" onclick="calcNum('4')">4</button>
         <button class="calc-btn" onclick="calcNum('5')">5</button>
         <button class="calc-btn" onclick="calcNum('6')">6</button>
-        <button class="calc-btn" onclick="calcNum('.')">,</button>
+        <button class="calc-btn op" onclick="calcOp('-')">-</button>
 
+        <!-- Fila 5 -->
         <button class="calc-btn" onclick="calcNum('1')">1</button>
         <button class="calc-btn" onclick="calcNum('2')">2</button>
         <button class="calc-btn" onclick="calcNum('3')">3</button>
-        <button class="calc-btn" onclick="calcNum('.')">.</button>
+        <button class="calc-btn op" onclick="calcOp('+')">+</button>
 
-        <button class="calc-btn" style="grid-column: span 2;" onclick="calcNum('0')">0</button>
-        <button class="calc-btn equals" style="grid-column: span 2;" onclick="calcEquals()">=</button>
+        <!-- Fila 6 -->
+        <button class="calc-btn" onclick="calcNum('.')">.</button>
+        <button class="calc-btn" onclick="calcNum('0')">0</button>
+        <button class="calc-btn" onclick="calcNum(',')">,</button>
+        <button class="calc-btn equals" onclick="calcEquals()">=</button>
       </div>
       </div>
     </div>
@@ -978,7 +979,6 @@
     <div id="tab-scale" class="tab-panel">
       <div class="panel-title">Conversión de Escala</div>
 
-      <!-- Texto superior con min-height fijo para evitar saltos de diseño -->
       <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0; min-height: 2.6rem; display: flex; flex-direction: column; justify-content: center;">
         • Ingrese valores.
       </div>
@@ -1047,7 +1047,6 @@
       <div class="panel-title">Sistemas Numéricos</div>
 
       <div class="calc-table-layout">
-        <!-- Decimal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
             <div class="table-cell-label green">Decimal (10)</div>
@@ -1061,7 +1060,6 @@
           </div>
         </div>
 
-        <!-- Binario -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
             <div class="table-cell-label blue">Binario (2)</div>
@@ -1075,7 +1073,6 @@
           </div>
         </div>
 
-        <!-- Octal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
             <div class="table-cell-label accent">Octal (8)</div>
@@ -1089,7 +1086,6 @@
           </div>
         </div>
 
-        <!-- Hexadecimal -->
         <div class="base-row-container">
           <div class="base-row-main table-row">
             <div class="table-cell-label strong">Hex (16)</div>
@@ -1197,14 +1193,13 @@
   </main>
 
   <script>
-    // Bloquear gestos de zoom de iOS Safari
     document.addEventListener('gesturestart', function (e) {
       e.preventDefault();
     });
 
     let activeInput = null;
-    let currentBaseType = 'dec'; // dec, bin, oct, hex
-    let activeDataField = 'src'; // src o dst
+    let currentBaseType = 'dec';
+    let activeDataField = 'src';
 
     function setActiveInput(input) {
       document.querySelectorAll('.tab-panel.active input').forEach(el => el.classList.remove('active-input'));
@@ -1249,11 +1244,15 @@
       });
     }
 
-    /* Separador de miles: en los cuadros de valores el punto es de miles y la coma es decimal */
     function groupDigits(s) {
-      const i = s.indexOf(',');
-      const ip = i < 0 ? s : s.slice(0, i);
-      const rest = i < 0 ? '' : s.slice(i);
+      if (!s) return '';
+      const sepIdx = s.indexOf(',');
+      if (sepIdx < 0) {
+        const cleanStr = s.replace(/\./g, '');
+        return cleanStr.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      }
+      const ip = s.slice(0, sepIdx).replace(/\./g, '');
+      const rest = s.slice(sepIdx);
       return ip.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + rest;
     }
 
@@ -1265,11 +1264,16 @@
     }
 
     function fmtDisplay(v) {
-      if (/^-?\d+(\.\d*)?$/.test(v)) {
-        const i = v.indexOf('.');
-        return groupDigits(i < 0 ? v : v.slice(0, i)) + (i < 0 ? '' : ',' + v.slice(i + 1));
-      }
-      return v.replace('.', ',');
+      if (v === 'Error') return 'Error';
+      const symbols = { '*': '×', '/': '÷' };
+      return v.replace(/(\d+(\.\d+)*(\,\d*)?)|([\+\-\*\/\^\(\)])|([a-zA-Z0-9]+)/g, (match, num) => {
+        if (num) {
+          const parts = num.split(',');
+          const intPart = parts[0].replace(/\./g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          return parts.length > 1 ? intPart + ',' + parts[1] : intPart;
+        }
+        return symbols[match] || match;
+      });
     }
 
     function parseNum(valStr) {
@@ -1287,11 +1291,15 @@
       if (!activeInput) return;
 
       if (!activeInput.id.startsWith('base-')) {
-        let raw = activeInput.value.replace(/\./g, '');
+        let raw = activeInput.value;
         if (val === 'back') {
           raw = raw.slice(0, -1);
-        } else if (val === '.' || val === ',') {
-          if (!raw.includes(',')) raw += (raw === '' ? '0,' : ',');
+        } else if (val === ',') {
+          if (!raw.includes(',')) {
+            raw += (raw === '' ? '0,' : ',');
+          }
+        } else if (val === '.') {
+          raw += '.';
         } else if (/^\d$/.test(val)) {
           raw = (raw === '0') ? val : raw + val;
         }
@@ -1303,10 +1311,9 @@
       let v = activeInput.value;
       if (val === 'back') {
         v = v.slice(0, -1);
-      } else if (val === '.' || val === ',') {
-        const sep = val;
-        if (!v.includes('.') && !v.includes(',')) {
-          v += (v === '' ? '0' + sep : sep);
+      } else if (val === ',' || val === '.') {
+        if (!v.includes(',') && !v.includes('.')) {
+          v += (v === '' ? '0' + val : val);
         }
       } else {
         if (v === '0' && !isNaN(val)) v = val;
@@ -1319,15 +1326,7 @@
 
     function formatEs(num, maxDec = 4) {
       if (isNaN(num) || num === null) return '0';
-      return groupDigits(num.toLocaleString('es-AR', { maximumFractionDigits: maxDec, useGrouping: false }));
-    }
-
-    function cleanNum(n, digits = 12) {
-      return Number.isFinite(n) ? parseFloat(n.toPrecision(digits)) : n;
-    }
-
-    function roundNum(n, decimals = 8) {
-      return Number.isFinite(n) ? parseFloat(n.toFixed(decimals)) : 0;
+      return groupDigits(num.toLocaleString('es-AR', { maximumFractionDigits: maxDec, useGrouping: false }).replace('.', ','));
     }
 
     function switchTab(tabId, btn) {
@@ -1348,7 +1347,6 @@
       }
     }
 
-    // COPIAR Y PEGAR
     async function copyToClipboard(text) {
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1426,13 +1424,11 @@
       copyValue(num !== null ? num : txt);
     }
 
-    // ESTÁNDAR
-    let calcVal = '0';
-    let calcOpCurrent = null;
-    let calcPrevVal = null;
-    let calcResetNext = false;
-    let calcReplaceNext = false;
-    let calcStack = [];
+    // ===== MOTOR DE CÁLCULO =====
+    let calcExpr = '0';
+    let calcIsEvaluated = false;
+    let angleMode = 'deg';
+    let calcMode = 'standard';
 
     function fitDisplay() {
       const el = document.getElementById('calc-display');
@@ -1446,7 +1442,7 @@
     }
 
     function updateCalcDisplay() {
-      document.getElementById('calc-display').innerText = fmtDisplay(calcVal);
+      document.getElementById('calc-display').innerText = fmtDisplay(calcExpr);
       fitDisplay();
     }
 
@@ -1455,115 +1451,152 @@
       document.getElementById('calc-history').innerText = text.length > MAX ? '… ' + text.slice(-(MAX - 2)) : text;
     }
 
-    function opSym(op) {
-      return { '*': '×', '/': '÷' }[op] || op;
-    }
-
-    function calcPrefix() {
-      if (calcStack.length === 0) return '';
-      return calcStack.map(f => (f.prev !== null && f.op ? `${formatEs(f.prev)} ${opSym(f.op)} ` : '') + '(').join(' ') + ' ';
-    }
-
     function calcNum(n) {
-      let valToInsert = (n === ',' || n === '.') ? '.' : n;
-      if (calcResetNext || calcReplaceNext) {
-        calcVal = valToInsert === '.' ? '0.' : valToInsert;
-        calcResetNext = false;
-        calcReplaceNext = false;
+      const ch = n; 
+      if (calcExpr === '0' || calcExpr === 'Error' || calcIsEvaluated) {
+        calcExpr = (ch === '.' || ch === ',') ? '0' + ch : ch;
+        calcIsEvaluated = false;
       } else {
-        if (valToInsert === '.' && calcVal.includes('.')) return;
-        calcVal = calcVal === '0' && valToInsert !== '.' ? valToInsert : calcVal + valToInsert;
+        const lastToken = calcExpr.split(/[\+\-\*\/\^\(\)]/).pop();
+        if (ch === ',' && lastToken.includes(',')) return;
+        
+        const lastChar = calcExpr.slice(-1);
+        if (lastChar === ')' && /^\d$/.test(ch)) {
+          calcExpr += '*' + ch;
+        } else {
+          calcExpr += ch;
+        }
       }
       updateCalcDisplay();
     }
 
     function calcOp(op) {
-      if (calcVal === 'Error') return;
+      if (calcExpr === 'Error') return;
+      calcIsEvaluated = false;
       if (op === '%') {
-        calcVal = cleanNum(parseFloat(calcVal) / 100).toString();
-        updateCalcDisplay();
-        return;
-      }
-      if (calcPrevVal !== null && !calcResetNext) {
-        calcEval();
-        if (calcVal === 'Error') return;
-      }
-      calcPrevVal = parseFloat(calcVal);
-      calcOpCurrent = op;
-      calcResetNext = true;
-      calcReplaceNext = false;
-      setHistory(`${calcPrefix()}${formatEs(calcPrevVal)} ${opSym(op)}`);
-    }
-
-    function calcEval() {
-      if (calcOpCurrent === null || calcPrevVal === null) return;
-      let curr = parseFloat(calcVal);
-      let res = 0;
-      switch(calcOpCurrent) {
-        case '+': res = calcPrevVal + curr; break;
-        case '-': res = calcPrevVal - curr; break;
-        case '*': res = calcPrevVal * curr; break;
-        case '/': res = curr !== 0 ? calcPrevVal / curr : 'Error'; break;
-        case '^': res = Math.pow(calcPrevVal, curr); break;
-      }
-      if (typeof res === 'number' && !Number.isFinite(res)) res = 'Error';
-      setHistory(`${calcPrefix()}${formatEs(calcPrevVal)} ${opSym(calcOpCurrent)} ${formatEs(curr)} =`);
-      if (typeof res === 'number') {
-        calcVal = (calcOpCurrent === '^' ? snapNum(res) : cleanNum(res)).toString();
+        calcExpr += '/100';
       } else {
-        calcVal = res;
-        calcStack = [];
+        const lastChar = calcExpr.slice(-1);
+        if (['+', '-', '*', '/', '^'].includes(lastChar)) {
+          calcExpr = calcExpr.slice(0, -1) + op;
+        } else {
+          calcExpr += op;
+        }
       }
-      calcPrevVal = null;
-      calcOpCurrent = null;
-      calcResetNext = true;
-      calcReplaceNext = false;
       updateCalcDisplay();
     }
 
-    function calcEquals() {
-      if (calcVal === 'Error') return;
-      while (calcStack.length > 0) {
-        calcCloseParen();
-        if (calcVal === 'Error') return;
+    function calcParen(p) {
+      if (calcExpr === 'Error') return;
+      if (calcExpr === '0' || calcIsEvaluated) {
+        calcExpr = p;
+        calcIsEvaluated = false;
+      } else {
+        const lastChar = calcExpr.slice(-1);
+        if (p === '(' && (/[\d\)\pi\e]/.test(lastChar))) {
+          calcExpr += '*' + p;
+        } else {
+          calcExpr += p;
+        }
       }
-      calcEval();
+      updateCalcDisplay();
     }
 
     function calcClear() {
-      calcVal = '0';
-      calcPrevVal = null;
-      calcOpCurrent = null;
-      calcResetNext = false;
-      calcReplaceNext = false;
-      calcStack = [];
+      calcExpr = '0';
+      calcIsEvaluated = false;
       setHistory('');
       updateCalcDisplay();
     }
 
     function calcClearEntry() {
-      calcVal = '0';
-      calcReplaceNext = false;
+      calcExpr = '0';
+      calcIsEvaluated = false;
       updateCalcDisplay();
     }
 
     function calcBackspace() {
-      if (calcResetNext || calcReplaceNext) return;
-      calcVal = calcVal.length > 1 ? calcVal.slice(0, -1) : '0';
-      if (calcVal === '-' || calcVal === '-0') calcVal = '0';
+      if (calcExpr === 'Error' || calcIsEvaluated) {
+        calcClear();
+        return;
+      }
+      calcExpr = calcExpr.length > 1 ? calcExpr.slice(0, -1) : '0';
       updateCalcDisplay();
     }
 
     function calcToggleSign() {
-      if (calcVal !== '0' && calcVal !== 'Error') {
-        calcVal = calcVal.startsWith('-') ? calcVal.slice(1) : '-' + calcVal;
-        updateCalcDisplay();
+      if (calcExpr === 'Error') return;
+      if (!isNaN(calcExpr.replace(/\./g, '').replace(',', '.'))) {
+        let val = -parseFloat(calcExpr.replace(/\./g, '').replace(',', '.'));
+        calcExpr = String(val).replace('.', ',');
+      } else {
+        calcExpr = '-(' + calcExpr + ')';
+      }
+      updateCalcDisplay();
+    }
+
+    function evaluateExpression(expr) {
+      try {
+        let clean = expr;
+        // Limpiar separadores de miles (puntos) y convertir comas en puntos decimales para evaluacion
+        clean = clean.replace(/\./g, '').replace(/,/g, '.');
+
+        const toRad = v => angleMode === 'deg' ? (v * Math.PI / 180) : v;
+        const fromRad = v => angleMode === 'deg' ? (v * 180 / Math.PI) : v;
+
+        const scope = {
+          sin: x => snapNum(Math.sin(toRad(x))),
+          cos: x => snapNum(Math.cos(toRad(x))),
+          tan: x => snapNum(Math.tan(toRad(x))),
+          asin: x => snapNum(fromRad(Math.asin(x))),
+          acos: x => snapNum(fromRad(Math.acos(x))),
+          atan: x => snapNum(fromRad(Math.atan(x))),
+          ln: Math.log,
+          log: Math.log10,
+          exp: Math.exp,
+          pow10: x => Math.pow(10, x),
+          sqr: x => x * x,
+          cube: x => x * x * x,
+          sqrt: Math.sqrt,
+          inv: x => 1 / x,
+          abs: Math.abs,
+          fact: factorial,
+          pi: Math.PI,
+          e: Math.E
+        };
+
+        clean = clean.replace(/(\d|\))\s*\(/g, '$1*('); clean = clean.replace(/(\d\vert{}\))\s*([a-zA-Z]+)/g, '$1*$2');
+
+        const keys = Object.keys(scope).join('|');
+        const funcRegex = new RegExp(`(${keys})\\((-?\\d+\\.?\\d*)\\)`, 'g');
+        let prev;
+        do {
+          prev = clean;
+          clean = clean.replace(funcRegex, (m, fn, arg) => scope[fn](parseFloat(arg)));
+        } while (clean !== prev);
+
+        clean = clean.replace(/\^/g, '**');
+
+        const fn = new Function('scope', `with(scope){ return ${clean}; }`);
+        const res = fn(scope);
+
+        if (typeof res === 'number' && Number.isFinite(res)) {
+          return snapNum(res);
+        }
+        return 'Error';
+      } catch (err) {
+        return 'Error';
       }
     }
 
-    // CIENTÍFICA
-    let calcMode = 'standard';
-    let angleMode = 'deg';
+    function calcEquals() {
+      if (calcExpr === 'Error') return;
+      setHistory(fmtDisplay(calcExpr) + ' =');
+      const res = evaluateExpression(calcExpr);
+      calcExpr = String(res).replace('.', ',');
+      calcIsEvaluated = true;
+      updateCalcDisplay();
+    }
 
     function snapNum(n) {
       if (!Number.isFinite(n)) return n;
@@ -1578,87 +1611,30 @@
       return r;
     }
 
-    function calcSetError() {
-      calcVal = 'Error';
-      calcPrevVal = null;
-      calcOpCurrent = null;
-      calcStack = [];
-      calcResetNext = true;
-      calcReplaceNext = false;
-      updateCalcDisplay();
-    }
-
     function calcFunc(name) {
-      if (calcVal === 'Error') return;
-      const x = parseFloat(calcVal);
-      const toRad = v => angleMode === 'deg' ? v * Math.PI / 180 : v;
-      const fromRad = v => angleMode === 'deg' ? v * 180 / Math.PI : v;
-      let r = NaN;
-      switch (name) {
-        case 'sin': r = Math.sin(toRad(x)); break;
-        case 'cos': r = Math.cos(toRad(x)); break;
-        case 'tan': {
-          const a = toRad(x);
-          r = Math.abs(Math.cos(a)) < 1e-12 ? NaN : Math.tan(a);
-          break;
-        }
-        case 'asin': r = Math.abs(x) <= 1 ? fromRad(Math.asin(x)) : NaN; break;
-        case 'acos': r = Math.abs(x) <= 1 ? fromRad(Math.acos(x)) : NaN; break;
-        case 'atan': r = fromRad(Math.atan(x)); break;
-        case 'ln': r = x > 0 ? Math.log(x) : NaN; break;
-        case 'log': r = x > 0 ? Math.log10(x) : NaN; break;
-        case 'exp': r = Math.exp(x); break;
-        case 'pow10': r = Math.pow(10, x); break;
-        case 'sqr': r = x * x; break;
-        case 'sqrt': r = x >= 0 ? Math.sqrt(x) : NaN; break;
-        case 'inv': r = x !== 0 ? 1 / x : NaN; break;
-        case 'fact': r = factorial(x); break;
+      if (calcExpr === 'Error') return;
+      const lastChar = calcExpr.slice(-1);
+      if (calcExpr !== '0' && /[\d\)]/.test(lastChar)) {
+        calcExpr += `*${name}(`;
+      } else if (calcExpr === '0' || calcIsEvaluated) {
+        calcExpr = `${name}(`;
+      } else {
+        calcExpr += `${name}(`;
       }
-      if (!Number.isFinite(r)) { calcSetError(); return; }
-      if ((name === 'sin' || name === 'cos' || name === 'tan') && Math.abs(r) < 1e-12) r = 0;
-      calcVal = snapNum(r).toString();
-      calcResetNext = false;
-      calcReplaceNext = true;
+      calcIsEvaluated = false;
       updateCalcDisplay();
     }
 
     function calcConst(name) {
-      calcVal = (name === 'pi' ? Math.PI : Math.E).toString();
-      calcResetNext = false;
-      calcReplaceNext = true;
-      updateCalcDisplay();
-    }
-
-    function calcParen(p) {
-      if (p === '(') calcOpenParen(); else calcCloseParen();
-    }
-
-    function calcOpenParen() {
-      if (calcVal === 'Error') return;
-      calcStack.push({ prev: calcPrevVal, op: calcOpCurrent });
-      calcPrevVal = null;
-      calcOpCurrent = null;
-      calcVal = '0';
-      calcResetNext = false;
-      calcReplaceNext = false;
-      setHistory(calcPrefix());
-      updateCalcDisplay();
-    }
-
-    function calcCloseParen() {
-      if (calcVal === 'Error' || calcStack.length === 0) return;
-      if (calcOpCurrent !== null && calcPrevVal !== null) {
-        calcEval();
-        if (calcVal === 'Error') return;
+      const lastChar = calcExpr.slice(-1);
+      if (calcExpr === '0' || calcIsEvaluated) {
+        calcExpr = name;
+      } else if (/[\d\)]/.test(lastChar)) {
+        calcExpr += '*' + name;
+      } else {
+        calcExpr += name;
       }
-      const f = calcStack.pop();
-      calcPrevVal = f.prev;
-      calcOpCurrent = f.op;
-      calcResetNext = false;
-      calcReplaceNext = true;
-      setHistory(calcOpCurrent
-        ? `${calcPrefix()}${formatEs(calcPrevVal)} ${opSym(calcOpCurrent)}`
-        : calcPrefix().trim());
+      calcIsEvaluated = false;
       updateCalcDisplay();
     }
 
@@ -1693,7 +1669,6 @@
 
     window.addEventListener('resize', fitDisplay);
 
-    // PORCENTAJES
     function calcP1() {
       const p = parseNum(document.getElementById('p1-percent').value);
       const v = parseNum(document.getElementById('p1-value').value);
@@ -1746,7 +1721,6 @@
       setActiveInput(document.getElementById('p4-value'));
     }
 
-    // ESCALAS
     const UNIT_ABBR = { 'milímetro': 'mm', 'centímetro': 'cm', 'metro': 'm' };
     const UNIT_TO_M = { 'milímetro': 0.001, 'centímetro': 0.01, 'metro': 1 };
     let scaleMode = 'real';
@@ -1806,7 +1780,6 @@
       setActiveInput(document.getElementById('scale-r1'));
     }
 
-    // CONVERSIÓN DE BASES NUMÉRICAS
     const BASE_DIGITS = { dec: 10, bin: 2, oct: 8, hex: 16 };
     const BASE_FRAC_MAX = 10;
 
@@ -1862,7 +1835,6 @@
       setActiveBaseInput('base-dec', 'dec');
     }
 
-    // CONVERSOR DE DATOS / ALMACENAMIENTO
     const DATA_MULTIPLIERS = {
       'bit': 0.125,
       'byte': 1,
@@ -1901,7 +1873,6 @@
       setActiveDataInput('data-val-1', 'src');
     }
 
-    // AVISO
     function showToast(msg, ms = 3600) {
       document.querySelectorAll('.toast').forEach(old => old.remove());
       const t = document.createElement('div');
@@ -1912,7 +1883,6 @@
       setTimeout(() => t.remove(), ms);
     }
 
-    // TEMA
     const THEMES = { original: 'Tema original', pink: 'Tema rosa y negro', 'Café': 'Café' };
 
     function applyTheme(name) {
