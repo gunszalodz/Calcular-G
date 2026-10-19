@@ -1619,7 +1619,7 @@
       angleMode = mode === 'rad' ? 'rad' : 'deg';
       const btn = document.getElementById('btn-angle');
       if (btn) btn.textContent = angleMode === 'rad' ? 'RAD' : 'DEG';
-      if (save) { try { localStorage.setItem('calc-angle', angleMode); } catch (e) {} }
+      if (save) { try { localStorage.setItem('calculadora-g_angle', angleMode); } catch (e) {} }
     }
 
     function toggleAngle() {
@@ -1634,12 +1634,12 @@
       document.getElementById('mode-sci').classList.toggle('active', sci);
       document.getElementById('calc-mode-word').textContent = sci ? ' Científica' : ' Estándar';
       fitDisplay();
-      if (save) { try { localStorage.setItem('calc-mode', calcMode); } catch (e) {} }
+      if (save) { try { localStorage.setItem('calculadora-g_mode', calcMode); } catch (e) {} }
     }
 
     try {
       setCalcMode('standard', false);
-      const savedAngle = localStorage.getItem('calc-angle');
+      const savedAngle = localStorage.getItem('calculadora-g_angle');
       if (savedAngle) setAngleMode(savedAngle, false);
       setActiveInput(document.getElementById('p1-percent'));
     } catch (e) {}
@@ -1880,11 +1880,11 @@
       else next = 'original';
 
       applyTheme(next);
-      try { localStorage.setItem('calc-theme', next); } catch (e) {}
+      try { localStorage.setItem('calculadora-g_theme', next); } catch (e) {}
       showToast(THEMES[next]);
     }
 
-    try { applyTheme(localStorage.getItem('calc-theme')); } catch (e) {}
+    try { applyTheme(localStorage.getItem('calculadora-g_theme')); } catch (e) {}
   </script>
 </body>
 </html>
