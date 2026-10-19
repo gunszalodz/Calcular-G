@@ -1249,9 +1249,32 @@
       });
     }
 
+    /* Separador de miles: en los cuadros de valores el punto es de miles y la coma es decimal */
+    function groupDigits(s) {
+      const i = s.indexOf(',');
+      const ip = i < 0 ? s : s.slice(0, i);
+      const rest = i < 0 ? '' : s.slice(i);
+      return ip.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + rest;
+    }
+
+    function numToField(n, maxDec = 8) {
+      if (!Number.isFinite(n)) return '';
+      let s = parseFloat(n.toFixed(maxDec)).toString();
+      if (/e/i.test(s)) s = n.toFixed(maxDec).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+      return groupDigits(s.replace('.', ','));
+    }
+
+    function fmtDisplay(v) {
+      if (/^-?\d+(\.\d*)?$/.test(v)) {
+        const i = v.indexOf('.');
+        return groupDigits(i < 0 ? v : v.slice(0, i)) + (i < 0 ? '' : ',' + v.slice(i + 1));
+      }
+      return v.replace('.', ',');
+    }
+
     function parseNum(valStr) {
       if (!valStr) return 0;
-      return parseFloat(valStr.replace(',', '.')) || 0;
+      return parseFloat(String(valStr).replace(/\./g, '').replace(',', '.')) || 0;
     }
 
     function vKey(val) {
@@ -1262,6 +1285,20 @@
         if (firstInput) setActiveInput(firstInput);
       }
       if (!activeInput) return;
+
+      if (!activeInput.id.startsWith('base-')) {
+        let raw = activeInput.value.replace(/\./g, '');
+        if (val === 'back') {
+          raw = raw.slice(0, -1);
+        } else if (val === '.' || val === ',') {
+          if (!raw.includes(',')) raw += (raw === '' ? '0,' : ',');
+        } else if (/^\d$/.test(val)) {
+          raw = (raw === '0') ? val : raw + val;
+        }
+        activeInput.value = groupDigits(raw);
+        activeInput.dispatchEvent(new Event('input'));
+        return;
+      }
 
       let v = activeInput.value;
       if (val === 'back') {
@@ -1282,7 +1319,7 @@
 
     function formatEs(num, maxDec = 4) {
       if (isNaN(num) || num === null) return '0';
-      return num.toLocaleString('es-AR', { maximumFractionDigits: maxDec });
+      return groupDigits(num.toLocaleString('es-AR', { maximumFractionDigits: maxDec, useGrouping: false }));
     }
 
     function cleanNum(n, digits = 12) {
@@ -1347,7 +1384,7 @@
         showToast('Campo vacío', 1400);
         return;
       }
-      copyValue(val);
+      copyValue(inputId.startsWith('base-') ? val : val.replace(/\./g, ''));
     }
 
     async function pasteToInput(inputId, type) {
@@ -1358,7 +1395,17 @@
             const input = document.getElementById(inputId);
             if (inputId.startsWith('base-')) setActiveBaseInput(inputId, type);
             else setActiveInput(input);
-            input.value = text.trim();
+            let t = text.trim();
+            if (!inputId.startsWith('base-')) {
+              t = t.replace(/\s/g, '');
+              if (t.includes(',') || /^\d{1,3}(\.\d{3})+$/.test(t)) t = t.replace(/\./g, '');
+              else t = t.replace('.', ',');
+              t = t.replace(/[^\d,-]/g, '');
+              const k = t.indexOf(',');
+              if (k >= 0) t = t.slice(0, k + 1) + t.slice(k + 1).replace(/,/g, '');
+              t = groupDigits(t);
+            }
+            input.value = t;
             input.dispatchEvent(new Event('input'));
             showToast('Pegado con éxito', 1500);
             return;
@@ -1399,7 +1446,7 @@
     }
 
     function updateCalcDisplay() {
-      document.getElementById('calc-display').innerText = calcVal.replace('.', ',');
+      document.getElementById('calc-display').innerText = fmtDisplay(calcVal);
       fitDisplay();
     }
 
@@ -1731,7 +1778,7 @@
         const realMeters = realVal * fReal;
         const planMeters = realMeters / ratio;
         const planVal = planMeters / fPlan;
-        planInput.value = roundNum(planVal);
+        planInput.value = numToField(planVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
         document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       } else {
@@ -1745,7 +1792,7 @@
         const planMeters = planVal * fPlan;
         const realMeters = planMeters * ratio;
         const realVal = realMeters / fReal;
-        realInput.value = roundNum(realVal);
+        realInput.value = numToField(realVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
         document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       }
@@ -1836,13 +1883,13 @@
         const raw = parseNum(val1Input.value);
         const bytes = raw * DATA_MULTIPLIERS[unit1];
         const converted = bytes / DATA_MULTIPLIERS[unit2];
-        val2Input.value = val1Input.value === '' ? '' : roundNum(converted, 6);
+        val2Input.value = val1Input.value === '' ? '' : numToField(converted, 6);
         document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(converted, 4)} ${unit2}`;
       } else {
         const raw = parseNum(val2Input.value);
         const bytes = raw * DATA_MULTIPLIERS[unit2];
         const converted = bytes / DATA_MULTIPLIERS[unit1];
-        val1Input.value = val2Input.value === '' ? '' : roundNum(converted, 6);
+        val1Input.value = val2Input.value === '' ? '' : numToField(converted, 6);
         document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(raw, 4)} ${unit2}`;
       }
     }
