@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Herramientas de Cálculo Rápido</title>
-
+  
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,77 +16,76 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== TEMA ORIGINAL (neón cian / rosa sobre carcasa oscura) ===== */
+    /* ===== TEMA ORIGINAL (calculadora rosa pastel con teclas de colores) ===== */
     :root {
       --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
       --font-num: "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
 
-      --bg: #07050d; --header-bg: transparent;
-      --body-bg: radial-gradient(120% 55% at 50% 0%, rgba(41,211,255,.20) 0%, transparent 65%), radial-gradient(110% 50% at 50% 100%, rgba(190,60,255,.22) 0%, transparent 65%), #0c0914;
-      --text: #eee6ff;
-      --accent: #3ddcff; --accent-hover: #86eaff; --accent-edge: #0a6f8a; --on-accent: #021016;
-      --title: #f6f0ff;
-      --title-glow: 0 0 8px rgba(41,211,255,.65);
-      --green: #6dffb0; --blue: #7cd4ff;
-      --panel: linear-gradient(180deg, #211b33 0%, #151120 100%);
-      --panel-border: #29d3ff; --panel-inner: #0d0a16;
-      --glow-c: rgba(41,211,255,.55); --glow-soft: rgba(41,211,255,.18);
-      --muted: #c9c2e6;
-      --field: #100c1b; --field-border: #4a4678; --focus: #3ddcff;
-      --btn2-bg: linear-gradient(180deg, #34324f 0%, #23213a 100%); --btn2-border: #5a5590;
-      --calc-hover: linear-gradient(180deg, #47446b 0%, #2f2c4b 100%); --calc-border: #4a4678;
-      --nav-bg: #0c0914; --nav-border: #2c2750;
-      --key-bg: linear-gradient(180deg, #3a3855 0%, #25233a 100%);
-      --key-alt: linear-gradient(180deg, #2f2d49 0%, #1d1b30 100%);
-      --key-edge: #05030a; --key-hi: rgba(255,255,255,.14);
-      --key-fg: #ff7ad9; --key-glow: 0 0 6px rgba(255,90,210,.55);
-      --op-glow: 0 0 6px rgba(61,220,255,.55);
-      --lcd-bg: #05030a; --lcd-fg: #ff4f93; --lcd-dim: #d27aa0; --lcd-glow: 0 0 8px rgba(255,79,147,.6);
-      --lcd-edge: #4a4678; --inset: rgba(0,0,0,.7);
+      --bg: #fff5f8; --header-bg: transparent;
+      --body-bg: linear-gradient(180deg, #fff1f6 0%, #fbd9e5 100%);
+      --text: #3a1a2c; --title: #3a1a2c; --muted: #4a2038;
+      --accent: #b3205f; --accent-hover: #8f184c; --accent-edge: #7a1040; --on-accent: #ffffff;
+      --green: #1f6b3a; --blue: #1c5a96;
+      --panel: linear-gradient(180deg, #f9b9c9 0%, #f5a3b8 100%);
+      --panel-border: #e98aa5; --ring: #fbd0dc; --shadow: rgba(150,50,90,.30);
+      --field: #fff5f8; --field-border: #e08fa8; --focus: #1c5a96;
+      --nav-bg: #f6aabd; --nav-border: #fbd0dc;
+
+      --on-key: #2f2a3a; --op-fg: #7a1f55; --edge: #d27c96; --key-shadow: rgba(110,30,65,.28);
+      --c-green: #b5d79a; --c-orange: #ff9a6c;
+      --c-yellow: #fbd89c; --c-peach: #fcc9a8; --c-pink: #fbb7c6; --c-lav: #dbb5ee; --c-blue: #8fd3ec;
+      --c-sci: #fdeaf1;
+
+      --lcd-bg: linear-gradient(180deg, #a9aeb0 0%, #bfc3c4 100%);
+      --lcd-fg: #14171a; --lcd-dim: #3b4144; --lcd-edge: #5a5f62;
+      --inset: rgba(0,0,0,.30);
+      --solar-a: #2b2b31; --solar-b: #000000;
     }
 
-    /* ===== TEMA ROSA (neón magenta) ===== */
+    /* ===== TEMA ROSA Y NEGRO ===== */
     :root[data-theme="pink"] {
-      --bg: #08030a; --header-bg: transparent;
-      --body-bg: radial-gradient(120% 55% at 50% 0%, rgba(255,63,176,.28) 0%, transparent 65%), radial-gradient(110% 50% at 50% 100%, rgba(255,63,176,.22) 0%, transparent 65%), #0a0409;
-      --text: #ffe9f6;
+      --bg: #12060f; --header-bg: transparent;
+      --body-bg: linear-gradient(180deg, #2a0f20 0%, #12050d 100%);
+      --text: #ffe9f6; --title: #fff2fa; --muted: #f0c4de;
       --accent: #ff5fc8; --accent-hover: #ff8fda; --accent-edge: #8f1058; --on-accent: #1a0010;
-      --title: #fff2fa;
-      --title-glow: 0 0 8px rgba(255,63,176,.7);
       --green: #8dffd0; --blue: #cdb0ff;
-      --panel: linear-gradient(180deg, #2a1325 0%, #170a15 100%);
-      --panel-border: #ff3fb0; --panel-inner: #0e050c;
-      --glow-c: rgba(255,63,176,.55); --glow-soft: rgba(255,63,176,.20);
-      --muted: #f0c4de;
-      --field: #12060f; --field-border: #7a2560; --focus: #ff5fc8;
-      --btn2-bg: linear-gradient(180deg, #4a2040 0%, #2e132a 100%); --btn2-border: #9a3a7c;
-      --calc-hover: linear-gradient(180deg, #5f2a52 0%, #3a1934 100%); --calc-border: #7a2560;
-      --nav-bg: #0a0409; --nav-border: #4a1538;
-      --key-bg: linear-gradient(180deg, #43203b 0%, #2a1227 100%);
-      --key-alt: linear-gradient(180deg, #371a31 0%, #230f20 100%);
-      --key-edge: #05020a; --key-hi: rgba(255,170,225,.16);
-      --key-fg: #ffc2ec; --key-glow: 0 0 6px rgba(255,95,200,.55);
-      --op-glow: 0 0 6px rgba(255,95,200,.6);
-      --lcd-bg: #0a0309; --lcd-fg: #ff9ee0; --lcd-dim: #d58bbd; --lcd-glow: 0 0 8px rgba(255,120,210,.6);
-      --lcd-edge: #7a2560; --inset: rgba(0,0,0,.7);
+      --panel: linear-gradient(180deg, #2c1024 0%, #1a0a15 100%);
+      --panel-border: #ff3fa0; --ring: #6b1f52; --shadow: rgba(255,63,160,.30);
+      --field: #1a0a15; --field-border: #8a2a64; --focus: #ff5fc8;
+      --nav-bg: #1a0a15; --nav-border: #6b1f52;
+
+      --on-key: #2b0a1d; --op-fg: #5a0f3a; --edge: #9a2a6a; --key-shadow: rgba(0,0,0,.5);
+      --c-green: #ffe0ef; --c-orange: #ffffff;
+      --c-yellow: #ffd0e6; --c-peach: #ffbddb; --c-pink: #ffa6cf; --c-lav: #ff8fc3; --c-blue: #ff78b7;
+      --c-sci: #ffe0ef;
+
+      --lcd-bg: linear-gradient(180deg, #12050d 0%, #1d0a16 100%);
+      --lcd-fg: #ff9ee0; --lcd-dim: #e0a0c8; --lcd-edge: #8a2a64;
+      --inset: rgba(0,0,0,.6);
+      --solar-a: #3a1230; --solar-b: #0a0309;
     }
 
-    /* ===== TEMA CAFÉ (claro, sin brillo) ===== */
+    /* ===== TEMA CAFÉ ===== */
     :root[data-theme="Café"] {
-      --bg: #fbf5e8; --header-bg: transparent; --body-bg: #f2eada; --text: #2c2b28;
-      --accent: #7a5230; --accent-hover: #5e3d21; --accent-edge: #3f2812; --on-accent: #ffffff;
-      --title: #2b1a0a; --title-glow: none;
+      --bg: #fbf5e8; --header-bg: transparent;
+      --body-bg: linear-gradient(180deg, #f7f0e0 0%, #eadfc6 100%);
+      --text: #2b1a0a; --title: #2b1a0a; --muted: #2b1a0a;
+      --accent: #6b3f1c; --accent-hover: #51300f; --accent-edge: #3b2410; --on-accent: #ffffff;
       --green: #3f5a1f; --blue: #8a3f12;
-      --panel: #e8decb; --panel-border: #7a5230; --panel-inner: #f4ecd9;
-      --glow-c: rgba(0,0,0,0); --glow-soft: rgba(0,0,0,0);
-      --muted: #2c2b28;
-      --field: #faf6ee; --field-border: #b49c74; --focus: #7a5230;
-      --btn2-bg: #dfd2b9; --btn2-border: #a88f67; --calc-hover: #e9dfc8; --calc-border: #b49c74;
-      --nav-bg: #e8decb; --nav-border: #b49c74;
-      --key-bg: #f7f0e0; --key-alt: #efe5cf; --key-edge: #a88f67; --key-hi: rgba(255,255,255,.85);
-      --key-fg: #2b1a0a; --key-glow: none; --op-glow: none;
-      --lcd-bg: #c9cea8; --lcd-fg: #1f2714; --lcd-dim: #3f482b; --lcd-glow: none;
-      --lcd-edge: #7a5230; --inset: rgba(60,50,20,.35);
+      --panel: linear-gradient(180deg, #e3c79b 0%, #d4b07d 100%);
+      --panel-border: #7a5230; --ring: #efdcb8; --shadow: rgba(90,60,20,.30);
+      --field: #faf6ee; --field-border: #b49c74; --focus: #8a3f12;
+      --nav-bg: #d9bb8c; --nav-border: #efdcb8;
+
+      --on-key: #2b1a0a; --op-fg: #5a2d0c; --edge: #a98558; --key-shadow: rgba(80,50,15,.30);
+      --c-green: #cfd8a0; --c-orange: #e8a064;
+      --c-yellow: #f6e3b4; --c-peach: #efd0a0; --c-pink: #e8c496; --c-lav: #d9b484; --c-blue: #c9a06c;
+      --c-sci: #f6ead0;
+
+      --lcd-bg: linear-gradient(180deg, #bfc59a 0%, #cfd4b0 100%);
+      --lcd-fg: #1f2714; --lcd-dim: #3f482b; --lcd-edge: #5f6a3e;
+      --inset: rgba(60,50,20,.35);
+      --solar-a: #3a3a30; --solar-b: #0c0c08;
     }
 
     * {
@@ -111,16 +110,17 @@
 
     main::-webkit-scrollbar,
     .tab-panel::-webkit-scrollbar,
-    body::-webkit-scrollbar { display: none; }
+    .log-box-compact::-webkit-scrollbar,
+    body::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
-    main, .tab-panel, body {
+    main, .tab-panel, .log-box-compact, body {
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
 
     /* ===== Encabezado ===== */
     header {
-      padding: 8px 14px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -133,11 +133,25 @@
       font-weight: 700;
       letter-spacing: .02em;
       color: var(--title);
-      text-shadow: var(--title-glow);
       min-width: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    /* Panel solar */
+    header::after {
+      content: "";
+      width: 70px;
+      height: 16px;
+      flex-shrink: 0;
+      border-radius: 3px;
+      background: linear-gradient(135deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 40%), linear-gradient(180deg, var(--solar-a), var(--solar-b));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 1px 3px var(--shadow);
+    }
+
+    @media (max-width: 480px) {
+      header::after { display: none; }
     }
 
     .header-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
@@ -148,13 +162,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--btn2-bg);
-      border: 1px solid var(--btn2-border);
-      border-radius: 8px;
-      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
-      color: var(--accent);
-      font-size: 1rem;
-      line-height: 1;
+      background: var(--c-green);
+      border: none;
+      border-radius: 999px;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.55), inset 0 -2px 0 rgba(0,0,0,.12), 0 2px 0 var(--edge);
+      color: var(--on-key);
       cursor: pointer;
       padding: 0;
       touch-action: manipulation;
@@ -170,19 +182,19 @@
       stroke-linejoin: round;
     }
 
-    .icon-btn:active { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--key-hi); }
+    .icon-btn:active { transform: translateY(2px); box-shadow: inset 0 2px 0 rgba(255,255,255,.4); }
 
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 20px;
+      bottom: 70px;
       transform: translateX(-50%);
-      background: var(--panel-inner);
-      border: 1px solid var(--accent);
-      box-shadow: 0 0 10px var(--glow-c);
+      background: var(--field);
+      border: 2px solid var(--accent);
       color: var(--title);
       padding: 9px 14px;
-      border-radius: 10px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px var(--shadow);
       font-size: 0.85rem;
       font-weight: 600;
       max-width: 90%;
@@ -195,100 +207,23 @@
 
     .toast.show { opacity: 1; }
 
-    /* ===== Navegación (fila de teclas de función) ===== */
-    .nav-container {
-      position: relative;
-      flex-shrink: 0;
-      background-color: var(--nav-bg);
-      border-bottom: 1px solid var(--nav-border);
-    }
-
-    .nav-container::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 16px;
-      background: linear-gradient(to right, transparent, var(--nav-bg));
-      pointer-events: none;
-    }
-
-    nav {
-      display: flex;
-      justify-content: flex-start;
-      padding: 6px 6px 7px;
-      gap: 6px;
-      overflow-x: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent) transparent;
-    }
-
-    nav::-webkit-scrollbar { height: 3px; }
-    nav::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 2px; }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      background: var(--key-bg);
-      border: 1px solid var(--key-edge);
-      border-radius: 10px;
-      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: .01em;
-      cursor: pointer;
-      padding: 7px 12px 6px;
-      min-width: 72px;
-      white-space: nowrap;
-      touch-action: manipulation;
-      flex-shrink: 0;
-    }
-
-    .nav-icon {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-    }
-
-    .nav-item.active {
-      color: var(--accent);
-      font-weight: 700;
-      border-color: var(--accent);
-      text-shadow: var(--op-glow);
-      box-shadow: inset 0 1px 0 var(--key-hi), 0 0 8px var(--glow-c);
-    }
-
     main {
       flex: 1;
-      padding: 10px 15px 12px;
+      padding: 10px 14px 12px;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
 
-    /* Carcasa con borde brillante */
+    /* Carcasa */
     .tab-panel {
       display: none;
       height: 100%;
       flex-direction: column;
       background: var(--panel);
-      border-radius: 20px;
+      border-radius: 28px;
       border: 1px solid var(--panel-border);
-      box-shadow:
-        0 0 0 2px var(--panel-border),
-        0 0 12px 3px var(--glow-c),
-        inset 0 0 0 3px var(--panel-inner),
-        inset 0 0 16px var(--glow-soft);
+      box-shadow: 0 0 0 3px var(--ring), 0 8px 16px var(--shadow), inset 0 2px 0 rgba(255,255,255,.35);
       padding: 10px;
       justify-content: flex-start;
       gap: 8px;
@@ -310,8 +245,8 @@
     .calc-table-layout {
       display: flex;
       flex-direction: column;
-      border: 1px solid var(--field-border);
-      border-radius: 10px;
+      border: 2px solid var(--field-border);
+      border-radius: 18px;
       overflow: hidden;
       background: var(--field);
     }
@@ -319,7 +254,7 @@
     .table-row {
       display: flex;
       align-items: center;
-      border-bottom: 1px solid var(--field-border);
+      border-bottom: 2px solid var(--field-border);
     }
     .table-row:last-child { border-bottom: none; }
 
@@ -329,47 +264,45 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--muted);
-      line-height: 1.2;
     }
-
     .table-cell-label.green { color: var(--green); }
     .table-cell-label.blue { color: var(--blue); }
-    .table-cell-label.accent { color: var(--accent); }
-    .table-cell-label.strong { color: var(--title); }
 
     .table-cell-input {
-      width: 220px;
-      padding: 5px 10px;
+      width: 190px;
+      padding: 6px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      gap: 4px;
     }
 
+    .table-cell-input span { font-family: var(--font-num); font-weight: 700; }
+
     .table-cell-input input {
-      width: 100%;
+      flex: 1;
       min-width: 0;
-      padding: 10px 8px;
+      padding: 8px 6px;
       background-color: var(--bg);
-      border: 1px solid var(--field-border);
-      border-radius: 8px;
-      box-shadow: inset 0 2px 4px var(--inset);
+      border: 2px solid var(--field-border);
+      border-radius: 12px;
+      box-shadow: inset 0 2px 3px var(--inset);
       color: var(--title);
       font-family: var(--font-num);
       font-size: 1.25rem;
       font-weight: 700;
-      text-align: right;
+      text-align: center;
       outline: none;
       touch-action: manipulation;
-      direction: ltr;
     }
 
     .table-cell-input select {
-      width: 78px;
+      width: 62px;
       flex-shrink: 0;
-      padding: 10px 4px;
+      padding: 8px 2px;
       background-color: var(--bg);
-      border: 1px solid var(--field-border);
-      border-radius: 8px;
+      border: 2px solid var(--field-border);
+      border-radius: 12px;
       color: var(--title);
       font-family: var(--font-num);
       font-size: 0.8rem;
@@ -381,56 +314,41 @@
 
     .table-cell-input input.active-input {
       border-color: var(--accent);
-      box-shadow: inset 0 2px 4px var(--inset), 0 0 0 1px var(--accent), 0 0 8px var(--glow-c);
+      box-shadow: inset 0 2px 3px var(--inset), 0 0 0 2px var(--accent);
     }
 
     .table-cell-input input:focus, .table-cell-input select:focus {
       border-color: var(--focus);
     }
 
-    .base-row-container {
-      display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid var(--field-border);
-      background: var(--field);
-    }
-    .base-row-container:last-child { border-bottom: none; }
+    /* ===== Botones secundarios (CE naranja, Copiar verde) ===== */
+    .btn-ce-box { display: flex; justify-content: flex-end; }
 
-    .base-row-main { display: flex; align-items: center; }
-
-    .base-row-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 6px;
-      padding: 2px 12px 6px 12px;
-    }
-
-    .btn-action, .btn-copy {
-      background: var(--btn2-bg);
-      border: 1px solid var(--btn2-border);
-      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
-      color: var(--title);
-      border-radius: 8px;
-      font-weight: 600;
+    .btn-ce, .btn-copy {
+      border: none;
+      border-radius: 999px;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.12), 0 3px 0 var(--edge);
+      color: var(--on-key);
+      font-weight: 700;
       cursor: pointer;
       touch-action: manipulation;
     }
 
-    .btn-action { padding: 4px 10px; font-size: 0.75rem; }
-    .btn-copy { padding: 6px 12px; font-size: 0.82rem; }
+    .btn-ce { background: var(--c-orange); padding: 5px 16px; font-size: 0.85rem; }
+    .btn-copy { background: var(--c-green); padding: 6px 14px; font-size: 0.8rem; font-weight: 600; }
 
-    .btn-action:active, .btn-copy:active { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--key-hi); }
+    .btn-ce:active, .btn-copy:active { transform: translateY(3px); box-shadow: inset 0 2px 0 rgba(255,255,255,.4); }
 
     @media (hover: hover) {
-      .btn-action:hover, .btn-copy:hover { background: var(--calc-hover); }
+      .btn-ce:hover, .btn-copy:hover { filter: brightness(1.06); }
     }
 
-    /* ===== Pantalla de resultado (LCD) ===== */
+    /* ===== Pantalla de resultado (LCD gris) ===== */
     .result-box-compact {
       background: var(--lcd-bg);
       border: 1px solid var(--lcd-edge);
-      border-radius: 10px;
-      box-shadow: inset 0 2px 8px var(--inset), inset 0 0 14px var(--glow-soft);
+      border-radius: 14px;
+      box-shadow: inset 0 3px 6px var(--inset), 0 0 0 3px var(--ring);
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
@@ -439,100 +357,102 @@
     }
     .result-box-compact .text {
       color: var(--lcd-fg);
-      text-shadow: var(--lcd-glow);
       font-family: var(--font-num);
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
     }
 
     .log-box-compact {
       background: var(--bg);
-      border: 1px solid var(--field-border);
-      border-radius: 8px;
-      padding: 8px 12px;
+      border: 2px solid var(--field-border);
+      border-radius: 10px;
+      padding: 6px 10px;
       font-family: var(--font-num);
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.35;
+      font-size: 0.75rem;
       font-weight: 500;
+      color: var(--muted);
+      line-height: 1.2;
+      max-height: 38px;
+      overflow-y: auto;
     }
 
-    /* ===== Teclas ===== */
+    /* ===== Teclas redondas con relieve ===== */
     .v-key, .calc-btn {
-      background: var(--key-bg);
-      border: 1px solid var(--key-edge);
-      border-radius: 9px;
-      box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge);
-      color: var(--key-fg);
-      text-shadow: var(--key-glow);
+      --d: 4px;
+      background: linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 55%), var(--k, var(--c-pink));
+      border: none;
+      border-radius: 999px;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.55),
+        inset 0 -3px 0 rgba(0,0,0,.12),
+        0 var(--d) 0 var(--edge),
+        0 calc(var(--d) + 3px) 6px var(--key-shadow);
+      color: var(--on-key);
       font-family: var(--font-num);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
+      -webkit-text-stroke: 0.5px currentColor;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
       touch-action: manipulation;
       transition: transform .05s;
     }
 
-    .v-key, .calc-btn { -webkit-text-stroke: 0.5px currentColor; }
-    .calc-btn.sci { -webkit-text-stroke: 0.3px currentColor; }
+    .v-key { padding: 6px 0; }
 
-    .v-key:active:not(:disabled), .calc-btn:active {
-      transform: translateY(2px);
-      box-shadow: inset 0 1px 0 var(--key-hi), 0 0 0 var(--key-edge);
+    .v-key:active, .calc-btn:active {
+      transform: translateY(var(--d));
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.4), inset 0 -2px 0 rgba(0,0,0,.10), 0 0 0 var(--edge);
     }
 
     @media (hover: hover) {
-      .v-key:hover:not(:disabled), .calc-btn:hover { background: var(--calc-hover); }
+      .v-key:hover, .calc-btn:hover { filter: brightness(1.05); }
     }
 
-    .v-key:disabled { opacity: 0.35; cursor: not-allowed; }
+    .v-key.op, .calc-btn.op { color: var(--op-fg); font-weight: 800; }
 
-    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 800; text-shadow: var(--op-glow); }
-
-    .virtual-keypad-compact {
+    .virtual-keypad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 51px;
-      gap: 6px;
-      margin-top: auto;
-    }
-
-    .virtual-keypad-compact .v-key { font-size: 1.3rem; }
-
-    .virtual-keypad-bases {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: minmax(0, 1fr);
-      gap: 5px;
+      gap: 8px;
       flex: 1;
-      min-height: 0;
-      margin-top: 2px;
+      margin-top: 4px;
+      padding-bottom: 6px;
     }
+
+    /* Colores por fila: teclado virtual (4 columnas) */
+    .virtual-keypad > .v-key:nth-child(-n+3)   { --k: var(--c-yellow); }
+    .virtual-keypad > .v-key:nth-child(4)      { --k: var(--c-green); }
+    .virtual-keypad > .v-key:nth-child(n+5):nth-child(-n+8)  { --k: var(--c-pink); }
+    .virtual-keypad > .v-key:nth-child(n+9):nth-child(-n+12) { --k: var(--c-lav); }
+    .virtual-keypad > .v-key:nth-child(13)     { --k: var(--c-blue); }
 
     /* ===== Calculadora estándar / científica ===== */
     .calc-display {
+      position: relative;
+      overflow: hidden;
       background: var(--lcd-bg);
       border: 1px solid var(--lcd-edge);
-      border-radius: 10px;
-      box-shadow: inset 0 2px 8px var(--inset), inset 0 0 14px var(--glow-soft);
+      border-radius: 16px;
+      box-shadow: inset 0 3px 6px var(--inset), 0 0 0 3px var(--ring);
       padding: 10px 14px;
       text-align: right;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      height: 85px;
+      height: 80px;
     }
+
+    .calc-history, .calc-main-value { position: relative; }
 
     .calc-history {
       font-family: var(--font-num);
       font-size: 0.8rem;
-      color: var(--lcd-dim);
       font-weight: 500;
+      color: var(--lcd-dim);
       min-height: 18px;
       white-space: nowrap;
       overflow: hidden;
@@ -540,10 +460,9 @@
 
     .calc-main-value {
       font-family: var(--font-num);
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--lcd-fg);
-      text-shadow: var(--lcd-glow);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -552,27 +471,40 @@
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: minmax(42px, 1fr);
-      gap: 5px;
+      gap: 8px;
       flex: 1;
+      padding-bottom: 6px;
     }
 
+    .calc-btn { font-size: 1.4rem; }
+
+    /* Colores por fila: calculadora (22 teclas) */
+    .calc-grid > .calc-btn:nth-child(1),
+    .calc-grid > .calc-btn:nth-child(4)  { --k: var(--c-green); }
+    .calc-grid > .calc-btn:nth-child(2),
+    .calc-grid > .calc-btn:nth-child(3)  { --k: var(--c-orange); color: #3a1204; }
+    .calc-grid > .calc-btn:nth-child(n+5):nth-child(-n+8)   { --k: var(--c-yellow); }
+    .calc-grid > .calc-btn:nth-child(n+9):nth-child(-n+12)  { --k: var(--c-peach); }
+    .calc-grid > .calc-btn:nth-child(n+13):nth-child(-n+16) { --k: var(--c-pink); }
+    .calc-grid > .calc-btn:nth-child(n+17):nth-child(-n+20) { --k: var(--c-lav); }
+    .calc-grid > .calc-btn:nth-child(21) { --k: var(--c-blue); }
+
     .calc-btn.equals {
-      background: var(--accent);
-      color: var(--on-accent);
-      text-shadow: none;
+      --k: var(--c-blue);
+      color: var(--on-key);
+      font-size: 1.6rem;
       font-weight: 800;
-      border-color: var(--accent-edge);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 0 var(--accent-edge), 0 0 10px var(--glow-c);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.55),
+        inset 0 -3px 0 rgba(0,0,0,.12),
+        inset 0 0 0 3px rgba(255,255,255,.45),
+        0 var(--d) 0 var(--edge),
+        0 calc(var(--d) + 3px) 6px var(--key-shadow);
     }
 
     .calc-btn.equals:active {
-      transform: translateY(2px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 0 0 var(--accent-edge);
-    }
-
-    @media (hover: hover) {
-      .calc-btn.equals:hover { background: var(--accent-hover); }
+      transform: translateY(var(--d));
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.4), inset 0 0 0 3px rgba(255,255,255,.35), 0 0 0 var(--edge);
     }
 
     #calc-title { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -583,8 +515,8 @@
       gap: 2px;
       padding: 2px;
       background: var(--field);
-      border: 1px solid var(--field-border);
-      border-radius: 9px;
+      border: 2px solid var(--field-border);
+      border-radius: 999px;
       flex-shrink: 0;
     }
 
@@ -592,10 +524,10 @@
       background: none;
       border: none;
       color: var(--muted);
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 7px;
+      padding: 5px 10px;
+      border-radius: 999px;
       cursor: pointer;
       touch-action: manipulation;
     }
@@ -603,7 +535,6 @@
     .mode-switch button.active {
       background: var(--accent);
       color: var(--on-accent);
-      font-weight: 700;
     }
 
     .calc-body { flex: 1; display: flex; flex-direction: column; }
@@ -611,31 +542,33 @@
     .sci-grid {
       display: none;
       grid-template-columns: repeat(5, 1fr);
-      gap: 4px;
-      margin-bottom: 5px;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
     }
 
     .tab-panel.sci .sci-grid { display: grid; }
 
     .calc-btn.sci {
-      background: var(--key-alt);
-      font-size: 0.75rem;
-      color: var(--text);
-      text-shadow: none;
+      --d: 3px;
+      --k: var(--c-sci);
+      font-size: 0.85rem;
+      color: var(--on-key);
+      -webkit-text-stroke: 0.3px currentColor;
     }
 
-    .calc-btn.sci.angle { color: var(--accent); font-weight: 800; text-shadow: var(--op-glow); }
+    .calc-btn.sci.angle { color: var(--accent); font-weight: 800; }
     .calc-btn sup { font-size: 0.6em; }
 
     #tab-standard.sci .calc-display {
-      height: 52px !important;
-      padding: 4px 10px !important;
-      margin-bottom: 3px !important;
+      height: 58px !important;
+      padding: 6px 12px !important;
+      margin-bottom: 4px !important;
       flex-shrink: 0 !important;
     }
 
     #tab-standard.sci .calc-main-value {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       line-height: 1.1 !important;
     }
 
@@ -644,30 +577,82 @@
     #tab-standard.sci .calc-body { flex: 1 !important; min-height: 0; }
 
     #tab-standard.sci .sci-grid {
-      gap: 3px !important;
-      margin-bottom: 3px !important;
+      gap: 4px !important;
+      margin-bottom: 4px !important;
+      padding-bottom: 3px;
       flex: 4 1 0 !important;
       min-height: 0;
       grid-template-rows: repeat(4, minmax(0, 1fr));
     }
 
     #tab-standard.sci .calc-grid {
-      gap: 3px !important;
+      gap: 4px !important;
+      padding-bottom: 3px;
       flex: 6.5 1 0 !important;
       min-height: 0;
       grid-template-rows: repeat(6, minmax(0, 1fr));
     }
 
     #tab-standard.sci .calc-btn {
+      --d: 3px;
       padding: 0 !important;
       min-height: 0;
-      font-size: 0.9rem !important;
-      border-radius: 7px;
+      font-size: 1rem !important;
     }
 
-    #tab-standard.sci .calc-btn.sci { font-size: 0.65rem !important; }
+    #tab-standard.sci .calc-btn.sci { font-size: 0.75rem !important; }
 
-    @media (max-width: 420px) {
+    /* ===== Navegación inferior (fila de teclas pastilla, como M+ / M- / MRC) ===== */
+    nav {
+      background-color: var(--nav-bg);
+      border-top: 3px solid var(--nav-border);
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+      gap: 4px;
+      padding: 6px 5px 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 55%), var(--c-green);
+      border: none;
+      border-radius: 18px;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.12), 0 3px 0 var(--edge);
+      color: var(--on-key);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 2px 5px;
+      width: 16.5%;
+      touch-action: manipulation;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 55%), var(--c-orange);
+      color: #3a1204;
+      font-weight: 700;
+      transform: translateY(3px);
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 0 0 var(--edge);
+    }
+
+    :root[data-theme="pink"] .nav-item.active { color: #2b0a1d; }
+
+    .nav-icon {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 460px) {
       .mode-word { display: none; }
     }
   </style>
@@ -677,47 +662,11 @@
   <header>
     <h1>Herramientas de Cálculo Rápido</h1>
     <div class="header-actions">
-      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()"><svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></button>
+      <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema" onclick="toggleTheme()">
+        <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+      </button>
     </div>
   </header>
-
-  <!-- Navegación Superior -->
-  <div class="nav-container">
-    <nav>
-      <button class="nav-item active" onclick="switchTab('tab-standard', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
-        <span>Estándar</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p1', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
-        <span>% valor</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p2', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-        <span>Qué %</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p3', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-        <span>Aumentar</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-p4', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
-        <span>Disminuir</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-scale', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
-        <span>Escalas</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-bases', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span>Bases (Bin/Hex)</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('tab-data', this)">
-        <svg class="nav-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-        <span>Datos</span>
-      </button>
-    </nav>
-  </div>
 
   <main>
     <!-- TAB ESTÁNDAR / CIENTÍFICA -->
@@ -793,14 +742,21 @@
 
     <!-- TAB PORCENTAJE DEL VALOR -->
     <div id="tab-p1" class="tab-panel">
-      <div class="panel-title">Porcentaje de un Valor</div>
+      <div class="panel-title">
+        Porcentaje de un Valor
+      </div>
+      
+      <div class="result-box-compact">
+        <div class="text" id="p1-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
+      </div>
 
       <div class="calc-table-layout">
         <div class="table-row">
           <div class="table-cell-label green">Porcentaje (%)</div>
           <div class="table-cell-input" style="position: relative;">
-            <input type="text" inputmode="none" id="p1-percent" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--green); font-family: var(--font-num); font-weight: 700; pointer-events: none;">%</span>
+            <input type="text" inputmode="none" id="p1-percent" placeholder="0" oninput="calcP1()" onclick="setActiveInput(this)" readonly style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--green); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
         <div class="table-row">
@@ -811,35 +767,37 @@
         </div>
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p1-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p1-result-text')">Copiar</button>
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP1()">CE</button>
       </div>
 
-      <div class="virtual-keypad-compact">
+      <div class="virtual-keypad">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
-
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
-
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-
-        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2;" onclick="clearP1()">CE</button>
+        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
       </div>
     </div>
 
     <!-- TAB QUÉ PORCENTAJE ES -->
     <div id="tab-p2" class="tab-panel">
-      <div class="panel-title">¿Qué porcentaje es?</div>
+      <div class="panel-title">
+        ¿Qué porcentaje es?
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p2-result-text">Porcentaje = 0%</div>
+        <button class="btn-copy" onclick="copyText('p2-result-text')">Copiar</button>
+      </div>
 
       <div class="calc-table-layout">
         <div class="table-row">
@@ -856,35 +814,37 @@
         </div>
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p2-result-text">Porcentaje = 0%</div>
-        <button class="btn-copy" onclick="copyText('p2-result-text')">Copiar</button>
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP2()">CE</button>
       </div>
 
-      <div class="virtual-keypad-compact">
+      <div class="virtual-keypad">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
-
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
-
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-
-        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2;" onclick="clearP2()">CE</button>
+        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
       </div>
     </div>
 
     <!-- TAB AUMENTAR -->
     <div id="tab-p3" class="tab-panel">
-      <div class="panel-title">Aumentar Porcentaje</div>
+      <div class="panel-title">
+        Aumentar Porcentaje
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p3-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
+      </div>
 
       <div class="calc-table-layout">
         <div class="table-row">
@@ -896,41 +856,43 @@
         <div class="table-row">
           <div class="table-cell-label blue">% a Aumentar</div>
           <div class="table-cell-input" style="position: relative;">
-            <input type="text" inputmode="none" id="p3-percent" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--blue); font-family: var(--font-num); font-weight: 700; pointer-events: none;">%</span>
+            <input type="text" inputmode="none" id="p3-percent" placeholder="0" oninput="calcP3()" onclick="setActiveInput(this)" readonly style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p3-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p3-result-text')">Copiar</button>
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP3()">CE</button>
       </div>
 
-      <div class="virtual-keypad-compact">
+      <div class="virtual-keypad">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
-
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
-
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-
-        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2;" onclick="clearP3()">CE</button>
+        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
       </div>
     </div>
 
     <!-- TAB DISMINUIR -->
     <div id="tab-p4" class="tab-panel">
-      <div class="panel-title">Disminuir Porcentaje</div>
+      <div class="panel-title">
+        Disminuir Porcentaje
+      </div>
+
+      <div class="result-box-compact">
+        <div class="text" id="p4-result-text">Resultado = 0</div>
+        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
+      </div>
 
       <div class="calc-table-layout">
         <div class="table-row">
@@ -942,53 +904,50 @@
         <div class="table-row">
           <div class="table-cell-label blue">% a Descontar</div>
           <div class="table-cell-input" style="position: relative;">
-            <input type="text" inputmode="none" id="p4-percent" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly style="padding-right: 30px;">
-            <span style="position: absolute; right: 16px; color: var(--blue); font-family: var(--font-num); font-weight: 700; pointer-events: none;">%</span>
+            <input type="text" inputmode="none" id="p4-percent" placeholder="0" oninput="calcP4()" onclick="setActiveInput(this)" readonly style="padding-right: 25px;">
+            <span style="position: absolute; right: 14px; color: var(--blue); font-weight: bold; pointer-events: none;">%</span>
           </div>
         </div>
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="p4-result-text">Resultado = 0</div>
-        <button class="btn-copy" onclick="copyText('p4-result-text')">Copiar</button>
+      <div class="btn-ce-box">
+        <button class="btn-ce" onclick="clearP4()">CE</button>
       </div>
 
-      <div class="virtual-keypad-compact">
+      <div class="virtual-keypad">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
-
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
-
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-
-        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2;" onclick="clearP4()">CE</button>
+        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
       </div>
     </div>
 
     <!-- TAB ESCALAS -->
     <div id="tab-scale" class="tab-panel">
-      <div class="panel-title">Conversión de Escala</div>
+      <div class="panel-title">
+        Conversión de Escala
+      </div>
 
-      <!-- Texto superior con min-height fijo para evitar saltos de diseño -->
-      <div class="log-box-compact" id="scale-log" style="border: none; background: transparent; padding: 0; min-height: 2.6rem; display: flex; flex-direction: column; justify-content: center;">
-        • Ingrese valores.
+      <div class="result-box-compact">
+        <div class="text" id="scale-result-text">Escala = 0 cm</div>
+        <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
       </div>
 
       <div class="calc-table-layout">
         <div class="table-row">
-          <div class="table-cell-label strong">Escala (ej: 1:2)</div>
+          <div class="table-cell-label" style="color: var(--title);">Escala (ej: 1:2)</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-r1" value="1" onclick="setActiveInput(this)" readonly>
-            <span style="color: var(--accent); font-weight: 800; padding: 0 4px;">:</span>
+            <span style="color: var(--accent); font-weight: bold;">:</span>
             <input type="text" inputmode="none" id="scale-r2" value="2" onclick="setActiveInput(this)" readonly>
           </div>
         </div>
@@ -996,7 +955,7 @@
           <div class="table-cell-label green">Longitud real</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-real" placeholder="0" oninput="calcScale('real')" onclick="setActiveInput(this)" readonly>
-            <select id="scale-unit-real" onchange="calcScale('real')" style="margin-left: 4px;">
+            <select id="scale-unit-real" onchange="calcScale('real')">
               <option value="milímetro">mm</option>
               <option value="centímetro" selected>cm</option>
               <option value="metro">m</option>
@@ -1007,7 +966,7 @@
           <div class="table-cell-label blue">Longitud de escala</div>
           <div class="table-cell-input">
             <input type="text" inputmode="none" id="scale-plan" placeholder="0" oninput="calcScale('plan')" onclick="setActiveInput(this)" readonly>
-            <select id="scale-unit-plan" onchange="calcScale('plan')" style="margin-left: 4px;">
+            <select id="scale-unit-plan" onchange="calcScale('plan')">
               <option value="milímetro">mm</option>
               <option value="centímetro" selected>cm</option>
               <option value="metro">m</option>
@@ -1016,237 +975,71 @@
         </div>
       </div>
 
-      <div class="result-box-compact">
-        <div class="text" id="scale-result-text">Escala = 0 cm</div>
-        <button class="btn-copy" onclick="copyText('scale-result-text')">Copiar</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; min-height: 28px;">
+        <div class="log-box-compact" id="scale-log" style="flex: 1; border: none; background: transparent; padding: 0;">
+          • Ingrese valores.
+        </div>
+        <button class="btn-ce" onclick="clearScale()">CE</button>
       </div>
 
-      <div class="virtual-keypad-compact">
+      <div class="virtual-keypad">
         <button class="v-key" onclick="vKey('7')">7</button>
         <button class="v-key" onclick="vKey('8')">8</button>
         <button class="v-key" onclick="vKey('9')">9</button>
         <button class="v-key op" onclick="vKey('back')">⌫</button>
-
         <button class="v-key" onclick="vKey('4')">4</button>
         <button class="v-key" onclick="vKey('5')">5</button>
         <button class="v-key" onclick="vKey('6')">6</button>
         <button class="v-key op" onclick="vKey('.')">.</button>
-
         <button class="v-key" onclick="vKey('1')">1</button>
         <button class="v-key" onclick="vKey('2')">2</button>
         <button class="v-key" onclick="vKey('3')">3</button>
         <button class="v-key op" onclick="vKey(',')">,</button>
-
-        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2;" onclick="clearScale()">CE</button>
-      </div>
-    </div>
-
-    <!-- TAB CONVERSIÓN DE BASES NUMÉRICAS -->
-    <div id="tab-bases" class="tab-panel">
-      <div class="panel-title">Sistemas Numéricos</div>
-
-      <div class="calc-table-layout">
-        <!-- Decimal -->
-        <div class="base-row-container">
-          <div class="base-row-main table-row">
-            <div class="table-cell-label green">Decimal (10)</div>
-            <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-dec" placeholder="0" oninput="calcBases('dec')" onclick="setActiveBaseInput('base-dec', 'dec')" readonly>
-            </div>
-          </div>
-          <div class="base-row-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-dec', 'dec')">📋 Pegar</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-dec')">📋 Copiar</button>
-          </div>
-        </div>
-
-        <!-- Binario -->
-        <div class="base-row-container">
-          <div class="base-row-main table-row">
-            <div class="table-cell-label blue">Binario (2)</div>
-            <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-bin" placeholder="0" oninput="calcBases('bin')" onclick="setActiveBaseInput('base-bin', 'bin')" readonly>
-            </div>
-          </div>
-          <div class="base-row-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-bin', 'bin')">📋 Pegar</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-bin')">📋 Copiar</button>
-          </div>
-        </div>
-
-        <!-- Octal -->
-        <div class="base-row-container">
-          <div class="base-row-main table-row">
-            <div class="table-cell-label accent">Octal (8)</div>
-            <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-oct" placeholder="0" oninput="calcBases('oct')" onclick="setActiveBaseInput('base-oct', 'oct')" readonly>
-            </div>
-          </div>
-          <div class="base-row-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-oct', 'oct')">📋 Pegar</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-oct')">📋 Copiar</button>
-          </div>
-        </div>
-
-        <!-- Hexadecimal -->
-        <div class="base-row-container">
-          <div class="base-row-main table-row">
-            <div class="table-cell-label strong">Hex (16)</div>
-            <div class="table-cell-input">
-              <input type="text" inputmode="none" id="base-hex" placeholder="0" oninput="calcBases('hex')" onclick="setActiveBaseInput('base-hex', 'hex')" readonly>
-            </div>
-          </div>
-          <div class="base-row-actions">
-            <button class="btn-action" title="Pegar" onclick="pasteToInput('base-hex', 'hex')">📋 Pegar</button>
-            <button class="btn-action" title="Copiar" onclick="copyInputValue('base-hex')">📋 Copiar</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="virtual-keypad-bases" id="bases-keypad">
-        <button class="v-key" data-val="7" onclick="vKey('7')">7</button>
-        <button class="v-key" data-val="8" onclick="vKey('8')">8</button>
-        <button class="v-key" data-val="9" onclick="vKey('9')">9</button>
-        <button class="v-key op" data-val="back" onclick="vKey('back')">⌫</button>
-
-        <button class="v-key" data-val="4" onclick="vKey('4')">4</button>
-        <button class="v-key" data-val="5" onclick="vKey('5')">5</button>
-        <button class="v-key" data-val="6" onclick="vKey('6')">6</button>
-        <button class="v-key op" data-val="A" onclick="vKey('A')">A</button>
-
-        <button class="v-key" data-val="1" onclick="vKey('1')">1</button>
-        <button class="v-key" data-val="2" onclick="vKey('2')">2</button>
-        <button class="v-key" data-val="3" onclick="vKey('3')">3</button>
-        <button class="v-key op" data-val="B" onclick="vKey('B')">B</button>
-
-        <button class="v-key" data-val="0" onclick="vKey('0')">0</button>
-        <button class="v-key op" data-val="." onclick="vKey('.')">.</button>
-        <button class="v-key op" data-val="," onclick="vKey(',')">,</button>
-        <button class="v-key op" data-val="C" onclick="vKey('C')">C</button>
-
-        <button class="v-key op" data-val="D" onclick="vKey('D')">D</button>
-        <button class="v-key op" data-val="E" onclick="vKey('E')">E</button>
-        <button class="v-key op" data-val="F" onclick="vKey('F')">F</button>
-        <button class="v-key op" data-val="ce" onclick="clearBases()">CE</button>
-      </div>
-    </div>
-
-    <!-- TAB CONVERSOR DE DATOS / ALMACENAMIENTO -->
-    <div id="tab-data" class="tab-panel">
-      <div class="panel-title">Conversor de Datos</div>
-
-      <div class="calc-table-layout">
-        <div class="table-row">
-          <div class="table-cell-label green">Valor de Origen</div>
-          <div class="table-cell-input">
-            <input type="text" inputmode="none" id="data-val-1" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-1', 'src')" readonly>
-            <select id="data-unit-1" onchange="calcData()" style="margin-left: 4px;">
-              <option value="bit">bit</option>
-              <option value="byte" selected>Byte</option>
-              <option value="KB">KB</option>
-              <option value="MB">MB</option>
-              <option value="GB">GB</option>
-              <option value="TB">TB</option>
-              <option value="PB">PB</option>
-            </select>
-          </div>
-        </div>
-        <div class="table-row">
-          <div class="table-cell-label blue">Valor de Destino</div>
-          <div class="table-cell-input">
-            <input type="text" inputmode="none" id="data-val-2" placeholder="0" oninput="calcData()" onclick="setActiveDataInput('data-val-2', 'dst')" readonly>
-            <select id="data-unit-2" onchange="calcData()" style="margin-left: 4px;">
-              <option value="bit">bit</option>
-              <option value="byte">Byte</option>
-              <option value="KB" selected>KB</option>
-              <option value="MB">MB</option>
-              <option value="GB">GB</option>
-              <option value="TB">TB</option>
-              <option value="PB">PB</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="result-box-compact">
-        <div class="text" id="data-result-text">Resultado = 0 Bytes</div>
-        <button class="btn-copy" onclick="copyText('data-result-text')">Copiar</button>
-      </div>
-
-      <div class="virtual-keypad-compact">
-        <button class="v-key" onclick="vKey('7')">7</button>
-        <button class="v-key" onclick="vKey('8')">8</button>
-        <button class="v-key" onclick="vKey('9')">9</button>
-        <button class="v-key op" onclick="vKey('back')">⌫</button>
-
-        <button class="v-key" onclick="vKey('4')">4</button>
-        <button class="v-key" onclick="vKey('5')">5</button>
-        <button class="v-key" onclick="vKey('6')">6</button>
-        <button class="v-key op" onclick="vKey('.')">.</button>
-
-        <button class="v-key" onclick="vKey('1')">1</button>
-        <button class="v-key" onclick="vKey('2')">2</button>
-        <button class="v-key" onclick="vKey('3')">3</button>
-        <button class="v-key op" onclick="vKey(',')">,</button>
-
-        <button class="v-key" style="grid-column: span 2;" onclick="vKey('0')">0</button>
-        <button class="v-key op" style="grid-column: span 2;" onclick="clearData()">CE</button>
+        <button class="v-key" style="grid-column: span 4;" onclick="vKey('0')">0</button>
       </div>
     </div>
   </main>
 
+  <!-- Navegación Inferior -->
+  <nav>
+    <button class="nav-item active" onclick="switchTab('tab-standard', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+      <span>Estándar</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p1', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      <span>% valor</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p2', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+      <span>Qué %</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p3', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span>Aumentar</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-p4', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+      <span>Disminuir</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('tab-scale', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+      <span>Escalas</span>
+    </button>
+  </nav>
+
   <script>
-    // Bloquear gestos de zoom de iOS Safari
+    /* Bloquear gestos de zoom de iOS Safari */
     document.addEventListener('gesturestart', function (e) {
       e.preventDefault();
     });
 
     let activeInput = null;
-    let currentBaseType = 'dec'; // dec, bin, oct, hex
-    let activeDataField = 'src'; // src o dst
 
     function setActiveInput(input) {
       document.querySelectorAll('.tab-panel.active input').forEach(el => el.classList.remove('active-input'));
       activeInput = input;
       if (activeInput) activeInput.classList.add('active-input');
-    }
-
-    function setActiveBaseInput(inputId, type) {
-      currentBaseType = type;
-      const input = document.getElementById(inputId);
-      setActiveInput(input);
-      updateBasesKeypadState();
-    }
-
-    function setActiveDataInput(inputId, field) {
-      activeDataField = field;
-      const input = document.getElementById(inputId);
-      setActiveInput(input);
-    }
-
-    function updateBasesKeypadState() {
-      const keypad = document.getElementById('bases-keypad');
-      if (!keypad) return;
-      const buttons = keypad.querySelectorAll('button');
-
-      buttons.forEach(btn => {
-        const val = btn.getAttribute('data-val');
-        if (!val || val === 'back' || val === 'ce') return;
-
-        let allowed = true;
-        if (currentBaseType === 'bin') {
-          allowed = ['0', '1', '.', ','].includes(val);
-        } else if (currentBaseType === 'oct') {
-          allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '.', ','].includes(val);
-        } else if (currentBaseType === 'dec') {
-          allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ','].includes(val);
-        } else if (currentBaseType === 'hex') {
-          allowed = true;
-        }
-
-        btn.disabled = !allowed;
-      });
     }
 
     /* Separador de miles: en los cuadros de valores el punto es de miles y la coma es decimal */
@@ -1286,38 +1079,19 @@
       }
       if (!activeInput) return;
 
-      if (!activeInput.id.startsWith('base-')) {
-        let raw = activeInput.value.replace(/\./g, '');
-        if (val === 'back') {
-          raw = raw.slice(0, -1);
-        } else if (val === '.' || val === ',') {
-          if (!raw.includes(',')) raw += (raw === '' ? '0,' : ',');
-        } else if (/^\d$/.test(val)) {
-          raw = (raw === '0') ? val : raw + val;
-        }
-        activeInput.value = groupDigits(raw);
-        activeInput.dispatchEvent(new Event('input'));
-        return;
-      }
-
-      let v = activeInput.value;
+      let raw = activeInput.value.replace(/\./g, '');
       if (val === 'back') {
-        v = v.slice(0, -1);
+        raw = raw.slice(0, -1);
       } else if (val === '.' || val === ',') {
-        const sep = val;
-        if (!v.includes('.') && !v.includes(',')) {
-          v += (v === '' ? '0' + sep : sep);
-        }
-      } else {
-        if (v === '0' && !isNaN(val)) v = val;
-        else if (v === '0') v = val;
-        else v += val;
+        if (!raw.includes(',')) raw += (raw === '' ? '0,' : ',');
+      } else if (/^\d$/.test(val)) {
+        raw = (raw === '0') ? val : raw + val;
       }
-      activeInput.value = v;
+      activeInput.value = groupDigits(raw);
       activeInput.dispatchEvent(new Event('input'));
     }
 
-    function formatEs(num, maxDec = 4) {
+    function formatEs(num, maxDec = 2) {
       if (isNaN(num) || num === null) return '0';
       return groupDigits(num.toLocaleString('es-AR', { maximumFractionDigits: maxDec, useGrouping: false }));
     }
@@ -1338,17 +1112,13 @@
       btn.classList.add('active');
       if (tabId === 'tab-standard') {
         fitDisplay();
-      } else if (tabId === 'tab-bases') {
-        setActiveBaseInput('base-dec', 'dec');
-      } else if (tabId === 'tab-data') {
-        setActiveDataInput('data-val-1', 'src');
       } else {
         const firstInput = target.querySelector('input');
         if (firstInput) setActiveInput(firstInput);
       }
     }
 
-    // COPIAR Y PEGAR
+    /* COPIAR */
     async function copyToClipboard(text) {
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1378,43 +1148,6 @@
       showToast(ok ? `Copiado: ${text}` : 'No se pudo copiar', 1800);
     }
 
-    function copyInputValue(inputId) {
-      const val = document.getElementById(inputId).value;
-      if (!val) {
-        showToast('Campo vacío', 1400);
-        return;
-      }
-      copyValue(inputId.startsWith('base-') ? val : val.replace(/\./g, ''));
-    }
-
-    async function pasteToInput(inputId, type) {
-      try {
-        if (navigator.clipboard && navigator.clipboard.readText) {
-          const text = await navigator.clipboard.readText();
-          if (text) {
-            const input = document.getElementById(inputId);
-            if (inputId.startsWith('base-')) setActiveBaseInput(inputId, type);
-            else setActiveInput(input);
-            let t = text.trim();
-            if (!inputId.startsWith('base-')) {
-              t = t.replace(/\s/g, '');
-              if (t.includes(',') || /^\d{1,3}(\.\d{3})+$/.test(t)) t = t.replace(/\./g, '');
-              else t = t.replace('.', ',');
-              t = t.replace(/[^\d,-]/g, '');
-              const k = t.indexOf(',');
-              if (k >= 0) t = t.slice(0, k + 1) + t.slice(k + 1).replace(/,/g, '');
-              t = groupDigits(t);
-            }
-            input.value = t;
-            input.dispatchEvent(new Event('input'));
-            showToast('Pegado con éxito', 1500);
-            return;
-          }
-        }
-      } catch (e) {}
-      showToast('No se pudo leer el portapapeles', 1800);
-    }
-
     function numberFromResult(txt) {
       const m = txt.match(/=\s*(-?[\d.,]+(?:e[+-]?\d+)?)/i);
       return m ? m[1].replace(/\./g, '') : null;
@@ -1426,7 +1159,7 @@
       copyValue(num !== null ? num : txt);
     }
 
-    // ESTÁNDAR
+    /* ESTÁNDAR */
     let calcVal = '0';
     let calcOpCurrent = null;
     let calcPrevVal = null;
@@ -1561,7 +1294,7 @@
       }
     }
 
-    // CIENTÍFICA
+    /* CIENTÍFICA */
     let calcMode = 'standard';
     let angleMode = 'deg';
 
@@ -1693,7 +1426,7 @@
 
     window.addEventListener('resize', fitDisplay);
 
-    // PORCENTAJES
+    /* PORCENTAJES */
     function calcP1() {
       const p = parseNum(document.getElementById('p1-percent').value);
       const v = parseNum(document.getElementById('p1-value').value);
@@ -1746,7 +1479,7 @@
       setActiveInput(document.getElementById('p4-value'));
     }
 
-    // ESCALAS
+    /* ESCALAS */
     const UNIT_ABBR = { 'milímetro': 'mm', 'centímetro': 'cm', 'metro': 'm' };
     const UNIT_TO_M = { 'milímetro': 0.001, 'centímetro': 0.01, 'metro': 1 };
     let scaleMode = 'real';
@@ -1780,7 +1513,7 @@
         const planVal = planMeters / fPlan;
         planInput.value = numToField(planVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}`;
       } else {
         if (planValStr === '') {
           realInput.value = '';
@@ -1794,7 +1527,7 @@
         const realVal = realMeters / fReal;
         realInput.value = numToField(realVal);
         document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} | Real: ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}`;
       }
     }
 
@@ -1806,102 +1539,7 @@
       setActiveInput(document.getElementById('scale-r1'));
     }
 
-    // CONVERSIÓN DE BASES NUMÉRICAS
-    const BASE_DIGITS = { dec: 10, bin: 2, oct: 8, hex: 16 };
-    const BASE_FRAC_MAX = 10;
-
-    function parseBase(str, base) {
-      let t = str.replace(',', '.');
-      const invalid = base === 2 ? /[^01.]/g : base === 8 ? /[^0-7.]/g : base === 10 ? /[^0-9.]/g : /[^0-9a-fA-F.]/g;
-      t = t.replace(invalid, '');
-      if (t === '' || t === '.') return null;
-      const parts = t.split('.');
-      let value = parts[0] ? parseInt(parts[0], base) : 0;
-      if (isNaN(value)) value = 0;
-      const fp = parts[1] || '';
-      for (let i = 0; i < fp.length; i++) {
-        value += parseInt(fp[i], base) / Math.pow(base, i + 1);
-      }
-      return value;
-    }
-
-    function numToBase(n, base) {
-      const ip = Math.floor(n);
-      let frac = n - ip;
-      let out = ip.toString(base).toUpperCase();
-      let f = '';
-      while (frac > 1e-12 && f.length < BASE_FRAC_MAX) {
-        frac *= base;
-        const d = Math.floor(frac + 1e-9);
-        f += d.toString(base).toUpperCase();
-        frac -= d;
-      }
-      return f ? out + '.' + f : out;
-    }
-
-    function calcBases(changed) {
-      const inputs = {
-        dec: document.getElementById('base-dec'),
-        bin: document.getElementById('base-bin'),
-        oct: document.getElementById('base-oct'),
-        hex: document.getElementById('base-hex')
-      };
-      const value = parseBase(inputs[changed].value, BASE_DIGITS[changed]);
-      for (const key in inputs) {
-        if (key === changed) continue;
-        inputs[key].value = value === null ? '' : numToBase(value, BASE_DIGITS[key]);
-      }
-      for (const key in inputs) inputs[key].scrollLeft = inputs[key].scrollWidth;
-    }
-
-    function clearBases() {
-      document.getElementById('base-dec').value = '';
-      document.getElementById('base-bin').value = '';
-      document.getElementById('base-oct').value = '';
-      document.getElementById('base-hex').value = '';
-      setActiveBaseInput('base-dec', 'dec');
-    }
-
-    // CONVERSOR DE DATOS / ALMACENAMIENTO
-    const DATA_MULTIPLIERS = {
-      'bit': 0.125,
-      'byte': 1,
-      'KB': 1024,
-      'MB': 1024 * 1024,
-      'GB': 1024 * 1024 * 1024,
-      'TB': 1024 * 1024 * 1024 * 1024,
-      'PB': 1024 * 1024 * 1024 * 1024 * 1024
-    };
-
-    function calcData() {
-      const val1Input = document.getElementById('data-val-1');
-      const val2Input = document.getElementById('data-val-2');
-      const unit1 = document.getElementById('data-unit-1').value;
-      const unit2 = document.getElementById('data-unit-2').value;
-
-      if (activeDataField === 'src') {
-        const raw = parseNum(val1Input.value);
-        const bytes = raw * DATA_MULTIPLIERS[unit1];
-        const converted = bytes / DATA_MULTIPLIERS[unit2];
-        val2Input.value = val1Input.value === '' ? '' : numToField(converted, 6);
-        document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(converted, 4)} ${unit2}`;
-      } else {
-        const raw = parseNum(val2Input.value);
-        const bytes = raw * DATA_MULTIPLIERS[unit2];
-        const converted = bytes / DATA_MULTIPLIERS[unit1];
-        val1Input.value = val2Input.value === '' ? '' : numToField(converted, 6);
-        document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(raw, 4)} ${unit2}`;
-      }
-    }
-
-    function clearData() {
-      document.getElementById('data-val-1').value = '';
-      document.getElementById('data-val-2').value = '';
-      document.getElementById('data-result-text').innerText = 'Resultado = 0 Bytes';
-      setActiveDataInput('data-val-1', 'src');
-    }
-
-    // AVISO
+    /* AVISO */
     function showToast(msg, ms = 3600) {
       document.querySelectorAll('.toast').forEach(old => old.remove());
       const t = document.createElement('div');
@@ -1912,8 +1550,8 @@
       setTimeout(() => t.remove(), ms);
     }
 
-    // TEMA
-    const THEMES = { original: 'Tema original', pink: 'Tema rosa y negro', 'Café': 'Café' };
+    /* TEMA */
+    const THEMES = { original: 'Tema original', pink: 'Tema rosa y negro', Café: 'Café' };
 
     function applyTheme(name) {
       document.documentElement.setAttribute('data-theme', name || 'original');
@@ -1925,7 +1563,7 @@
       if (current === 'original') next = 'pink';
       else if (current === 'pink') next = 'Café';
       else next = 'original';
-
+      
       applyTheme(next);
       try { localStorage.setItem('calculadora-g_theme', next); } catch (e) {}
       showToast(THEMES[next]);
