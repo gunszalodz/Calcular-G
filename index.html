@@ -493,7 +493,7 @@
       color: var(--key-fg);
       text-shadow: var(--key-glow);
       font-family: var(--font-num);
-      font-size: 1.25rem;
+      font-size: 1.7rem; /* Aumentado de 1.25rem a 1.7rem */
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -522,7 +522,7 @@
       color: var(--accent); 
       font-weight: 800; 
       text-shadow: var(--op-glow); 
-      font-size: 1.55rem; /* <-- Iconos de operadores más grandes */
+      font-size: 2.1rem; /* Aumentado de 1.55rem a 2.1rem */
     }
 
     .virtual-keypad-compact {
@@ -533,9 +533,8 @@
       margin-top: auto;
     }
 
-    .virtual-keypad-compact .v-key { font-size: 1.3rem; }
-    
-    .virtual-keypad-compact .v-key.op { font-size: 1.6rem; } /* <-- Iconos en teclados compactos más grandes */
+    .virtual-keypad-compact .v-key { font-size: 1.7rem; } /* Aumentado de 1.3rem */
+    .virtual-keypad-compact .v-key.op { font-size: 2rem; } /* Aumentado de 1.6rem */
 
     .virtual-keypad-bases {
       display: grid;
@@ -597,6 +596,7 @@
       font-weight: 800;
       border-color: var(--accent-edge);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 0 var(--accent-edge), 0 0 10px var(--glow-c);
+      font-size: 2.1rem; /* Aumentado el "=" para que iguale a los operadores */
     }
 
     .calc-btn.equals:active {
@@ -652,7 +652,7 @@
 
     .calc-btn.sci {
       background: var(--key-alt);
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: var(--text);
       text-shadow: none;
     }
@@ -694,15 +694,15 @@
     #tab-standard.sci .calc-btn {
       padding: 0 !important;
       min-height: 0;
-      font-size: 0.9rem !important;
+      font-size: 1.15rem !important; /* Aumentado de 0.9rem */
       border-radius: 7px;
     }
     
     #tab-standard.sci .calc-btn.op {
-      font-size: 1.15rem !important; /* <-- Iconos en modo científico más grandes */
+      font-size: 1.5rem !important; /* Aumentado de 1.15rem */
     }
 
-    #tab-standard.sci .calc-btn.sci { font-size: 0.65rem !important; }
+    #tab-standard.sci .calc-btn.sci { font-size: 0.75rem !important; } /* Aumentado de 0.65rem */
 
     @media (max-width: 420px) {
       .mode-word { display: none; }
