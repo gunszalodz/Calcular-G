@@ -1897,11 +1897,11 @@
       else next = 'original';
 
       applyTheme(next);
-      try { localStorage.setItem('calculadora-g_theme_basica', next); } catch (e) {}
+      try { sessionStorage.setItem('calculadora-g_theme_basica', next); } catch (e) {}
       showToast(THEMES[next]);
     }
 
-    try { applyTheme(localStorage.getItem('calculadora-g_theme_basica')); } catch (e) {}
+    try { applyTheme(sessionStorage.getItem('calculadora-g_theme_basica')); } catch (e) {}
   </script>
 </body>
 </html>
