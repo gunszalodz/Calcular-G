@@ -7,13 +7,12 @@
 
   <!-- ============================================================
        TEMA: inicialización temprana (antes de pintar la UI).
-       Guardado como ÍNDICE numérico para evitar problemas de
-       encoding con 'Café'. Migra automáticamente desde el
-       formato viejo (nombre string).
+       Usa SOLO ASCII para evitar problemas de codificación.
+       Guarda un índice numérico. Migra datos viejos automáticamente.
        ============================================================ -->
   <script>
   (function () {
-    var THEMES = ['original', 'pink', 'Café'];
+    var THEMES = ['original', 'pink', 'cafe'];
     function pickDefault() {
       var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       return dark ? 0 : 2;
@@ -29,6 +28,8 @@
         for (var k = 0; k < THEMES.length; k++) {
           if (THEMES[k] === s) return k;
         }
+        // Migración de versiones anteriores (con tilde o mayúsculas)
+        if (s === 'Café' || s === 'café' || s === 'CAFE') return 2;
         return null;
       } catch (e) { return null; }
     }
@@ -104,8 +105,8 @@
       --lcd-edge: #7a2560; --inset: rgba(0,0,0,.7);
     }
 
-    /* ===== TEMA CAFÉ (claro, sin brillo) ===== */
-    :root[data-theme="Café"] {
+    /* ===== TEMA CAFE (claro, sin brillo) - ID sin tilde ===== */
+    :root[data-theme="cafe"] {
       --bg: #fbf5e8; --header-bg: transparent; --body-bg: #f2eada; --text: #2c2b28;
       --accent: #7a5230; --accent-hover: #5e3d21; --accent-edge: #3f2812; --on-accent: #ffffff;
       --title: #2b1a0a; --title-glow: none;
@@ -1695,21 +1696,12 @@
     // ============================================================
     // ===== TEMA: persistencia robusta por dispositivo =====
     // ============================================================
-    // El atributo data-theme inicial se setea en <head> ANTES de
-    // renderizar (ver script al principio del documento), así no
-    // hay flash ni problemas de timing. Aquí solo gestionamos el
-    // toggle y guardamos el cambio.
-    //
-    // Se guarda un ÍNDICE numérico (0/1/2) en vez del nombre del
-    // tema para evitar cualquier problema de encoding con 'Café'.
-    // Si detectamos el formato viejo (string con el nombre), lo
-    // migramos automáticamente al leerlo.
 
     const THEME_KEY = 'calculadora-g_theme_basica';
     const THEMES = [
       { id: 'original', label: 'Tema original' },
       { id: 'pink',     label: 'Tema rosa y negro' },
-      { id: 'Café',     label: 'Café' }
+      { id: 'cafe',     label: 'Café' }
     ];
 
     function getSavedThemeIndex() {
@@ -1723,6 +1715,8 @@
         for (let k = 0; k < THEMES.length; k++) {
           if (THEMES[k].id === s) return k;
         }
+        // Migración de valores viejos
+        if (s === 'Café' || s === 'café' || s === 'CAFE') return 2;
         return null;
       } catch (e) { return null; }
     }
@@ -1751,8 +1745,6 @@
       showToast(THEMES[next].label);
     }
 
-    // Disponible desde consola para volver al tema por defecto:
-    //   resetTheme();
     function resetTheme() {
       try { localStorage.removeItem(THEME_KEY); } catch (e) {}
       const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1761,16 +1753,12 @@
       showToast('Tema restablecido');
     }
 
-    // Red de seguridad: si el save falló al togglear, reintentamos
-    // guardar cuando la pestaña se oculta (antes de cerrar).
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'hidden') {
         saveThemeIndex(currentThemeIndex());
       }
     });
 
-    // Si el navegador restaura desde BFCache (botón atrás), re-aplicamos
-    // el tema guardado para asegurar consistencia.
     window.addEventListener('pageshow', function () {
       const idx = getSavedThemeIndex();
       if (idx !== null) applyThemeByIndex(idx);
@@ -1780,11 +1768,9 @@
     // ===== INICIALIZACIÓN =====
     // ============================================================
     try {
-      // Modo calculadora (antes se guardaba pero nunca se leía → bug arreglado).
       const savedMode = localStorage.getItem('calculadora-g_mode');
       setCalcMode(savedMode === 'scientific' ? 'scientific' : 'standard', false);
 
-      // Ángulo
       const savedAngle = localStorage.getItem('calculadora-g_angle');
       if (savedAngle) setAngleMode(savedAngle, false);
 
