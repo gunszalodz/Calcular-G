@@ -12,7 +12,7 @@
        ============================================================ -->
   <script>
   (function () {
-    var THEMES = ['original', 'pink', 'cafe'];
+    var THEMES = ['original', 'pink', 'cafe', 'peach'];
     function pickDefault() {
       var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       return dark ? 0 : 2;
@@ -29,6 +29,7 @@
           if (THEMES[k] === s) return k;
         }
         if (s === 'Café' || s === 'café' || s === 'CAFE') return 2;
+        if (s === 'Indigo' || s === 'indigo' || s === 'Fitness' || s === 'Peach') return 3; // Migración
         return null;
       } catch (e) { return null; }
     }
@@ -104,7 +105,7 @@
       --lcd-edge: #7a2560; --inset: rgba(0,0,0,.7);
     }
 
-    /* ===== TEMA CAFE (claro, sin brillo) - ID sin tilde ===== */
+    /* ===== TEMA CAFE (claro, sin brillo) ===== */
     :root[data-theme="cafe"] {
       --bg: #fbf5e8; --header-bg: transparent; --body-bg: #f2eada; --text: #2c2b28;
       --accent: #7a5230; --accent-hover: #5e3d21; --accent-edge: #3f2812; --on-accent: #ffffff;
@@ -120,6 +121,26 @@
       --key-fg: #2b1a0a; --key-glow: none; --op-glow: none;
       --lcd-bg: #c9cea8; --lcd-fg: #1f2714; --lcd-dim: #3f482b; --lcd-glow: none;
       --lcd-edge: #7a5230; --inset: rgba(60,50,20,.35);
+    }
+
+    /* ===== TEMA PEACH (Nueva referencia) ===== */
+    :root[data-theme="peach"] {
+      --bg: #1c1c1c; --header-bg: transparent; --body-bg: #1c1c1c; --text: #ffffff;
+      --accent: #ffb38a; --accent-hover: #ffcbb3; --accent-edge: #cc8a60; --on-accent: #1c1c1c;
+      --title: #ffffff; --title-glow: none;
+      --green: #ffb38a; --blue: #ff6b81;
+      --panel: #1c1c1c; --panel-border: #2a2a2a; --panel-inner: #1c1c1c;
+      --glow-c: transparent; --glow-soft: transparent;
+      --muted: #a0a0a0;
+      --field: #2a2a2a; --field-border: #444444; --focus: #ffb38a;
+      --btn2-bg: #333333; --btn2-border: #444444; --calc-hover: #444444; --calc-border: #444444;
+      --nav-bg: #1c1c1c; --nav-border: #2a2a2a;
+      --key-bg: #111111; --key-alt: #2a2a2a; --key-edge: #000000; --key-hi: rgba(255,255,255,.05);
+      --key-fg: #ffffff; --key-glow: none; --op-glow: none;
+      --lcd-bg: linear-gradient(180deg, #ffb38a 0%, #ff6b81 100%);
+      /* Textos del display en gris muy oscuro para máximo contraste */
+      --lcd-fg: #1c1c1c; --lcd-dim: rgba(28,28,28,.7); --lcd-glow: none;
+      --lcd-edge: #1c1c1c; --inset: rgba(0,0,0,.5);
     }
 
     * {
@@ -493,7 +514,7 @@
       color: var(--key-fg);
       text-shadow: var(--key-glow);
       font-family: var(--font-num);
-      font-size: 1.7rem; /* Aumentado de 1.25rem a 1.7rem */
+      font-size: 1.7rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -504,12 +525,39 @@
       transition: transform .05s;
     }
 
+    /* Estilos específicos para los botones de operadores en el tema Peach */
+    :root[data-theme="peach"] .v-key.op, 
+    :root[data-theme="peach"] .calc-btn.op {
+      background: var(--accent);
+      color: var(--on-accent);
+      text-shadow: none;
+      border-color: var(--accent-edge);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 0 var(--accent-edge);
+    }
+
+    :root[data-theme="peach"] .calc-btn.equals {
+      background: var(--accent);
+      color: var(--on-accent);
+      text-shadow: none;
+      border-color: var(--accent-edge);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 0 var(--accent-edge);
+    }
+
     .v-key, .calc-btn { -webkit-text-stroke: 0.5px currentColor; }
     .calc-btn.sci { -webkit-text-stroke: 0.3px currentColor; }
+    :root[data-theme="peach"] .v-key.op, 
+    :root[data-theme="peach"] .calc-btn.op,
+    :root[data-theme="peach"] .calc-btn.equals { -webkit-text-stroke: 0; }
 
     .v-key:active:not(:disabled), .calc-btn:active {
       transform: translateY(2px);
       box-shadow: inset 0 1px 0 var(--key-hi), 0 0 0 var(--key-edge);
+    }
+    
+    :root[data-theme="peach"] .v-key.op:active, 
+    :root[data-theme="peach"] .calc-btn.op:active,
+    :root[data-theme="peach"] .calc-btn.equals:active {
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 var(--accent-edge);
     }
 
     @media (hover: hover) {
@@ -522,7 +570,12 @@
       color: var(--accent); 
       font-weight: 800; 
       text-shadow: var(--op-glow); 
-      font-size: 2.1rem; /* Aumentado de 1.55rem a 2.1rem */
+      font-size: 2.1rem;
+    }
+    
+    :root[data-theme="peach"] .v-key.op, 
+    :root[data-theme="peach"] .calc-btn.op {
+      color: var(--on-accent);
     }
 
     .virtual-keypad-compact {
@@ -533,8 +586,8 @@
       margin-top: auto;
     }
 
-    .virtual-keypad-compact .v-key { font-size: 1.7rem; } /* Aumentado de 1.3rem */
-    .virtual-keypad-compact .v-key.op { font-size: 2rem; } /* Aumentado de 1.6rem */
+    .virtual-keypad-compact .v-key { font-size: 1.7rem; }
+    .virtual-keypad-compact .v-key.op { font-size: 2rem; }
 
     .virtual-keypad-bases {
       display: grid;
@@ -596,7 +649,7 @@
       font-weight: 800;
       border-color: var(--accent-edge);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 0 var(--accent-edge), 0 0 10px var(--glow-c);
-      font-size: 2.1rem; /* Aumentado el "=" para que iguale a los operadores */
+      font-size: 2.1rem;
     }
 
     .calc-btn.equals:active {
@@ -694,15 +747,15 @@
     #tab-standard.sci .calc-btn {
       padding: 0 !important;
       min-height: 0;
-      font-size: 1.15rem !important; /* Aumentado de 0.9rem */
+      font-size: 1.15rem !important;
       border-radius: 7px;
     }
-    
+
     #tab-standard.sci .calc-btn.op {
-      font-size: 1.5rem !important; /* Aumentado de 1.15rem */
+      font-size: 1.5rem !important;
     }
 
-    #tab-standard.sci .calc-btn.sci { font-size: 0.75rem !important; } /* Aumentado de 0.65rem */
+    #tab-standard.sci .calc-btn.sci { font-size: 0.75rem !important; }
 
     @media (max-width: 420px) {
       .mode-word { display: none; }
@@ -1711,7 +1764,8 @@
     const THEMES = [
       { id: 'original', label: 'Tema original' },
       { id: 'pink',     label: 'Tema rosa y negro' },
-      { id: 'cafe',     label: 'Café' }
+      { id: 'cafe',     label: 'Café' },
+      { id: 'peach',    label: 'Tema Peach' }
     ];
 
     function getSavedThemeIndex() {
@@ -1726,6 +1780,7 @@
           if (THEMES[k].id === s) return k;
         }
         if (s === 'Café' || s === 'café' || s === 'CAFE') return 2;
+        if (s === 'Indigo' || s === 'indigo' || s === 'Fitness' || s === 'Peach') return 3;
         return null;
       } catch (e) { return null; }
     }
