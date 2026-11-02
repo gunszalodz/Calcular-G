@@ -28,7 +28,6 @@
         for (var k = 0; k < THEMES.length; k++) {
           if (THEMES[k] === s) return k;
         }
-        // Migración de versiones anteriores (con tilde o mayúsculas)
         if (s === 'Café' || s === 'café' || s === 'CAFE') return 2;
         return null;
       } catch (e) { return null; }
@@ -519,7 +518,12 @@
 
     .v-key:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    .v-key.op, .calc-btn.op { color: var(--accent); font-weight: 800; text-shadow: var(--op-glow); }
+    .v-key.op, .calc-btn.op { 
+      color: var(--accent); 
+      font-weight: 800; 
+      text-shadow: var(--op-glow); 
+      font-size: 1.55rem; /* <-- Iconos de operadores más grandes */
+    }
 
     .virtual-keypad-compact {
       display: grid;
@@ -530,6 +534,8 @@
     }
 
     .virtual-keypad-compact .v-key { font-size: 1.3rem; }
+    
+    .virtual-keypad-compact .v-key.op { font-size: 1.6rem; } /* <-- Iconos en teclados compactos más grandes */
 
     .virtual-keypad-bases {
       display: grid;
@@ -690,6 +696,10 @@
       min-height: 0;
       font-size: 0.9rem !important;
       border-radius: 7px;
+    }
+    
+    #tab-standard.sci .calc-btn.op {
+      font-size: 1.15rem !important; /* <-- Iconos en modo científico más grandes */
     }
 
     #tab-standard.sci .calc-btn.sci { font-size: 0.65rem !important; }
@@ -1715,7 +1725,6 @@
         for (let k = 0; k < THEMES.length; k++) {
           if (THEMES[k].id === s) return k;
         }
-        // Migración de valores viejos
         if (s === 'Café' || s === 'café' || s === 'CAFE') return 2;
         return null;
       } catch (e) { return null; }
