@@ -47,7 +47,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J24FZD8KJQ"></script>
 <script>
@@ -335,6 +335,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      overscroll-behavior: contain;
     }
 
     .tab-panel {
@@ -345,7 +346,7 @@
       width: 100%;
       max-width: 500px;
       margin: auto;
-      
+
       flex-direction: column;
       background: var(--panel);
       border-radius: 20px;
@@ -541,7 +542,7 @@
     }
 
     /* Estilos específicos para los botones de operadores en el tema Peach */
-    :root[data-theme="peach"] .v-key.op, 
+    :root[data-theme="peach"] .v-key.op,
     :root[data-theme="peach"] .calc-btn.op {
       background: var(--accent);
       color: var(--on-accent);
@@ -558,18 +559,12 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 0 var(--accent-edge);
     }
 
-    .v-key, .calc-btn { -webkit-text-stroke: 0.5px currentColor; }
-    .calc-btn.sci { -webkit-text-stroke: 0.3px currentColor; }
-    :root[data-theme="peach"] .v-key.op, 
-    :root[data-theme="peach"] .calc-btn.op,
-    :root[data-theme="peach"] .calc-btn.equals { -webkit-text-stroke: 0; }
-
     .v-key:active:not(:disabled), .calc-btn:active {
       transform: translateY(2px);
       box-shadow: inset 0 1px 0 var(--key-hi), 0 0 0 var(--key-edge);
     }
-    
-    :root[data-theme="peach"] .v-key.op:active, 
+
+    :root[data-theme="peach"] .v-key.op:active,
     :root[data-theme="peach"] .calc-btn.op:active,
     :root[data-theme="peach"] .calc-btn.equals:active {
       box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 0 0 var(--accent-edge);
@@ -581,14 +576,14 @@
 
     .v-key:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    .v-key.op, .calc-btn.op { 
-      color: var(--accent); 
-      font-weight: 800; 
-      text-shadow: var(--op-glow); 
+    .v-key.op, .calc-btn.op {
+      color: var(--accent);
+      font-weight: 800;
+      text-shadow: var(--op-glow);
       font-size: 2.1rem;
     }
-    
-    :root[data-theme="peach"] .v-key.op, 
+
+    :root[data-theme="peach"] .v-key.op,
     :root[data-theme="peach"] .calc-btn.op {
       color: var(--on-accent);
     }
@@ -774,6 +769,20 @@
 
     @media (max-width: 420px) {
       .mode-word { display: none; }
+    }
+
+    /* ===== Ajustes de rendimiento para pantallas pequeñas =====
+       Se reducen capas de box-shadow (pintado caro en GPUs débiles) */
+    @media (max-width: 480px) {
+      .tab-panel {
+        box-shadow:
+          0 0 0 2px var(--panel-border),
+          0 0 8px 1px var(--glow-c),
+          inset 0 0 0 3px var(--panel-inner);
+      }
+      .result-box-compact, .calc-display {
+        box-shadow: inset 0 2px 6px var(--inset);
+      }
     }
   </style>
 </head>
@@ -1309,51 +1318,75 @@
       e.preventDefault();
     });
 
+    /* ===== Cache de DOM (evita búsquedas repetidas en cada pulsación) ===== */
+    const $ = (id) => document.getElementById(id);
+
+    const UI = {
+      display: $('calc-display'),
+      history: $('calc-history'),
+      panelStd: $('tab-standard'),
+      modeStdBtn: $('mode-std'),
+      modeSciBtn: $('mode-sci'),
+      modeWord: $('calc-mode-word'),
+      angleBtn: $('btn-angle'),
+      baseInputs: { dec: $('base-dec'), bin: $('base-bin'), oct: $('base-oct'), hex: $('base-hex') },
+      baseKeypad: $('bases-keypad'),
+      baseKeypadButtons: null,
+      data1: $('data-val-1'),
+      data2: $('data-val-2'),
+      dataUnit1: $('data-unit-1'),
+      dataUnit2: $('data-unit-2'),
+      dataResult: $('data-result-text')
+    };
+    if (UI.baseKeypad) UI.baseKeypadButtons = UI.baseKeypad.querySelectorAll('button');
+
+    const panels = document.querySelectorAll('.tab-panel');
+    const navItems = document.querySelectorAll('.nav-item');
+    let activePanel = UI.panelStd;
+
     let activeInput = null;
     let currentBaseType = 'dec';
     let activeDataField = 'src';
 
     function setActiveInput(input) {
-      document.querySelectorAll('.tab-panel.active input').forEach(el => el.classList.remove('active-input'));
+      if (input === activeInput) return;
+      if (activeInput) activeInput.classList.remove('active-input');
       activeInput = input;
       if (activeInput) activeInput.classList.add('active-input');
     }
 
+    /* Llama directamente al handler inline: evita crear un Event por tecla */
+    function triggerInput(input) {
+      const h = input.oninput;
+      if (typeof h === 'function') h.call(input);
+      else input.dispatchEvent(new Event('input'));
+    }
+
     function setActiveBaseInput(inputId, type) {
       currentBaseType = type;
-      const input = document.getElementById(inputId);
-      setActiveInput(input);
+      setActiveInput($(inputId));
       updateBasesKeypadState();
     }
 
     function setActiveDataInput(inputId, field) {
       activeDataField = field;
-      const input = document.getElementById(inputId);
-      setActiveInput(input);
+      setActiveInput($(inputId));
     }
 
     function updateBasesKeypadState() {
-      const keypad = document.getElementById('bases-keypad');
-      if (!keypad) return;
-      const buttons = keypad.querySelectorAll('button');
-
-      buttons.forEach(btn => {
+      const buttons = UI.baseKeypadButtons;
+      if (!buttons) return;
+      const decOk = ['0','1','2','3','4','5','6','7','8','9','.',','];
+      for (let i = 0; i < buttons.length; i++) {
+        const btn = buttons[i];
         const val = btn.getAttribute('data-val');
-        if (!val || val === 'back' || val === 'ce') return;
-
+        if (!val || val === 'back' || val === 'ce') continue;
         let allowed = true;
-        if (currentBaseType === 'bin') {
-          allowed = ['0', '1', '.', ','].includes(val);
-        } else if (currentBaseType === 'oct') {
-          allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '.', ','].includes(val);
-        } else if (currentBaseType === 'dec') {
-          allowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ','].includes(val);
-        } else if (currentBaseType === 'hex') {
-          allowed = true;
-        }
-
+        if (currentBaseType === 'bin') allowed = val === '0' || val === '1' || val === '.' || val === ',';
+        else if (currentBaseType === 'oct') allowed = decOk.indexOf(val) !== -1 && (val < '8' || val === '.' || val === ',');
+        else if (currentBaseType === 'dec') allowed = decOk.indexOf(val) !== -1;
         btn.disabled = !allowed;
-      });
+      }
     }
 
     function groupDigits(s) {
@@ -1394,10 +1427,8 @@
     }
 
     function vKey(val) {
-      const panel = document.querySelector('.tab-panel.active');
-      if (!panel) return;
-      if (!activeInput || !panel.contains(activeInput)) {
-        const firstInput = panel.querySelector('input');
+      if (!activeInput || !activePanel.contains(activeInput)) {
+        const firstInput = activePanel.querySelector('input');
         if (firstInput) setActiveInput(firstInput);
       }
       if (!activeInput) return;
@@ -1416,7 +1447,7 @@
           raw = (raw === '0') ? val : raw + val;
         }
         activeInput.value = groupDigits(raw);
-        activeInput.dispatchEvent(new Event('input'));
+        triggerInput(activeInput);
         return;
       }
 
@@ -1428,12 +1459,11 @@
           v += (v === '' ? '0' + val : val);
         }
       } else {
-        if (v === '0' && !isNaN(val)) v = val;
-        else if (v === '0') v = val;
+        if (v === '0') v = val;
         else v += val;
       }
       activeInput.value = v;
-      activeInput.dispatchEvent(new Event('input'));
+      triggerInput(activeInput);
     }
 
     function formatEs(num, maxDec = 4) {
@@ -1442,11 +1472,13 @@
     }
 
     function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-      const target = document.getElementById(tabId);
-      target.classList.add('active');
-      btn.classList.add('active');
+      const target = $(tabId);
+      if (!target) return;
+      panels.forEach(p => p.classList.toggle('active', p === target));
+      navItems.forEach(i => i.classList.toggle('active', i === btn));
+      activePanel = target;
+      setActiveInput(null);
+
       if (tabId === 'tab-standard') {
         fitDisplay();
       } else if (tabId === 'tab-bases') {
@@ -1489,7 +1521,7 @@
     }
 
     function copyInputValue(inputId) {
-      const val = document.getElementById(inputId).value;
+      const val = $(inputId).value;
       if (!val) {
         showToast('Campo vacío', 1400);
         return;
@@ -1502,7 +1534,7 @@
         if (navigator.clipboard && navigator.clipboard.readText) {
           const text = await navigator.clipboard.readText();
           if (text) {
-            const input = document.getElementById(inputId);
+            const input = $(inputId);
             if (inputId.startsWith('base-')) setActiveBaseInput(inputId, type);
             else setActiveInput(input);
             let t = text.trim();
@@ -1516,7 +1548,7 @@
               t = groupDigits(t);
             }
             input.value = t;
-            input.dispatchEvent(new Event('input'));
+            triggerInput(input);
             showToast('Pegado con éxito', 1500);
             return;
           }
@@ -1531,7 +1563,9 @@
     }
 
     function copyText(id) {
-      const txt = document.getElementById(id).innerText;
+      const node = $(id);
+      if (!node) return;
+      const txt = node.textContent || '';
       const num = numberFromResult(txt);
       copyValue(num !== null ? num : txt);
     }
@@ -1542,25 +1576,35 @@
     let angleMode = 'deg';
     let calcMode = 'standard';
 
+    // Tamaños base del display (rem -> px) para calcular el ajuste sin getComputedStyle
+    const BASE_FONT_STD = 36.8;   // 2.3rem
+    const BASE_FONT_SCI = 22.4;   // 1.4rem
+    let displayFitted = false;
+
     function fitDisplay() {
-      const el = document.getElementById('calc-display');
+      const el = UI.display;
       if (!el) return;
-      el.style.fontSize = '';
-      let size = parseFloat(getComputedStyle(el).fontSize);
-      while (el.scrollWidth > el.clientWidth && size > 12) {
-        size -= 1;
+      if (displayFitted) { el.style.fontSize = ''; displayFitted = false; }
+      const cw = el.clientWidth;
+      if (!cw) return;
+      const sw = el.scrollWidth;
+      if (sw > cw + 1) {
+        const base = calcMode === 'scientific' ? BASE_FONT_SCI : BASE_FONT_STD;
+        let size = Math.floor(base * cw / sw);
+        if (size < 12) size = 12;
         el.style.fontSize = size + 'px';
+        displayFitted = true;
       }
     }
 
     function updateCalcDisplay() {
-      document.getElementById('calc-display').innerText = fmtDisplay(calcExpr);
+      UI.display.textContent = fmtDisplay(calcExpr);
       fitDisplay();
     }
 
     function setHistory(text) {
       const MAX = 36;
-      document.getElementById('calc-history').innerText = text.length > MAX ? '… ' + text.slice(-(MAX - 2)) : text;
+      UI.history.textContent = text.length > MAX ? '… ' + text.slice(-(MAX - 2)) : text;
     }
 
     function calcNum(n) {
@@ -1647,6 +1691,9 @@
       updateCalcDisplay();
     }
 
+    const SCOPE_KEYS = 'sin|cos|tan|asin|acos|atan|ln|log|exp|pow10|sqr|cube|sqrt|inv|abs|fact|pi|e';
+    const FUNC_ARG_RE = new RegExp(`(${SCOPE_KEYS})\\((-?\\d+\\.?\\d*)\\)`, 'g');
+
     function evaluateExpression(expr) {
       try {
         let clean = expr;
@@ -1678,12 +1725,11 @@
 
         clean = clean.replace(/(\d|\))\s*\(/g, '$1*('); clean = clean.replace(/(\d\vert{}\))\s*([a-zA-Z]+)/g, '$1*$2');
 
-        const keys = Object.keys(scope).join('|');
-        const funcRegex = new RegExp(`(${keys})\\((-?\\d+\\.?\\d*)\\)`, 'g');
         let prev;
         do {
           prev = clean;
-          clean = clean.replace(funcRegex, (m, fn, arg) => scope[fn](parseFloat(arg)));
+          FUNC_ARG_RE.lastIndex = 0;
+          clean = clean.replace(FUNC_ARG_RE, (m, fn, arg) => scope[fn](parseFloat(arg)));
         } while (clean !== prev);
 
         clean = clean.replace(/\^/g, '**');
@@ -1751,8 +1797,7 @@
 
     function setAngleMode(mode, save = true) {
       angleMode = mode === 'rad' ? 'rad' : 'deg';
-      const btn = document.getElementById('btn-angle');
-      if (btn) btn.textContent = angleMode === 'rad' ? 'RAD' : 'DEG';
+      if (UI.angleBtn) UI.angleBtn.textContent = angleMode === 'rad' ? 'RAD' : 'DEG';
       if (save) { try { localStorage.setItem('calculadora-g_angle', angleMode); } catch (e) {} }
     }
 
@@ -1763,10 +1808,12 @@
     function setCalcMode(mode, save = true) {
       calcMode = mode === 'scientific' ? 'scientific' : 'standard';
       const sci = calcMode === 'scientific';
-      document.getElementById('tab-standard').classList.toggle('sci', sci);
-      document.getElementById('mode-std').classList.toggle('active', !sci);
-      document.getElementById('mode-sci').classList.toggle('active', sci);
-      document.getElementById('calc-mode-word').textContent = sci ? ' Científica' : ' Estándar';
+      UI.panelStd.classList.toggle('sci', sci);
+      UI.modeStdBtn.classList.toggle('active', !sci);
+      UI.modeSciBtn.classList.toggle('active', sci);
+      UI.modeWord.textContent = sci ? ' Científica' : ' Estándar';
+      displayFitted = false;
+      UI.display.style.fontSize = '';
       fitDisplay();
       if (save) { try { localStorage.setItem('calculadora-g_mode', calcMode); } catch (e) {} }
     }
@@ -1852,62 +1899,67 @@
 
       const savedAngle = localStorage.getItem('calculadora-g_angle');
       if (savedAngle) setAngleMode(savedAngle, false);
-
-      setActiveInput(document.getElementById('p1-percent'));
     } catch (e) {}
 
-    window.addEventListener('resize', fitDisplay);
+    let resizeRaf = 0;
+    window.addEventListener('resize', function () {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(function () {
+        resizeRaf = 0;
+        fitDisplay();
+      });
+    }, { passive: true });
 
     function calcP1() {
-      const p = parseNum(document.getElementById('p1-percent').value);
-      const v = parseNum(document.getElementById('p1-value').value);
+      const p = parseNum($('p1-percent').value);
+      const v = parseNum($('p1-value').value);
       const res = (p / 100) * v;
-      document.getElementById('p1-result-text').innerText = `Resultado = ${formatEs(res, 4)}`;
+      $('p1-result-text').textContent = `Resultado = ${formatEs(res, 4)}`;
     }
     function clearP1() {
-      document.getElementById('p1-percent').value = '';
-      document.getElementById('p1-value').value = '';
-      document.getElementById('p1-result-text').innerText = 'Resultado = 0';
-      setActiveInput(document.getElementById('p1-percent'));
+      $('p1-percent').value = '';
+      $('p1-value').value = '';
+      $('p1-result-text').textContent = 'Resultado = 0';
+      setActiveInput($('p1-percent'));
     }
 
     function calcP2() {
-      const total = parseNum(document.getElementById('p2-total').value);
-      const part = parseNum(document.getElementById('p2-part').value);
+      const total = parseNum($('p2-total').value);
+      const part = parseNum($('p2-part').value);
       const res = total !== 0 ? (part / total) * 100 : 0;
-      document.getElementById('p2-result-text').innerText = `Porcentaje = ${formatEs(res, 4)}%`;
+      $('p2-result-text').textContent = `Porcentaje = ${formatEs(res, 4)}%`;
     }
     function clearP2() {
-      document.getElementById('p2-total').value = '';
-      document.getElementById('p2-part').value = '';
-      document.getElementById('p2-result-text').innerText = 'Porcentaje = 0%';
-      setActiveInput(document.getElementById('p2-total'));
+      $('p2-total').value = '';
+      $('p2-part').value = '';
+      $('p2-result-text').textContent = 'Porcentaje = 0%';
+      setActiveInput($('p2-total'));
     }
 
     function calcP3() {
-      const v = parseNum(document.getElementById('p3-value').value);
-      const p = parseNum(document.getElementById('p3-percent').value);
+      const v = parseNum($('p3-value').value);
+      const p = parseNum($('p3-percent').value);
       const res = v * (1 + p / 100);
-      document.getElementById('p3-result-text').innerText = `Resultado = ${formatEs(res, 4)}`;
+      $('p3-result-text').textContent = `Resultado = ${formatEs(res, 4)}`;
     }
     function clearP3() {
-      document.getElementById('p3-value').value = '';
-      document.getElementById('p3-percent').value = '';
-      document.getElementById('p3-result-text').innerText = 'Resultado = 0';
-      setActiveInput(document.getElementById('p3-value'));
+      $('p3-value').value = '';
+      $('p3-percent').value = '';
+      $('p3-result-text').textContent = 'Resultado = 0';
+      setActiveInput($('p3-value'));
     }
 
     function calcP4() {
-      const v = parseNum(document.getElementById('p4-value').value);
-      const p = parseNum(document.getElementById('p4-percent').value);
+      const v = parseNum($('p4-value').value);
+      const p = parseNum($('p4-percent').value);
       const res = v * (1 - p / 100);
-      document.getElementById('p4-result-text').innerText = `Resultado = ${formatEs(res, 4)}`;
+      $('p4-result-text').textContent = `Resultado = ${formatEs(res, 4)}`;
     }
     function clearP4() {
-      document.getElementById('p4-value').value = '';
-      document.getElementById('p4-percent').value = '';
-      document.getElementById('p4-result-text').innerText = 'Resultado = 0';
-      setActiveInput(document.getElementById('p4-value'));
+      $('p4-value').value = '';
+      $('p4-percent').value = '';
+      $('p4-result-text').textContent = 'Resultado = 0';
+      setActiveInput($('p4-value'));
     }
 
     const UNIT_ABBR = { 'milímetro': 'mm', 'centímetro': 'cm', 'metro': 'm' };
@@ -1916,14 +1968,14 @@
 
     function calcScale(mode) {
       if (mode) scaleMode = mode; else mode = scaleMode;
-      const r1 = parseNum(document.getElementById('scale-r1').value) || 1;
-      const r2 = parseNum(document.getElementById('scale-r2').value) || 1;
+      const r1 = parseNum($('scale-r1').value) || 1;
+      const r2 = parseNum($('scale-r2').value) || 1;
       const ratio = r2 / r1;
 
-      const realInput = document.getElementById('scale-real');
-      const planInput = document.getElementById('scale-plan');
-      const uReal = document.getElementById('scale-unit-real').value;
-      const uPlan = document.getElementById('scale-unit-plan').value;
+      const realInput = $('scale-real');
+      const planInput = $('scale-plan');
+      const uReal = $('scale-unit-real').value;
+      const uPlan = $('scale-unit-plan').value;
       const fReal = UNIT_TO_M[uReal] || 0.01;
       const fPlan = UNIT_TO_M[uPlan] || 0.01;
 
@@ -1933,8 +1985,8 @@
       if (mode === 'real') {
         if (realValStr === '') {
           planInput.value = '';
-          document.getElementById('scale-result-text').innerText = `Escala = 0 ${UNIT_ABBR[uPlan]}`;
-          document.getElementById('scale-log').innerHTML = '• Ingrese valores.';
+          $('scale-result-text').textContent = `Escala = 0 ${UNIT_ABBR[uPlan]}`;
+          $('scale-log').textContent = '• Ingrese valores.';
           return;
         }
         const realVal = parseNum(realValStr);
@@ -1942,13 +1994,13 @@
         const planMeters = realMeters / ratio;
         const planVal = planMeters / fPlan;
         planInput.value = numToField(planVal);
-        document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        $('scale-result-text').textContent = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        $('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       } else {
         if (planValStr === '') {
           realInput.value = '';
-          document.getElementById('scale-result-text').innerText = `Escala = 0 ${UNIT_ABBR[uPlan]}`;
-          document.getElementById('scale-log').innerHTML = '• Ingrese valores.';
+          $('scale-result-text').textContent = `Escala = 0 ${UNIT_ABBR[uPlan]}`;
+          $('scale-log').textContent = '• Ingrese valores.';
           return;
         }
         const planVal = parseNum(planValStr);
@@ -1956,17 +2008,17 @@
         const realMeters = planMeters * ratio;
         const realVal = realMeters / fReal;
         realInput.value = numToField(realVal);
-        document.getElementById('scale-result-text').innerText = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
-        document.getElementById('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        $('scale-result-text').textContent = `Escala = ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
+        $('scale-log').innerHTML = `• ${r1}:${r2} · Real ${formatEs(realVal, 4)} ${UNIT_ABBR[uReal]}<br>• Escala ${formatEs(planVal, 4)} ${UNIT_ABBR[uPlan]}`;
       }
     }
 
     function clearScale() {
-      document.getElementById('scale-real').value = '';
-      document.getElementById('scale-plan').value = '';
-      document.getElementById('scale-result-text').innerText = `Escala = 0 cm`;
-      document.getElementById('scale-log').innerHTML = '• Ingrese valores.';
-      setActiveInput(document.getElementById('scale-r1'));
+      $('scale-real').value = '';
+      $('scale-plan').value = '';
+      $('scale-result-text').textContent = `Escala = 0 cm`;
+      $('scale-log').textContent = '• Ingrese valores.';
+      setActiveInput($('scale-r1'));
     }
 
     const BASE_DIGITS = { dec: 10, bin: 2, oct: 8, hex: 16 };
@@ -2002,12 +2054,7 @@
     }
 
     function calcBases(changed) {
-      const inputs = {
-        dec: document.getElementById('base-dec'),
-        bin: document.getElementById('base-bin'),
-        oct: document.getElementById('base-oct'),
-        hex: document.getElementById('base-hex')
-      };
+      const inputs = UI.baseInputs;
       const value = parseBase(inputs[changed].value, BASE_DIGITS[changed]);
       for (const key in inputs) {
         if (key === changed) continue;
@@ -2017,10 +2064,11 @@
     }
 
     function clearBases() {
-      document.getElementById('base-dec').value = '';
-      document.getElementById('base-bin').value = '';
-      document.getElementById('base-oct').value = '';
-      document.getElementById('base-hex').value = '';
+      const inputs = UI.baseInputs;
+      inputs.dec.value = '';
+      inputs.bin.value = '';
+      inputs.oct.value = '';
+      inputs.hex.value = '';
       setActiveBaseInput('base-dec', 'dec');
     }
 
@@ -2035,30 +2083,30 @@
     };
 
     function calcData() {
-      const val1Input = document.getElementById('data-val-1');
-      const val2Input = document.getElementById('data-val-2');
-      const unit1 = document.getElementById('data-unit-1').value;
-      const unit2 = document.getElementById('data-unit-2').value;
+      const val1Input = UI.data1;
+      const val2Input = UI.data2;
+      const unit1 = UI.dataUnit1.value;
+      const unit2 = UI.dataUnit2.value;
 
       if (activeDataField === 'src') {
         const raw = parseNum(val1Input.value);
         const bytes = raw * DATA_MULTIPLIERS[unit1];
         const converted = bytes / DATA_MULTIPLIERS[unit2];
         val2Input.value = val1Input.value === '' ? '' : numToField(converted, 6);
-        document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(converted, 4)} ${unit2}`;
+        UI.dataResult.textContent = `Resultado = ${formatEs(converted, 4)} ${unit2}`;
       } else {
         const raw = parseNum(val2Input.value);
         const bytes = raw * DATA_MULTIPLIERS[unit2];
         const converted = bytes / DATA_MULTIPLIERS[unit1];
         val1Input.value = val2Input.value === '' ? '' : numToField(converted, 6);
-        document.getElementById('data-result-text').innerText = `Resultado = ${formatEs(raw, 4)} ${unit2}`;
+        UI.dataResult.textContent = `Resultado = ${formatEs(raw, 4)} ${unit2}`;
       }
     }
 
     function clearData() {
-      document.getElementById('data-val-1').value = '';
-      document.getElementById('data-val-2').value = '';
-      document.getElementById('data-result-text').innerText = 'Resultado = 0 Bytes';
+      UI.data1.value = '';
+      UI.data2.value = '';
+      UI.dataResult.textContent = 'Resultado = 0 Bytes';
       setActiveDataInput('data-val-1', 'src');
     }
 
